@@ -1,6 +1,9 @@
 class World {
   gameCharacter = new Character();
   enemies = [new Chicken(), new Chicken(), new Chicken()];
+  clouds = [
+    new Clouds()
+  ];
   canvas;
   ctx;
 
@@ -13,7 +16,7 @@ class World {
   draw() {
     this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
 
-
+    //gameCharacter
     this.ctx.drawImage(
       this.gameCharacter.img,
       this.gameCharacter.x,
@@ -22,7 +25,8 @@ class World {
       this.gameCharacter.height
     );
 
-    this.enemies.forEach(enemy => {
+    //Chicken
+    this.enemies.forEach((enemy) => {
       this.ctx.drawImage(
         enemy.img,
         enemy.x,
@@ -32,12 +36,21 @@ class World {
       );
     });
 
+    //Clouds
+    this.clouds.forEach((cloud) => {
+      this.ctx.drawImage(
+        cloud.img,
+        cloud.x,
+        cloud.y,
+        cloud.width,
+        cloud.height,
+      )
+    });
+
     // draw() wird immer wieder aufgerufen
     self = this;
-    requestAnimationFrame(function(){
+    requestAnimationFrame(function () {
       self.draw();
-    })
+    });
   }
-
-
 }
