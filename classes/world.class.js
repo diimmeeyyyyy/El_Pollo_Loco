@@ -1,8 +1,9 @@
 class World {
   gameCharacter = new Character();
-  enemies = level1.enemies;
+  /* enemies = level1.enemies;
   clouds = level1.clouds;
-  backgroundObjects = level1.backgroundObjects;
+  backgroundObjects = level1.backgroundObjects; */
+  level = level1;
   canvas;
   ctx;
   keyboard;
@@ -26,13 +27,13 @@ class World {
     this.ctx.translate(this.camera_x, 0);
 
     //background zuerst, weil zuerst erstellt wird
-    this.addObjectsToGame(this.backgroundObjects);
+    this.addObjectsToGame(this.level.backgroundObjects);
     //gameCharacter
     this.addToGame(this.gameCharacter);
     //Chicken
-    this.addObjectsToGame(this.enemies);
+    this.addObjectsToGame(this.level.enemies);
     //Clouds
-    this.addObjectsToGame(this.clouds);
+    this.addObjectsToGame(this.level.clouds);
 
     this.ctx.translate(-this.camera_x, 0);
 
