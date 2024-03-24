@@ -1,19 +1,12 @@
 class World {
   gameCharacter = new Character();
-  enemies = [new Chicken(), new Chicken(), new Chicken()];
-  clouds = [new Clouds()];
-  backgroundObjects = [
-    new BackgroundObject("img/5_background/layers/air.png", 0, 720, 480),
-    new BackgroundObject("img/5_background/layers/3_third_layer/1.png", 0),
-    new BackgroundObject("img/5_background/layers/3_third_layer/2.png", 360),
-    new BackgroundObject("img/5_background/layers/2_second_layer/1.png", 0),
-    new BackgroundObject("img/5_background/layers/2_second_layer/2.png", 360),
-    new BackgroundObject("img/5_background/layers/1_first_layer/1.png", 0),
-    new BackgroundObject("img/5_background/layers/1_first_layer/2.png", 360),
-  ];
+  enemies = level1.enemies;
+  clouds = level1.clouds;
+  backgroundObjects = level1.backgroundObjects;
   canvas;
   ctx;
   keyboard;
+  camera_x = 0;
 
   constructor(canvas, keyboard) {
     this.ctx = canvas.getContext("2d");
@@ -29,6 +22,9 @@ class World {
 
   draw() {
     this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+
+    this.ctx.translate(this.camera_x, 0);
+
     //background zuerst, weil zuerst erstellt wird
     this.addObjectsToGame(this.backgroundObjects);
     //gameCharacter
@@ -37,6 +33,8 @@ class World {
     this.addObjectsToGame(this.enemies);
     //Clouds
     this.addObjectsToGame(this.clouds);
+
+    this.ctx.translate(-this.camera_x, 0);
 
     // draw() wird immer wieder aufgerufen
     self = this;
@@ -53,10 +51,7 @@ class World {
 
   addToGame(moveableObject) {
     if (moveableObject.otherDirection) {
-      this.ctx.save();
-      this.ctx.translate(moveableObject.width, 0);
-      this.ctx.scale(-1, 1);
-      moveableObject.x = moveableObject.x * -1;
+      this.flipImage(moveableObject);
     }
     this.ctx.drawImage(
       moveableObject.img,
@@ -66,8 +61,19 @@ class World {
       moveableObject.height
     );
     if (moveableObject.otherDirection) {
-      moveableObject.x = moveableObject.x * -1;
-      this.ctx.restore();
+      this.flipImageBack(moveableObject);
     }
+  }
+
+  flipImage(moveableObject) {
+    this.ctx.save();
+    this.ctx.translate(moveableObject.width, 0); //verursacht Verchiebung
+    this.ctx.scale(-1, 1); //verursacht Spiegelung
+    moveableObject.x = moveableObject.x * -1; //X-Achse spiegeln
+  }
+
+  flipImageBack(moveableObject) {
+    moveableObject.x = moveableObject.x * -1;
+    this.ctx.restore();
   }
 }
