@@ -4,12 +4,12 @@ let keyboard = new Keyboard();
 
 function init() {
   canvas = document.getElementById("Canvas");
-  world = new World(canvas);
+  world = new World(canvas, keyboard);
 }
 
 
 document.addEventListener("keydown", (event) => {
-  console.log(event);
+  /* console.log(event); */
   if (event.keyCode == 39) {
     keyboard.RIGHT = true;
   }
@@ -33,7 +33,7 @@ document.addEventListener("keydown", (event) => {
 
 
 document.addEventListener("keyup", (event) => {
-  console.log(event);
+/*   console.log(event); */
   if (event.keyCode == 39) {
     keyboard.RIGHT = false;
   }

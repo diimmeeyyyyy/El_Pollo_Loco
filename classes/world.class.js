@@ -13,11 +13,18 @@ class World {
   ];
   canvas;
   ctx;
+  keyboard;
 
-  constructor(canvas) {
+  constructor(canvas, keyboard) {
     this.ctx = canvas.getContext("2d");
     this.canvas = canvas;
+    this.keyboard = keyboard;
     this.draw();
+    this.setWorld();
+  }
+
+  setWorld() {
+    this.gameCharacter.world = this;
   }
 
   draw() {
@@ -45,6 +52,12 @@ class World {
   }
 
   addToGame(moveableObject) {
+    if (moveableObject.otherDirection) {
+      this.ctx.save();
+      this.ctx.translate(moveableObject.width, 0);
+      this.ctx.scale(-1, 1);
+      moveableObject.x = moveableObject.x * -1;
+    }
     this.ctx.drawImage(
       moveableObject.img,
       moveableObject.x,
@@ -52,5 +65,9 @@ class World {
       moveableObject.width,
       moveableObject.height
     );
+    if (moveableObject.otherDirection) {
+      moveableObject.x = moveableObject.x * -1;
+      this.ctx.restore();
+    }
   }
 }
