@@ -1,6 +1,6 @@
 class MoveableObject {
   x = 120;
-  y = 240;
+  y = 350;
   img;
   width = 100;
   height = 150;
@@ -8,6 +8,21 @@ class MoveableObject {
   currentImage = 0;
   speed = 0.15;
   otherDirection = false;
+  speedY = 0;
+  acceleration = 2; //gravity-acceleration
+
+  applyGrafity() {
+    setInterval(() => {
+      if (this.isAboveGround()) {
+        this.y -= this.speedY;
+        this.speedY -= this.acceleration;
+      }
+    }, 1000 / 25);
+  }
+
+  isAboveGround() {
+    return this.y < 230;
+  }
 
   loadImage(path) {
     this.img = new Image(); //this.img = document.getElementById("image") <img id="image">
@@ -22,7 +37,7 @@ class MoveableObject {
     });
   }
 
-  playAnimation(images){
+  playAnimation(images) {
     let i = this.currentImage % images.length; //Modulo-Operator (%)
     let path = images[i];
     this.img = this.imageCache[path];
