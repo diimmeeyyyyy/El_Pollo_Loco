@@ -13,7 +13,7 @@ class MoveableObject {
 
   applyGrafity() {
     setInterval(() => {
-      if (this.isAboveGround()) {
+      if (this.isAboveGround() || this.speedY > 0) {
         this.y -= this.speedY;
         this.speedY -= this.acceleration;
       }
@@ -21,7 +21,7 @@ class MoveableObject {
   }
 
   isAboveGround() {
-    return this.y < 230;
+    return this.y < 240; //bc ground is at 240px
   }
 
   loadImage(path) {
