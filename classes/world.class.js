@@ -18,11 +18,12 @@ class World {
   checkCollisions() {
     setInterval(() => {
       this.level.enemies.forEach((enemy) => {
-        if (this.Character.isColliding(enemy)) {
-          console.log("Collision with Character", enemy);
+        if (this.gameCharacter.isColliding(enemy)) {
+          this.gameCharacter.hit();
+          console.log("Collision with Character, energy", this.gameCharacter.energy);
         }
       });
-    }, 1000);
+    }, 200);
   }
 
   setWorld() {
