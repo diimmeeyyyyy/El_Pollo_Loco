@@ -11,6 +11,20 @@ class MoveableObject {
   speedY = 0;
   acceleration = 2; //gravity-acceleration
 
+  draw(ctx) {
+    ctx.drawImage(this.img, this.x, this.y, this.width, this.height);
+  }
+
+  drawFrame(ctx) {
+    if (this instanceof Character || this instanceof Chicken) {
+      ctx.beginPath();
+      ctx.lineWidth = "5";
+      ctx.strokeStyle = "blue";
+      ctx.rect(this.x, this.y, this.width, this.height);
+      ctx.stroke();
+    }
+  }
+
   applyGrafity() {
     setInterval(() => {
       if (this.isAboveGround() || this.speedY > 0) {
@@ -45,12 +59,10 @@ class MoveableObject {
   }
 
   moveRight() {
-    console.log("Hello world");
+    this.x += this.speed;
   }
 
   moveLeft() {
-    setInterval(() => {
-      this.x -= this.speed;
-    }, 1000 / 60);
+    this.x -= this.speed;
   }
 }
