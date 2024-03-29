@@ -1,18 +1,18 @@
 class StatusBar extends DrawableObject {
-  IMAGES_STATUSBAR_COIN = [
-    "img/7_statusbars/1_statusbar/1_statusbar_coin/orange/0.png",
-    "img/7_statusbars/1_statusbar/1_statusbar_coin/orange/20.png",
-    "img/7_statusbars/1_statusbar/1_statusbar_coin/orange/40.png",
-    "img/7_statusbars/1_statusbar/1_statusbar_coin/orange/60.png",
-    "img/7_statusbars/1_statusbar/1_statusbar_coin/orange/80.png",
-    "img/7_statusbars/1_statusbar/1_statusbar_coin/orange/100.png",
+  IMAGES_STATUSBAR_HEALTH = [
+    "img/7_statusbars/1_statusbar/2_statusbar_health/green/0.png",
+    "img/7_statusbars/1_statusbar/2_statusbar_health/green/20.png",
+    "img/7_statusbars/1_statusbar/2_statusbar_health/green/40.png",
+    "img/7_statusbars/1_statusbar/2_statusbar_health/green/60.png",
+    "img/7_statusbars/1_statusbar/2_statusbar_health/green/80.png",
+    "img/7_statusbars/1_statusbar/2_statusbar_health/green/100.png",
   ];
 
   percentage = 100;
 
   constructor() {
     super(); //to initialise methods from superior object
-    this.loadImages(this.IMAGES_STATUSBAR_COIN);
+    this.loadImages(this.IMAGES_STATUSBAR_HEALTH);
     this.x = 30;
     this.y = 0;
     this.width = 200;
@@ -23,7 +23,7 @@ class StatusBar extends DrawableObject {
   //setPercentge(number)
   setPercentage(percentage) {
     this.percentage = percentage;
-    let path = this.IMAGES_STATUSBAR_COIN[this.resolveImageIndex()]; //determine number between 0 and 5, bc we got 5 img
+    let path = this.IMAGES_STATUSBAR_HEALTH[this.resolveImageIndex()]; //determine number between 0 and 5, bc we got 5 img
     this.img = this.imageCache[path];
   }
 
