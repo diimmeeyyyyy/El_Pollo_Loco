@@ -11,6 +11,7 @@ class MoveableObject {
   speedY = 0;
   acceleration = 2; //gravity-acceleration
   energy = 100;
+  lastHit = 0;
 
   draw(ctx) {
     ctx.drawImage(this.img, this.x, this.y, this.width, this.height);
@@ -37,6 +38,21 @@ class MoveableObject {
 
   hit() {
     this.energy -= 5;
+    if (this.energy < 0) {
+      this.energy = 0;
+    } else {
+      this.lastHit = new Date().getTime(); // thats how i save time in number format
+    }
+  }
+
+  isHurt() {
+    let timepassed = new Date().getTime() - this.lastHit; // difference in ms
+    timepassed = timepassed / 1000; // differnce in seconds
+    return timepassed < 1;
+  }
+
+  isDead() {
+    return this.energy == 0;
   }
 
   applyGrafity() {

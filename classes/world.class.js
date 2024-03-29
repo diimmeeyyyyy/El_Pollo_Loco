@@ -20,7 +20,11 @@ class World {
       this.level.enemies.forEach((enemy) => {
         if (this.gameCharacter.isColliding(enemy)) {
           this.gameCharacter.hit();
-          console.log("Collision with Character, energy", this.gameCharacter.energy);
+          /* this.gameCharacter.playAnimation(this.gameCharacter.IMAGES_HURT); */
+          console.log(
+            "Collision with Character, energy",
+            this.gameCharacter.energy
+          );
         }
       });
     }, 200);
