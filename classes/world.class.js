@@ -5,6 +5,7 @@ class World {
   ctx;
   keyboard;
   camera_x = 0;
+  statusBar = new StatusBar();
 
   constructor(canvas, keyboard) {
     this.ctx = canvas.getContext("2d");
@@ -41,6 +42,8 @@ class World {
 
     //background zuerst, weil zuerst erstellt wird
     this.addObjectsToGame(this.level.backgroundObjects);
+    //statusbar
+    this.addToGame(this.statusBar);
     //gameCharacter
     this.addToGame(this.gameCharacter);
     //Chicken
