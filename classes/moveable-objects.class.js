@@ -1,11 +1,4 @@
-class MoveableObject {
-  x = 120;
-  y = 350;
-  img;
-  width = 100;
-  height = 150;
-  imageCache = {};
-  currentImage = 0;
+class MoveableObject extends DrawableObject {
   speed = 0.15;
   otherDirection = false;
   speedY = 0;
@@ -13,9 +6,6 @@ class MoveableObject {
   energy = 100;
   lastHit = 0;
 
-  draw(ctx) {
-    ctx.drawImage(this.img, this.x, this.y, this.width, this.height);
-  }
 
   drawFrame(ctx) {
     if (this instanceof Character || this instanceof Chicken) {
@@ -66,19 +56,6 @@ class MoveableObject {
 
   isAboveGround() {
     return this.y < 240; //bc ground is at 240px
-  }
-
-  loadImage(path) {
-    this.img = new Image(); //this.img = document.getElementById("image") <img id="image">
-    this.img.src = path;
-  }
-
-  loadImages(array) {
-    array.forEach((path) => {
-      let img = new Image();
-      img.src = path;
-      this.imageCache[path] = img;
-    });
   }
 
   playAnimation(images) {
