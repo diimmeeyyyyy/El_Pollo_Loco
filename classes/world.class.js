@@ -5,7 +5,9 @@ class World {
   ctx;
   keyboard;
   camera_x = 0;
-  statusBar = new StatusBar();
+  statusBar_health = new StatusBar(30, 0, "health");
+  statusBar_coins = new StatusBar(30, 50, "coins");
+  statusBar_bottle = new StatusBar(30, 100, "bottle");
 
   constructor(canvas, keyboard) {
     this.ctx = canvas.getContext("2d");
@@ -21,10 +23,9 @@ class World {
       this.level.enemies.forEach((enemy) => {
         if (this.gameCharacter.isColliding(enemy)) {
           this.gameCharacter.hit();
-          /* this.gameCharacter.playAnimation(this.gameCharacter.IMAGES_HURT); */
-          console.log(
-            "Collision with Character, energy",
-            this.gameCharacter.energy
+          this.statusBar_health.setPercentage(
+            this.gameCharacter.energy,
+            "health"
           );
         }
       });
@@ -42,14 +43,28 @@ class World {
 
     //background zuerst, weil zuerst erstellt wird
     this.addObjectsToGame(this.level.backgroundObjects);
-    //statusbar
-    this.addToGame(this.statusBar);
+    //Clouds
+    this.addObjectsToGame(this.level.clouds);
+
+    //statusBar_health
+    this.ctx.translate(-this.camera_x, 0); //back
+    this.addToGame(this.statusBar_health);
+    this.ctx.translate(this.camera_x, 0); //forward
+
+    //statusBar_coins
+    this.ctx.translate(-this.camera_x, 0); //back
+    this.addToGame(this.statusBar_coins);
+    this.ctx.translate(this.camera_x, 0); //forward
+
+    //statusBar_bottle
+    this.ctx.translate(-this.camera_x, 0); //back
+    this.addToGame(this.statusBar_bottle);
+    this.ctx.translate(this.camera_x, 0); //forward
+
     //gameCharacter
     this.addToGame(this.gameCharacter);
     //Chicken
     this.addObjectsToGame(this.level.enemies);
-    //Clouds
-    this.addObjectsToGame(this.level.clouds);
 
     this.ctx.translate(-this.camera_x, 0);
 
