@@ -6,6 +6,7 @@ class MoveableObject extends DrawableObject {
   energy = 100;
   lastHit = 0;
   bottlesAmount = 0;
+  collectBottle_sound = new Audio("audio/collectBottle.mp3");
 
   isColliding(mo) {
     return (
@@ -18,6 +19,7 @@ class MoveableObject extends DrawableObject {
 
   collect() {
     this.bottlesAmount += 20;
+    this.collectBottle_sound.play();
     if (this.bottlesAmount > 100) {
       this.bottlesAmount = 100;
     }
