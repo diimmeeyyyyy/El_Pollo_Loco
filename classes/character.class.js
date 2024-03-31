@@ -36,9 +36,13 @@ class Character extends MoveableObject {
     "img/2_character_pepe/5_dead/D-56.png",
     "img/2_character_pepe/5_dead/D-57.png",
   ];
+
+  IMAGE_GAMEOVER = "img/9_intro_outro_screens/game_over/game over!.png";
   world;
   speed = 10;
   walking_sound = new Audio("audio/walking.mp3");
+  damage_sound = new Audio("audio/damage.mp3");
+  deadAnimationPlayed = false;
 
   constructor() {
     super().loadImage("img/2_character_pepe/2_walk/W-21.png");
@@ -74,7 +78,7 @@ class Character extends MoveableObject {
     setInterval(() => {
       if (this.isDead()) {
         //dead animation
-        this.playAnimation(this.IMAGES_DEAD);
+        this.playDeathAnimation();
       } else if (this.isAboveGround()) {
         //jump animation
         this.playAnimation(this.IMAGES_JUMPING);
@@ -83,8 +87,17 @@ class Character extends MoveableObject {
         this.playAnimation(this.IMAGES_WALKING);
       } else if (this.isHurt()) {
         this.playAnimation(this.IMAGES_HURT);
+        this.damage_sound.play();
       }
     }, 50);
+  }
+
+  playDeathAnimation() {
+    if (!this.deadAnimationPlayed) {
+      // Todesanimation abspielen
+      this.playAnimation(this.IMAGES_DEAD);
+      this.deadAnimationPlayed = true;
+    }
   }
 
   jump() {
