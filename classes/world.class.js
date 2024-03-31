@@ -29,6 +29,19 @@ class World {
           );
         }
       });
+      this.level.salsaBottles = this.level.salsaBottles.filter((bottle) => {
+        if (this.gameCharacter.isColliding(bottle)) {
+          this.gameCharacter.collect();
+          this.statusBar_bottle.setPercentage(
+            this.gameCharacter.bottlesAmount,
+            "bottle"
+          );
+          // if character collides with bottle, i remove it from array
+          return false;
+        }
+        // if character doesnt collide with bottle, i keep it in the game
+        return true;
+      });
     }, 200);
   }
 
@@ -45,6 +58,8 @@ class World {
     this.addObjectsToGame(this.level.backgroundObjects);
     //Clouds
     this.addObjectsToGame(this.level.clouds);
+    //salsa bottles
+    this.addObjectsToGame(this.level.salsaBottles);
 
     //statusBar_health
     this.ctx.translate(-this.camera_x, 0); //back

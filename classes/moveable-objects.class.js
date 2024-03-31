@@ -5,6 +5,7 @@ class MoveableObject extends DrawableObject {
   acceleration = 2; //gravity-acceleration
   energy = 100;
   lastHit = 0;
+  bottlesAmount = 0;
 
   isColliding(mo) {
     return (
@@ -13,6 +14,13 @@ class MoveableObject extends DrawableObject {
       this.x < mo.x &&
       this.y < mo.y + mo.height
     );
+  }
+
+  collect() {
+    this.bottlesAmount += 20;
+    if (this.bottlesAmount > 100) {
+      this.bottlesAmount = 100;
+    }
   }
 
   hit() {

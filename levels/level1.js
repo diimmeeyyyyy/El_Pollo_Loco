@@ -1,4 +1,5 @@
 const level1 = new Level(
+  [new SalsaBottles(500),new SalsaBottles(600), new SalsaBottles(700)],
   [new Chicken(), new Chicken(), new Chicken(), new Endboss()],
   [new Clouds()],
   [
