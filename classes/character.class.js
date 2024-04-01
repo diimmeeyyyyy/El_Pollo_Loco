@@ -114,14 +114,15 @@ class Character extends MoveableObject {
         idleTimer += 1;
       }
 
-      if (idleTimer >= 60 * 5) {
-        // bc 60 frames per second * 5 seconds
-        this.playAnimation(this.IMAGES_LONG_IDLE);
-      } else if (idleTimer >= 60 * 2) {
-        // bc 60 frames per second * 3 seconds
-        this.playAnimation(this.IMAGES_IDLE);
+      if (!this.isDead()) {
+        if (idleTimer >= 60 * 5) {
+          // bc 60 frames per second * 5 seconds
+          this.playAnimation(this.IMAGES_LONG_IDLE);
+        } else if (idleTimer >= 60 * 2) {
+          // bc 60 frames per second * 3 seconds
+          this.playAnimation(this.IMAGES_IDLE);
+        }
       }
-
       this.world.camera_x = -this.x + 100;
     }, 1000 / 60);
 
@@ -137,7 +138,8 @@ class Character extends MoveableObject {
         this.playAnimation(this.IMAGES_WALKING);
       } else if (this.isHurt()) {
         this.playAnimation(this.IMAGES_HURT);
-        this.damage_sound.play();
+        this.playSound(this.damage_sound);
+        idleTimer = 0;
       }
     }, 50);
   }

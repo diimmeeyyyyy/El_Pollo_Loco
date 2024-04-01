@@ -8,6 +8,7 @@ class World {
   statusBar_health = new StatusBar(30, 0, "health", 100);
   statusBar_coins = new StatusBar(30, 50, "coins", 0);
   statusBar_bottle = new StatusBar(30, 100, "bottle", 0);
+  throwableObjects = [/* new ThrowableObject() */];
 
   constructor(canvas, keyboard) {
     this.ctx = canvas.getContext("2d");
@@ -15,34 +16,53 @@ class World {
     this.keyboard = keyboard;
     this.draw();
     this.setWorld();
-    this.checkCollisions();
+    this.run();
+  }
+
+  run() {
+    setInterval(() => {
+      this.checkCollisions();
+      this.checkSalsaBottles();
+      this.checkThrowableObjects();
+    }, 200);
   }
 
   checkCollisions() {
-    setInterval(() => {
-      this.level.enemies.forEach((enemy) => {
-        if (this.gameCharacter.isColliding(enemy)) {
-          this.gameCharacter.hit();
-          this.statusBar_health.setPercentage(
-            this.gameCharacter.energy,
-            "health"
-          );
-        }
-      });
-      this.level.salsaBottles = this.level.salsaBottles.filter((bottle) => {
-        if (this.gameCharacter.isColliding(bottle)) {
-          this.gameCharacter.collect();
-          this.statusBar_bottle.setPercentage(
-            this.gameCharacter.bottlesAmount,
-            "bottle"
-          );
-          // if character collides with bottle, i remove it from array
-          return false;
-        }
-        // if character doesnt collide with bottle, i keep it in the game
-        return true;
-      });
-    }, 200);
+    this.level.enemies.forEach((enemy) => {
+      if (this.gameCharacter.isColliding(enemy)) {
+        this.gameCharacter.hit();
+        this.statusBar_health.setPercentage(
+          this.gameCharacter.energy,
+          "health"
+        );
+      }
+    });
+  }
+
+  checkSalsaBottles() {
+    this.level.salsaBottles = this.level.salsaBottles.filter((bottle) => {
+      if (this.gameCharacter.isColliding(bottle)) {
+        this.gameCharacter.collect();
+        this.statusBar_bottle.setPercentage(
+          this.gameCharacter.bottlesAmount,
+          "bottle"
+        );
+        // if character collides with bottle, i remove it from array
+        return false;
+      }
+      // if character doesnt collide with bottle, i keep it in the game
+      return true;
+    });
+  }
+
+  checkThrowableObjects() {
+    if (this.keyboard.D) {
+      let bottle = new ThrowableObject(
+        this.gameCharacter.x + 100,
+        this.gameCharacter.y + 100
+      );
+      this.throwableObjects.push(bottle);
+    }
   }
 
   setWorld() {
@@ -58,6 +78,8 @@ class World {
     this.addObjectsToGame(this.level.backgroundObjects);
     //Clouds
     this.addObjectsToGame(this.level.clouds);
+    //throwable objects
+    this.addObjectsToGame(this.throwableObjects);
     //salsa bottles
     this.addObjectsToGame(this.level.salsaBottles);
 
