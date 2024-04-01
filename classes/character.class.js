@@ -1,6 +1,33 @@
 class Character extends MoveableObject {
   height = 200;
   y = 240;
+
+  IMAGES_IDLE = [
+    "img/2_character_pepe/1_idle/idle/I-1.png",
+    "img/2_character_pepe/1_idle/idle/I-2.png",
+    "img/2_character_pepe/1_idle/idle/I-3.png",
+    "img/2_character_pepe/1_idle/idle/I-4.png",
+    "img/2_character_pepe/1_idle/idle/I-5.png",
+    "img/2_character_pepe/1_idle/idle/I-6.png",
+    "img/2_character_pepe/1_idle/idle/I-7.png",
+    "img/2_character_pepe/1_idle/idle/I-8.png",
+    "img/2_character_pepe/1_idle/idle/I-9.png",
+    "img/2_character_pepe/1_idle/idle/I-10.png",
+  ];
+
+  IMAGES_LONG_IDLE = [
+    "img/2_character_pepe/1_idle/long_idle/I-11.png",
+    "img/2_character_pepe/1_idle/long_idle/I-12.png",
+    "img/2_character_pepe/1_idle/long_idle/I-13.png",
+    "img/2_character_pepe/1_idle/long_idle/I-14.png",
+    "img/2_character_pepe/1_idle/long_idle/I-15.png",
+    "img/2_character_pepe/1_idle/long_idle/I-16.png",
+    "img/2_character_pepe/1_idle/long_idle/I-17.png",
+    "img/2_character_pepe/1_idle/long_idle/I-18.png",
+    "img/2_character_pepe/1_idle/long_idle/I-19.png",
+    "img/2_character_pepe/1_idle/long_idle/I-20.png",
+  ];
+
   IMAGES_WALKING = [
     "img/2_character_pepe/2_walk/W-21.png",
     "img/2_character_pepe/2_walk/W-22.png",
@@ -46,7 +73,9 @@ class Character extends MoveableObject {
   deadAnimationPlayed = false;
 
   constructor() {
-    super().loadImage("img/2_character_pepe/2_walk/W-21.png");
+    super().loadImage("img/2_character_pepe/1_idle/idle/I-1.png");
+    this.loadImages(this.IMAGES_IDLE);
+    this.loadImages(this.IMAGES_LONG_IDLE);
     this.loadImages(this.IMAGES_WALKING);
     this.loadImages(this.IMAGES_JUMPING);
     this.loadImages(this.IMAGES_HURT);
@@ -56,25 +85,41 @@ class Character extends MoveableObject {
   }
 
   animate() {
+    let idleTimer = 0;
     setInterval(() => {
       this.walking_sound.pause();
       if (this.world.keyboard.RIGHT && this.x < this.world.level.levelEndX) {
         this.moveRight();
         this.otherDirection = false;
-        if (!this.isAboveGround()) {
-          this.walking_sound.play();
-        }
+        this.playSound(this.walking_sound);
+        idleTimer = 0;
       }
       if (this.world.keyboard.LEFT && this.x > 0) {
         this.moveLeft();
         this.otherDirection = true;
-        if (!this.isAboveGround()) {
-          this.walking_sound.play();
-        }
+        this.playSound(this.walking_sound);
+        idleTimer = 0;
       }
 
       if (this.world.keyboard.SPACE && !this.isAboveGround()) {
         this.jump();
+        idleTimer = 0;
+      }
+
+      if (
+        !this.world.keyboard.SPACE &&
+        !this.world.keyboard.RIGHT &&
+        !this.world.keyboard.LEFT
+      ) {
+        idleTimer += 1;
+      }
+
+      if (idleTimer >= 60 * 5) {
+        // bc 60 frames per second * 5 seconds
+        this.playAnimation(this.IMAGES_LONG_IDLE);
+      } else if (idleTimer >= 60 * 2) {
+        // bc 60 frames per second * 3 seconds
+        this.playAnimation(this.IMAGES_IDLE);
       }
 
       this.world.camera_x = -this.x + 100;
@@ -95,6 +140,12 @@ class Character extends MoveableObject {
         this.damage_sound.play();
       }
     }, 50);
+  }
+
+  playSound(sound) {
+    if (!this.isAboveGround()) {
+      sound.play();
+    }
   }
 
   playDeathAnimation() {
