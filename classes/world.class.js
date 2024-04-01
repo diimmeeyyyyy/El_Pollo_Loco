@@ -8,7 +8,7 @@ class World {
   statusBar_health = new StatusBar(30, 0, "health", 100);
   statusBar_coins = new StatusBar(30, 50, "coins", 0);
   statusBar_bottle = new StatusBar(30, 100, "bottle", 0);
-  throwableObjects = [/* new ThrowableObject() */];
+  throwableObjects = [];
 
   constructor(canvas, keyboard) {
     this.ctx = canvas.getContext("2d");
@@ -56,12 +56,17 @@ class World {
   }
 
   checkThrowableObjects() {
-    if (this.keyboard.D) {
+    if (this.keyboard.D && this.gameCharacter.bottlesAmount > 0) {
       let bottle = new ThrowableObject(
         this.gameCharacter.x + 100,
-        this.gameCharacter.y + 100
+        this.gameCharacter.y
       );
       this.throwableObjects.push(bottle);
+      this.gameCharacter.bottlesAmount -= 20;
+      this.statusBar_bottle.setPercentage(
+        this.gameCharacter.bottlesAmount,
+        "bottle"
+      );
     }
   }
 
