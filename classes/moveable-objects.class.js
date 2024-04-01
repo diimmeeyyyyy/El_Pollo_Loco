@@ -23,6 +23,7 @@ class MoveableObject extends DrawableObject {
     if (this.bottlesAmount > 100) {
       this.bottlesAmount = 100;
     }
+    console.log(this.bottlesAmount);
   }
 
   hit() {
