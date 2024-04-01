@@ -8,6 +8,7 @@ class World {
   statusBar_health = new StatusBar(30, 0, "health", 100);
   statusBar_coins = new StatusBar(30, 50, "coins", 0);
   statusBar_bottle = new StatusBar(30, 100, "bottle", 0);
+  statusBar_endboss = new StatusBar(500, 0, "endboss", 100);
   throwableObjects = [];
 
   constructor(canvas, keyboard) {
@@ -102,6 +103,13 @@ class World {
     this.ctx.translate(-this.camera_x, 0); //back
     this.addToGame(this.statusBar_bottle);
     this.ctx.translate(this.camera_x, 0); //forward
+
+    // statusBar_endboss
+    if (this.gameCharacter.x >= 1500) {
+      this.ctx.translate(-this.camera_x, 0); //back
+      this.addToGame(this.statusBar_endboss);
+      this.ctx.translate(this.camera_x, 0); //forward
+    }
 
     //gameCharacter
     this.addToGame(this.gameCharacter);
