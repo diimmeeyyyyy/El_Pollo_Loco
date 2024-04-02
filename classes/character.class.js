@@ -83,29 +83,28 @@ class Character extends MoveableObject {
     this.applyGravity();
     this.animate();
   }
-
+  idleTimer = 0;
   animate() {
-    let idleTimer = 0;
     setInterval(() => {
       this.walking_sound.pause();
       if (this.world.keyboard.RIGHT && this.x < this.world.level.levelEndX) {
         this.moveRight();
         this.otherDirection = false;
         this.playSound(this.walking_sound);
-        idleTimer = 0;
+        this.idleTimer = 0;
       }
       if (this.world.keyboard.LEFT && this.x > 0) {
         this.moveLeft();
         this.otherDirection = true;
         this.playSound(this.walking_sound);
-        idleTimer = 0;
+        this.idleTimer = 0;
       }
       if (this.world.keyboard.SPACE && !this.isAboveGround()) {
         this.jump();
-        idleTimer = 0;
+        this.idleTimer = 0;
       }
       if (this.world.keyboard.D) {
-        idleTimer = 0;
+        this.idleTimer = 0;
       }
       if (
         !this.world.keyboard.SPACE &&
@@ -113,14 +112,14 @@ class Character extends MoveableObject {
         !this.world.keyboard.LEFT &&
         !this.world.keyboard.D
       ) {
-        idleTimer += 1;
+        this.idleTimer += 1;
       }
 
       if (!this.isDead()) {
-        if (idleTimer >= 60 * 5) {
+        if (this.idleTimer >= 60 * 5) {
           // bc 60 frames per second * 5 seconds
           this.playAnimation(this.IMAGES_LONG_IDLE);
-        } else if (idleTimer >= 60 * 2) {
+        } else if (this.idleTimer >= 60 * 2) {
           // bc 60 frames per second * 3 seconds
           this.playAnimation(this.IMAGES_IDLE);
         }
@@ -129,7 +128,7 @@ class Character extends MoveableObject {
     }, 1000 / 60);
 
     setInterval(() => {
-      if (this.isDead()) {
+      if (this.isDead(this.energy)) {
         //dead animation
         this.playDeathAnimation();
       } else if (this.isAboveGround()) {
@@ -141,7 +140,7 @@ class Character extends MoveableObject {
       } else if (this.isHurt()) {
         this.playAnimation(this.IMAGES_HURT);
         this.playSound(this.damage_sound);
-        idleTimer = 0;
+        this.idleTimer = 0;
       }
     }, 50);
   }

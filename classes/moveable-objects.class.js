@@ -7,6 +7,7 @@ class MoveableObject extends DrawableObject {
   lastHit = 0;
   bottlesAmount = 0;
   collectBottle_sound = new Audio("audio/collectBottle.mp3");
+  endbossEnergy = 100;
 
   isColliding(mo) {
     return (
@@ -26,6 +27,15 @@ class MoveableObject extends DrawableObject {
     console.log(this.bottlesAmount);
   }
 
+  bottleHitEndboss() {
+    this.endbossEnergy -= 25;
+    if (this.endbossEnergy < 0) {
+      this.endbossEnergy = 0;
+    } else {
+      this.lastHit = new Date().getTime();
+    }
+  }
+
   hit() {
     this.energy -= 5;
     if (this.energy < 0) {
@@ -41,8 +51,8 @@ class MoveableObject extends DrawableObject {
     return timepassed < 1;
   }
 
-  isDead() {
-    return this.energy == 0;
+  isDead(energy) {
+    return energy == 0;
   }
 
   applyGravity() {
@@ -55,7 +65,8 @@ class MoveableObject extends DrawableObject {
   }
 
   isAboveGround() {
-    if (this instanceof ThrowableObject) {//throwableobjects should always fall
+    if (this instanceof ThrowableObject) {
+      //throwableobjects should always fall
       return true;
     } else {
       return this.y < 240; //bc ground is at 240px

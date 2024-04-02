@@ -23,9 +23,26 @@ class World {
   run() {
     setInterval(() => {
       this.checkCollisions();
-      this.checkSalsaBottles();
+      this.checkBottlesOnGround();
       this.checkThrowableObjects();
+      this.checkBottleCollision();
     }, 200);
+  }
+
+  checkBottleCollision() {
+    this.throwableObjects.forEach((bottle) => {
+      this.level.enemies.forEach((enemy) => {
+        if (bottle.isColliding(enemy)) {
+          if (enemy instanceof Endboss) {
+            enemy.bottleHitEndboss();
+            this.statusBar_endboss.setPercentage(
+              enemy.endbossEnergy,
+              "endboss"
+            );
+          }
+        }
+      });
+    });
   }
 
   checkCollisions() {
@@ -40,7 +57,7 @@ class World {
     });
   }
 
-  checkSalsaBottles() {
+  checkBottlesOnGround() {
     this.level.salsaBottles = this.level.salsaBottles.filter((bottle) => {
       if (this.gameCharacter.isColliding(bottle)) {
         this.gameCharacter.collect();
@@ -58,6 +75,7 @@ class World {
 
   checkThrowableObjects() {
     if (this.keyboard.D && this.gameCharacter.bottlesAmount > 0) {
+      this.gameCharacter.idleTimer = 0;
       let bottle = new ThrowableObject(
         this.gameCharacter.x + 100,
         this.gameCharacter.y
@@ -105,7 +123,7 @@ class World {
     this.ctx.translate(this.camera_x, 0); //forward
 
     // statusBar_endboss
-    if (this.gameCharacter.x >= 1500) {
+    if (this.gameCharacter.x >= 2000) {
       this.ctx.translate(-this.camera_x, 0); //back
       this.addToGame(this.statusBar_endboss);
       this.ctx.translate(this.camera_x, 0); //forward
@@ -113,8 +131,12 @@ class World {
 
     //gameCharacter
     this.addToGame(this.gameCharacter);
+
     //Chicken
     this.addObjectsToGame(this.level.enemies);
+
+    /*  //endboss
+    this.addObjectsToGame(this.level.endboss); */
 
     this.ctx.translate(-this.camera_x, 0);
 
