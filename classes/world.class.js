@@ -127,6 +127,8 @@ class World {
     this.addObjectsToGame(this.throwableObjects);
     //salsa bottles
     this.addObjectsToGame(this.level.salsaBottles);
+    //coins
+    this.addObjectsToGame(this.level.coins);
 
     //statusBar_health
     this.ctx.translate(-this.camera_x, 0); //back

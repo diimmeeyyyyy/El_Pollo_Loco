@@ -21,17 +21,13 @@ class DrawableObject {
       this instanceof Character ||
       this instanceof Chicken ||
       this instanceof Endboss ||
-      this instanceof SalsaBottles
+      this instanceof SalsaBottles ||
+      this instanceof Coins
     ) {
-      ctx.beginPath();
-      ctx.lineWidth = "5";
-      ctx.strokeStyle = "blue";
-      ctx.rect(this.x, this.y, this.width, this.height);
-      ctx.stroke();
-
       // Draw the offset object in red
       ctx.beginPath();
       ctx.strokeStyle = "red";
+      ctx.lineWidth = "5";
       ctx.rect(
         this.x + this.offset.left,
         this.y + this.offset.top,
