@@ -26,6 +26,7 @@ class World {
       this.checkBottlesOnGround();
       this.checkThrowableObjects();
       this.checkBottleCollision();
+      this.CheckCharacterJump();
     }, 200);
   }
 
@@ -34,7 +35,7 @@ class World {
       this.level.enemies.forEach((enemy) => {
         if (bottle.isColliding(enemy)) {
           if (enemy instanceof Endboss) {
-            enemy.bottleHitEndboss();
+            enemy.endbossIsCollidingBottle();
             this.statusBar_endboss.setPercentage(
               enemy.endbossEnergy,
               "endboss"
@@ -47,7 +48,10 @@ class World {
 
   checkCollisions() {
     this.level.enemies.forEach((enemy) => {
-      if (this.gameCharacter.isColliding(enemy)) {
+      if (
+        this.gameCharacter.isColliding(enemy) &&
+        !this.gameCharacter.isAboveGround()
+      ) {
         this.gameCharacter.hit();
         this.statusBar_health.setPercentage(
           this.gameCharacter.energy,
@@ -57,10 +61,27 @@ class World {
     });
   }
 
+  CheckCharacterJump() {
+    this.level.enemies = this.level.enemies.filter((enemy) => {
+      if (
+        this.gameCharacter.isJumpingOn(enemy) &&
+        this.gameCharacter.isAboveGround()
+      ) {
+        console.log("Character is jumping on enemy");
+        return false;
+        //add animation of dead chicken
+      }
+      return true;
+    });
+  }
+
   checkBottlesOnGround() {
     this.level.salsaBottles = this.level.salsaBottles.filter((bottle) => {
-      if (this.gameCharacter.isColliding(bottle)) {
-        this.gameCharacter.collect();
+      if (
+        this.gameCharacter.isColliding(bottle) &&
+        this.gameCharacter.bottlesAmount !== 100
+      ) {
+        this.gameCharacter.isCollecting();
         this.statusBar_bottle.setPercentage(
           this.gameCharacter.bottlesAmount,
           "bottle"

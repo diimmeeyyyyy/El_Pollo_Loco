@@ -20,12 +20,24 @@ class DrawableObject {
     if (
       this instanceof Character ||
       this instanceof Chicken ||
-      this instanceof Endboss
+      this instanceof Endboss ||
+      this instanceof SalsaBottles
     ) {
       ctx.beginPath();
       ctx.lineWidth = "5";
       ctx.strokeStyle = "blue";
       ctx.rect(this.x, this.y, this.width, this.height);
+      ctx.stroke();
+
+      // Draw the offset object in red
+      ctx.beginPath();
+      ctx.strokeStyle = "red";
+      ctx.rect(
+        this.x + this.offset.left,
+        this.y + this.offset.top,
+        this.width - this.offset.left - this.offset.right,
+        this.height - this.offset.top - this.offset.bottom
+      );
       ctx.stroke();
     }
   }

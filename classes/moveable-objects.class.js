@@ -8,26 +8,45 @@ class MoveableObject extends DrawableObject {
   bottlesAmount = 0;
   collectBottle_sound = new Audio("audio/collectBottle.mp3");
   endbossEnergy = 100;
+  enemyEnergy = 0;
 
   isColliding(mo) {
     return (
-      this.x + this.width > mo.x &&
-      this.y + this.height > mo.y &&
-      this.x < mo.x &&
-      this.y < mo.y + mo.height
+      this.x + this.width - this.offset.right > mo.x + mo.offset.left && //CHECK RIGHT -> LEFT
+      this.y + this.height - this.offset.bottom > mo.y + mo.offset.top && //CHECK TOP -> BOTTOM
+      this.x + this.offset.left < mo.x + mo.width - mo.offset.right && //CHECK LEFT -> RIGHT
+      this.y + this.offset.top < mo.y + mo.height - mo.offset.bottom //CHECK BOTTOM -> TOP
     );
   }
 
-  collect() {
+  offset = {
+    top: 0,
+    bottom: 0,
+    right: 0,
+    left: 0,
+  };
+
+  isJumpingOn(mo) {
+    if (
+      this.isColliding(mo) &&
+      this.y + this.height - this.offset.bottom >= mo.y + mo.offset.top &&
+      this.speedY < 0
+    ) {
+      return true;
+    }
+    return false;
+  }
+
+  isCollecting() {
     this.bottlesAmount += 20;
     this.collectBottle_sound.play();
-    if (this.bottlesAmount > 100) {
+    if (this.bottlesAmount >= 100) {
       this.bottlesAmount = 100;
     }
     console.log(this.bottlesAmount);
   }
 
-  bottleHitEndboss() {
+  endbossIsCollidingBottle() {
     this.endbossEnergy -= 25;
     if (this.endbossEnergy < 0) {
       this.endbossEnergy = 0;

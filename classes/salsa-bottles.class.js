@@ -4,6 +4,13 @@ class SalsaBottles extends DrawableObject {
   height = 80;
   width = 60;
 
+  offset = {
+    top: 15,
+    bottom: 15,
+    right: 15,
+    left: 15,
+  };
+
   constructor(x) {
     super();
     this.x = x;

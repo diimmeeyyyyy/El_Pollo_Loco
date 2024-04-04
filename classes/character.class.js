@@ -72,6 +72,13 @@ class Character extends MoveableObject {
   jump_sound = new Audio("audio/jump.mp3");
   deadAnimationPlayed = false;
 
+  offset = {
+    top: 120,
+    bottom: 10,
+    right: 20,
+    left: 20,
+  };
+
   constructor() {
     super().loadImage("img/2_character_pepe/1_idle/idle/I-1.png");
     this.loadImages(this.IMAGES_IDLE);
