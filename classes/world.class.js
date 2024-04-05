@@ -22,11 +22,15 @@ class World {
 
   run() {
     setInterval(() => {
-      this.checkCollisions();
       this.checkBottlesOnGround();
+      this.checkCoins();
+      this.CheckCharacterJump();
+    }, 1000 / 60);
+
+    setInterval(() => {
+      this.checkCollisions();
       this.checkThrowableObjects();
       this.checkBottleCollision();
-      this.CheckCharacterJump();
     }, 200);
   }
 
@@ -64,8 +68,9 @@ class World {
   CheckCharacterJump() {
     this.level.enemies = this.level.enemies.filter((enemy) => {
       if (
-        this.gameCharacter.isJumpingOn(enemy) &&
-        this.gameCharacter.isAboveGround()
+        this.gameCharacter.isColliding(enemy) &&
+        this.gameCharacter.isAboveGround() &&
+        this.gameCharacter.speedY < 0
       ) {
         console.log("Character is jumping on enemy");
         return false;
@@ -81,7 +86,7 @@ class World {
         this.gameCharacter.isColliding(bottle) &&
         this.gameCharacter.bottlesAmount !== 100
       ) {
-        this.gameCharacter.isCollecting();
+        this.gameCharacter.isCollecting("bottle");
         this.statusBar_bottle.setPercentage(
           this.gameCharacter.bottlesAmount,
           "bottle"
@@ -90,6 +95,23 @@ class World {
         return false;
       }
       // if character doesnt collide with bottle, i keep it in the game
+      return true;
+    });
+  }
+
+  checkCoins() {
+    this.level.coins = this.level.coins.filter((coin) => {
+      if (
+        this.gameCharacter.isColliding(coin) &&
+        this.gameCharacter.coinAmount !== 100
+      ) {
+        this.gameCharacter.isCollecting("coin");
+        this.statusBar_coins.setPercentage(
+          this.gameCharacter.coinAmount,
+          "coins"
+        );
+        return false;
+      }
       return true;
     });
   }
