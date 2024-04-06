@@ -12,6 +12,13 @@ class MoveableObject extends DrawableObject {
   endbossEnergy = 100;
   enemyEnergy = 0;
 
+  offset = {
+    top: 0,
+    bottom: 0,
+    right: 0,
+    left: 0,
+  };
+
   isColliding(mo) {
     return (
       this.x + this.width - this.offset.right > mo.x + mo.offset.left && //CHECK RIGHT -> LEFT
@@ -20,13 +27,6 @@ class MoveableObject extends DrawableObject {
       this.y + this.offset.top < mo.y + mo.height - mo.offset.bottom //CHECK BOTTOM -> TOP
     );
   }
-
-  offset = {
-    top: 0,
-    bottom: 0,
-    right: 0,
-    left: 0,
-  };
 
   isCollecting(object) {
     if (object === "bottle") {
@@ -74,6 +74,12 @@ class MoveableObject extends DrawableObject {
 
   isDead(energy) {
     return energy == 0;
+  }
+
+  showGameOverScreen(){
+    if(this.endbossEnergy === 0){
+      
+    }
   }
 
   applyGravity() {

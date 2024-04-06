@@ -7,7 +7,14 @@ const level1 = new Level(
     new SalsaBottles(1500),
     new SalsaBottles(2000),
   ],
-  [new Coins(), new Coins(), new Coins()],
+  [
+    new Coins(),
+    new Coins(),
+    new Coins(),
+    new Coins(),
+    new Coins(),
+    new Coins(),
+  ],
   [new Chicken(), new Chicken(), new Chicken(), new Endboss()],
   [new Clouds()],
   [

@@ -2,7 +2,12 @@ let canvas;
 let world;
 let keyboard = new Keyboard();
 
-function init() {
+/* function init() {
+ 
+} */
+
+function startGame() {
+  document.getElementById("Start_Game_Button").style.display = "none";
   canvas = document.getElementById("Canvas");
   world = new World(canvas, keyboard);
 }

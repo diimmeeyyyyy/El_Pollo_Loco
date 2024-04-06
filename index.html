@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>El pollo loco</title>
+    <title>El Pollo Loco</title>
     <link rel="icon" href="./img/favIcon.png" />
     <link rel="stylesheet" href="style.css" />
     <script src="classes/drawable-object.class.js"></script>
@@ -23,8 +23,29 @@
     <script src="levels/level1.js"></script>
     <script src="javascript/game.js"></script>
   </head>
-  <body onload="init()">
+  <body>
     <h1>El pollo loco</h1>
-    <canvas id="Canvas" width="720" height="480"></canvas>
+    <div class="start-screen">
+      <canvas id="Canvas" width="720" height="480"></canvas>
+      <h2 id="Start_Game_Button" onclick="startGame()">Lets Play</h2>
+    </div>
+    <section class="keyboard-instructions">
+      <div class="keyboard-command">
+        <h3>Move Left:</h3>
+        <p>ARROW-LEFT</p>
+      </div>
+      <div class="keyboard-command">
+        <h3>Move Right:</h3>
+        <p>ARROW-RIGHT</p>
+      </div>
+      <div class="keyboard-command">
+        <h3>Jump:</h3>
+        <p>SPACE</p>
+      </div>
+      <div class="keyboard-command">
+        <h3>Throw Bottle:</h3>
+        <p>D</p>
+      </div>
+    </section>
   </body>
 </html>
