@@ -87,23 +87,39 @@ START-SCREEN KEYBOARD INSTRUCTION
   padding: 20px;
   filter: drop-shadow(2px 4px 6px black);
 }
+
+.arrange-keyboard-commands-content {
+  position: relative;
+  bottom: 15px;
+}
+
 .keyboard-instructions-popUp-headline {
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
   align-items: center;
+  margin-bottom: 10px;
 }
-.keyboard-instructions-popUp-headline img {
+
+#Close_Keyboard_Commands {
+  position: relative;
   cursor: pointer;
+  left: 260px;
+  top: -14px;
+  border: 2px solid red;
+  border-radius: 20px;
 }
+
 .keyboard-command-div {
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   justify-content: space-around;
   flex-direction: column;
 }
+
 .keyboard-command-div p {
   font-size: 20px;
 }
+
 .keyboard-img-div {
   display: flex;
   align-items: center;
@@ -113,4 +129,16 @@ START-SCREEN KEYBOARD INSTRUCTION
 .arrange-keyboard-instruction-section {
   display: flex;
   justify-content: center;
+}
+
+.pop-up-backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 2;
 }
