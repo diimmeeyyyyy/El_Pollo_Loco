@@ -86,3 +86,35 @@ document.addEventListener("keyup", (event) => {
     keyboard.D = false;
   }
 });
+
+function showKeyboardCommands() {
+  /* document.body.classList.add("pop-up-backdrop"); */
+
+  let popUp = document.createElement("div");
+  popUp.classList.add("keyboard-instructions");
+  popUp.innerHTML = /*html*/ `
+  <div class="keyboard-instructions-popUp-headline">
+    <h2>Keyboard Instructions:</h2>
+    <img src="./img/closePopUp.png">
+  </div>
+
+<section class="arrange-keyboard-instruction-section">
+  <div class="keyboard-command-div">
+    <p>Move Left</p>
+    <p>Move Right</p>
+    <p>Jump</p>
+    <p>Throw Bottle</p>
+  </div>
+
+  <div class="keyboard-img-div">
+    <img src="./img/moveLeft.png" />
+    <img src="./img/moveRight.png" />
+    <img src="./img/jump.png" />
+    <img src="./img/throwBottle.png" />
+  </div>
+</section>
+
+  `;
+
+  document.body.appendChild(popUp);
+}
