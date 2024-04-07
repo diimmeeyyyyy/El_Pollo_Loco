@@ -8,6 +8,16 @@ body {
   background-position: center;
 }
 
+p {
+  margin-block-start: 0;
+  margin-block-end: 0;
+}
+
+h2 {
+  margin-block-start: 0;
+  margin-block-end: 0;
+}
+
 canvas {
   background-image: url("img/9_intro_outro_screens/start/startscreen_1.png");
   background-size: cover;
@@ -16,34 +26,46 @@ canvas {
 }
 
 .start-screen {
-  position: relative;
+  /* position: relative; */
+  display: flex;
 }
 
-h2 {
-  margin-block-start: 0;
-  margin-block-end: 0;
+#Start_Game_Button {
   position: absolute;
-  bottom: 0%;
+  top: 10%;
   left: 50%;
   transform: translate(-50%, -50%);
-  background-color: #2bee2b;
+  background-color: rgb(128, 154, 71);
+  color: whitesmoke;
   padding: 10px;
   border-radius: 10px;
   font-size: 30px;
   cursor: pointer;
 }
-
-p {
-  margin-block-start: 0;
-  margin-block-end: 0;
+#Start_Game_Button:hover {
+  background-color: rgb(67, 95, 73);
 }
 
-.keyboard-instructions {
+.start-screen-footer {
+  background-color: rgb(152, 68, 10);
+  width: 672px;
   display: flex;
-  gap: 70px;
+  justify-content: space-between;
+  padding-inline: 24px;
+  padding-block: 12px;
+  border-bottom-left-radius: 20px;
+  border-bottom-right-radius: 20px;
 }
-
-.keyboard-command {
+.start-screen-footer img {
+  cursor: pointer;
+  width: 32px;
+  height: 32px;
+}
+.start-screen-footer img:hover {
+  filter: invert(90%) sepia(96%) saturate(6682%) hue-rotate(310deg)
+    brightness(97%) contrast(99%);
+}
+.start-screen-footer-left-div {
   display: flex;
-  flex-direction: column;
+  gap: 20px;
 }

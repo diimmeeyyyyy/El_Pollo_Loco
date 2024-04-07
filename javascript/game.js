@@ -2,9 +2,30 @@ let canvas;
 let world;
 let keyboard = new Keyboard();
 
-/* function init() {
- 
-} */
+function showFullscreen() {
+  let fullscreen = document.getElementById("Start_Screen");
+  enterFullscreen(fullscreen);
+}
+
+function enterFullscreen(element) {
+  if (element.requestFullscreen) {
+    element.requestFullscreen();
+  } else if (element.msRequestFullscreen) {
+    // for IE11 (remove June 15, 2022)
+    element.msRequestFullscreen();
+  } else if (element.webkitRequestFullscreen) {
+    // iOS Safari
+    element.webkitRequestFullscreen();
+  }
+}
+
+function exitFullscreen() {
+  if (document.exitFullscreen) {
+    document.exitFullscreen();
+  } else if (document.webkitExitFullscreen) {
+    document.webkitExitFullscreen();
+  }
+}
 
 function startGame() {
   document.getElementById("Start_Game_Button").style.display = "none";
