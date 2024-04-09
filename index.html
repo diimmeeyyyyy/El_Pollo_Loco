@@ -24,7 +24,8 @@
     <script src="javascript/game.js"></script>
   </head>
   <body>
-    <h1 id="Headline">El pollo loco</h1>
+    <main id="Fullscreen">
+      <h1 id="Headline">El Pollo Loco</h1>
       <div id="Start_Screen" class="start-screen">
         <canvas id="Canvas" width="720" height="480"></canvas>
         <h2 id="Start_Game_Button" onclick="startGame()">Lets Play</h2>
@@ -35,11 +36,27 @@
       <section id="Canvas_Footer" class="start-screen-footer">
         <div class="start-screen-footer-left-div">
           <img src="./img/book.png" onclick="showKeyboardCommands()" />
-          <img src="./img/info.png" onclick="showPolicy()" />
+          <img src="./img/info.png" id="Policy_Btn" onclick="showPolicy()" />
         </div>
+          <div
+            id="Mobile_Movement_Left"
+            class="mobile-movement mobile-movement-left"
+          >
+            <img id="Walk_Left_Button" src="./img/mobileWalkLeft.png" />
+            <img id="Walk_Right_Button" src="./img/mobileWalkRight.png" />
+          </div>
+          <div
+            id="Mobile_Movement_Right"
+            class="mobile-movement mobile-movement-right"
+          >
+            <img src="./img/mobileJump.png" />
+            <img src="./img/mobileThrowBottle.png" />
+          </div>
+        
         <div>
           <img src="./img/fullscreen.png" />
         </div>
       </section>
+    </main>
   </body>
 </html>
