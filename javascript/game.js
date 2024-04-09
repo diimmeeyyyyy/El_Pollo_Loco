@@ -30,6 +30,7 @@ function exitFullscreen() {
 function startGame() {
   document.getElementById("Start_Game_Button").style.display = "none";
   canvas = document.getElementById("Canvas");
+  initLevel();
   world = new World(canvas, keyboard);
 }
 

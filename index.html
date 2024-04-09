@@ -24,22 +24,22 @@
     <script src="javascript/game.js"></script>
   </head>
   <body>
-    <h1>El pollo loco</h1>
-    <div id="Start_Screen" class="start-screen">
-      <canvas id="Canvas" width="720" height="480"></canvas>
-      <h2 id="Start_Game_Button" onclick="startGame()">Lets Play</h2>
-      <!-- IMPRESSUM -->
-      <section id="Policy"></section>
-      <!--------------->
-    </div>
-    <section class="start-screen-footer">
-      <div class="start-screen-footer-left-div">
-        <img src="./img/book.png" onclick="showKeyboardCommands()" />
-        <img src="./img/info.png" onclick="showPolicy()" />
+    <h1 id="Headline">El pollo loco</h1>
+      <div id="Start_Screen" class="start-screen">
+        <canvas id="Canvas" width="720" height="480"></canvas>
+        <h2 id="Start_Game_Button" onclick="startGame()">Lets Play</h2>
+        <!-- IMPRESSUM -->
+        <section id="Policy"></section>
+        <!--------------->
       </div>
-      <div>
-        <img src="./img/fullscreen.png" />
-      </div>
-    </section>
+      <section id="Canvas_Footer" class="start-screen-footer">
+        <div class="start-screen-footer-left-div">
+          <img src="./img/book.png" onclick="showKeyboardCommands()" />
+          <img src="./img/info.png" onclick="showPolicy()" />
+        </div>
+        <div>
+          <img src="./img/fullscreen.png" />
+        </div>
+      </section>
   </body>
 </html>
