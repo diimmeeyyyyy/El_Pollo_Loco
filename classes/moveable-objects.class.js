@@ -10,7 +10,7 @@ class MoveableObject extends DrawableObject {
   collectBottle_sound = new Audio("audio/collectBottle.mp3");
   collectCoin_sound = new Audio("audio/collectCoin.mp3");
   endbossEnergy = 100;
-
+ /*  intervalIDs = []; */
 
   offset = {
     top: 0,
@@ -18,6 +18,11 @@ class MoveableObject extends DrawableObject {
     right: 0,
     left: 0,
   };
+
+  /* setStoppableInterval(fn, time) {
+    let id = setInterval(fn, time);
+    this.intervalIDs.push(id);
+  } */
 
   isColliding(mo) {
     return (
@@ -76,9 +81,8 @@ class MoveableObject extends DrawableObject {
     return energy == 0;
   }
 
-  showGameOverScreen(){
-    if(this.endbossEnergy === 0){
-      
+  showGameOverScreen() {
+    if (this.endbossEnergy === 0) {
     }
   }
 

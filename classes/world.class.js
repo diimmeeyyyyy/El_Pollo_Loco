@@ -10,6 +10,7 @@ class World {
   statusBar_bottle = new StatusBar(30, 100, "bottle", 0);
   statusBar_endboss = new StatusBar(500, 0, "endboss", 100);
   throwableObjects = [];
+  /* gameOverScreen = "img/9_intro_outro_screens/game_over/game over!.png"; */
 
   constructor(canvas, keyboard) {
     this.ctx = canvas.getContext("2d");
@@ -20,18 +21,28 @@ class World {
     this.run();
   }
 
+  gameInterval;
+  collisionInterval;
   run() {
-    setInterval(() => {
+    this.gameInterval = setInterval(() => {
       this.checkBottlesOnGround();
       this.checkCoins();
       this.CheckCharacterJump();
+      this.checkCharacterLife();
     }, 1000 / 60);
 
-    setInterval(() => {
+    this.collisionInterval = setInterval(() => {
       this.checkCollisions();
       this.checkThrowableObjects();
       this.checkBottleCollision();
     }, 200);
+  }
+
+  checkCharacterLife() {
+    if (this.gameCharacter.isAlive == false) {
+      this.stopGame();
+      this.showGameOverScreen();
+    }
   }
 
   checkBottleCollision() {
@@ -85,7 +96,6 @@ class World {
             }, 2000);
           }
         }
-
         /* return false; */
         //add animation of dead chicken
       }
@@ -145,6 +155,32 @@ class World {
     }
   }
 
+  showGameOverScreen() {
+    let canvas = document.getElementById("Canvas");
+    let ctx = canvas.getContext("2d");
+
+    let img = new Image();
+    img.onload = function () {
+      ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+      console.log("BILD WAS LOADED");
+    };
+    img.src = "img/9_intro_outro_screens/game_over/game over!.png";
+  }
+
+  stopGame() {
+    clearInterval(this.gameInterval);
+    clearInterval(this.collisionInterval);
+
+    this.level.enemies.forEach((enemy) => {
+      clearInterval(enemy.chickenInterval1);
+      clearInterval(enemy.chickenInterval2);
+      clearInterval(enemy.endbossInterval);
+    });
+
+    clearInterval(this.gameCharacter.characterInterval1);
+    clearInterval(this.gameCharacter.characterInterval2);
+  }
+
   setWorld() {
     this.gameCharacter.world = this;
   }
@@ -193,15 +229,14 @@ class World {
     //Chicken
     this.addObjectsToGame(this.level.enemies);
 
-    /*  //endboss
-    this.addObjectsToGame(this.level.endboss); */
-
     this.ctx.translate(-this.camera_x, 0);
 
     // draw() wird immer wieder aufgerufen
     self = this;
     requestAnimationFrame(function () {
-      self.draw();
+      if (self.gameCharacter.isAlive) {
+        self.draw();
+      }
     });
   }
 

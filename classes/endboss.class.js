@@ -43,9 +43,9 @@ class Endboss extends MoveableObject {
     this.x = 2500;
     this.animate();
   }
-
+  endbossInterval;
   animate() {
-    setInterval(() => {
+    this.endbossInterval = setInterval(() => {
       if (this.isHurt()) {
         this.endboss_damage_sound.play();
         this.playAnimation(this.IMAGES_HURT);

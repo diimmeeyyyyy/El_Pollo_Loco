@@ -36,6 +36,10 @@ function startGame() {
   keyboard.bindButtonPressEvents();
 }
 
+/* function showGameOverScreen(){
+  let canvas = document.getElementById("Canvas");
+} */
+
 function addMobileButtons() {
   document.getElementById("Mobile_Movement_Left").style.display = "flex";
   document.getElementById("Mobile_Movement_Right").style.display = "flex";

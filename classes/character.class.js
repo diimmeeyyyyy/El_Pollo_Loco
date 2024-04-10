@@ -71,6 +71,7 @@ class Character extends MoveableObject {
   damage_sound = new Audio("audio/damage.mp3");
   jump_sound = new Audio("audio/jump.mp3");
   deadAnimationPlayed = false;
+  isAlive = true;
 
   offset = {
     top: 120,
@@ -91,8 +92,10 @@ class Character extends MoveableObject {
     this.animate();
   }
   idleTimer = 0;
+  characterInterval1;
+  characterInterval2;
   animate() {
-    setInterval(() => {
+    this.characterInterval1 = setInterval(() => {
       this.walking_sound.pause();
       if (this.world.keyboard.RIGHT && this.x < this.world.level.levelEndX) {
         this.moveRight();
@@ -134,10 +137,11 @@ class Character extends MoveableObject {
       this.world.camera_x = -this.x + 100;
     }, 1000 / 60);
 
-    setInterval(() => {
+    this.characterInterval2 = setInterval(() => {
       if (this.isDead(this.energy)) {
         //dead animation
         this.playDeathAnimation();
+        this.dies();
       } else if (this.isAboveGround()) {
         //jump animation
         this.playAnimation(this.IMAGES_JUMPING);
@@ -164,6 +168,10 @@ class Character extends MoveableObject {
       this.playAnimation(this.IMAGES_DEAD);
       this.deadAnimationPlayed = true;
     }
+  }
+
+  dies() {
+    this.isAlive = false;
   }
 
   jump() {
