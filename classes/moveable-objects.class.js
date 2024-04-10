@@ -10,7 +10,7 @@ class MoveableObject extends DrawableObject {
   collectBottle_sound = new Audio("audio/collectBottle.mp3");
   collectCoin_sound = new Audio("audio/collectCoin.mp3");
   endbossEnergy = 100;
-  enemyEnergy = 0;
+
 
   offset = {
     top: 0,

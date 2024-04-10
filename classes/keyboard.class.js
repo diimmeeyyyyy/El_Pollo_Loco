@@ -8,9 +8,9 @@ class Keyboard {
 
   constructor() {
     this.bindKeyPressEvents();
-    /* this.bindButtonPressEvents(); */
+   /*  this.bindButtonPressEvents(); */
   }
-  
+
   bindKeyPressEvents() {
     document.addEventListener("keydown", (event) => {
       /* console.log(event.keyCode); */
@@ -65,35 +65,37 @@ class Keyboard {
         keyboard.D = false;
       }
     });
-  } 
+  }
 
- /*  bindButtonPressEvents() {
+  bindButtonPressEvents() {
+    //WALK LEFT
     document
       .getElementById("Walk_Left_Button")
       .addEventListener("touchstart", (e) => {
         e.preventDefault();
-        this.LEFT = true;
+        keyboard.LEFT = true;
       });
-
+  
     document
       .getElementById("Walk_Left_Button")
       .addEventListener("touchend", (e) => {
         e.preventDefault();
-        this.LEFT = false;
+        keyboard.LEFT = false;
       });
-
+  
+    //WALK RIGHT
     document
       .getElementById("Walk_Right_Button")
       .addEventListener("touchstart", (e) => {
         e.preventDefault();
-        this.RIGHT = true;
+        keyboard.RIGHT = true;
       });
-
+  
     document
       .getElementById("Walk_Right_Button")
       .addEventListener("touchend", (e) => {
         e.preventDefault();
-        this.RIGHT = false;
+        keyboard.RIGHT = false;
       });
-  } */
+  }
 }

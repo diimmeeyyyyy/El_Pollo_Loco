@@ -33,6 +33,7 @@ function startGame() {
   canvas = document.getElementById("Canvas");
   initLevel();
   world = new World(canvas, keyboard);
+  keyboard.bindButtonPressEvents();
 }
 
 function addMobileButtons() {

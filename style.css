@@ -79,7 +79,8 @@ canvas {
   cursor: pointer;
 }
 #Start_Game_Button:hover {
-  background-color: rgb(67, 95, 73);
+  background-color: whitesmoke;
+  color: rgb(67, 95, 73);
 }
 
 /* =============
@@ -230,7 +231,8 @@ START-SCREEN POLICY
 /* SMARTPHONES */
 @media only screen and (max-width: 720px) {
   #Fullscreen {
-    width: 100%;
+    width: 100vw;
+    height: 100vh;
   }
 
   #Headline {
@@ -242,7 +244,7 @@ START-SCREEN POLICY
   }
 
   canvas {
-    width: 100%;
+    width: 100vw;
   }
 
   .start-screen-footer {

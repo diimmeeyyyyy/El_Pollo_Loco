@@ -54,7 +54,8 @@ class World {
     this.level.enemies.forEach((enemy) => {
       if (
         this.gameCharacter.isColliding(enemy) &&
-        !this.gameCharacter.isAboveGround()
+        !this.gameCharacter.isAboveGround() &&
+        enemy.enemyIsdead === false
       ) {
         this.gameCharacter.hit();
         this.statusBar_health.setPercentage(
@@ -70,10 +71,22 @@ class World {
       if (
         this.gameCharacter.isColliding(enemy) &&
         this.gameCharacter.isAboveGround() &&
-        this.gameCharacter.speedY < 0
+        this.gameCharacter.speedY < 0 &&
+        enemy.enemyIsdead === false
       ) {
         console.log("Character is jumping on enemy");
-        return false;
+        if (enemy instanceof Chicken) {
+          enemy.enemyIsdead = true;
+          enemy.img.src = enemy.IMAGES_DEAD;
+          enemy.jump_on_chicken_sound.play();
+          if (enemy.enemyIsdead) {
+            setTimeout(() => {
+              enemy.img = null;
+            }, 2000);
+          }
+        }
+
+        /* return false; */
         //add animation of dead chicken
       }
       return true;
