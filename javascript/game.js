@@ -34,6 +34,7 @@ function startGame() {
   initLevel();
   world = new World(canvas, keyboard);
   keyboard.bindButtonPressEvents();
+  document.querySelector(".game-over-screen").classList.add("d-none");
 }
 
 /* function showGameOverScreen(){

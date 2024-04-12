@@ -228,6 +228,27 @@ START-SCREEN POLICY
   right: 15px;
 }
 
+/* =============
+GAME-OVER-SCREEN
+================*/
+.d-none {
+  display: none;
+}
+
+.game-over-buttons {
+  cursor: pointer;
+  filter: drop-shadow(2px 4px 6px black);
+}
+
+.button-container {
+  display: flex;
+  gap: 25px;
+  position: absolute;
+  top: 100px;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
 /* SMARTPHONES */
 @media only screen and (max-width: 720px) {
   #Fullscreen {

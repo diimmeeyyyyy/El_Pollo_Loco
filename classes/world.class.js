@@ -42,6 +42,7 @@ class World {
     if (this.gameCharacter.isAlive == false) {
       this.stopGame();
       this.showGameOverScreen();
+      this.removeMobileArrows();
     }
   }
 
@@ -156,7 +157,7 @@ class World {
   }
 
   showGameOverScreen() {
-    let canvas = document.getElementById("Canvas");
+     let canvas = document.getElementById("Canvas");
     let ctx = canvas.getContext("2d");
 
     let img = new Image();
@@ -165,6 +166,8 @@ class World {
       console.log("BILD WAS LOADED");
     };
     img.src = "img/9_intro_outro_screens/game_over/game over!.png";
+    let gameOverScreen = document.querySelector(".game-over-screen");
+    gameOverScreen.classList.remove("d-none");
   }
 
   stopGame() {
@@ -179,6 +182,13 @@ class World {
 
     clearInterval(this.gameCharacter.characterInterval1);
     clearInterval(this.gameCharacter.characterInterval2);
+  }
+
+  removeMobileArrows() {
+    let allButtons = document.querySelectorAll(".mobile-movement");
+    allButtons.forEach((button) => {
+      button.style.display = "none";
+    });
   }
 
   setWorld() {

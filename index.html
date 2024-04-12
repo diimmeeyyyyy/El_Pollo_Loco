@@ -32,6 +32,22 @@
         <!-- IMPRESSUM -->
         <section id="Policy"></section>
         <!--------------->
+        <!-- GAME-OVER-SCREEN -->
+        <section class="game-over-screen d-none">
+          <div class="button-container">
+            <img
+              class="game-over-buttons"
+              src="./img/backToStartScreen.png"
+              onclick="location.reload()"
+            />
+            <img
+              class="game-over-buttons"
+              src="./img/restart.png"
+              onclick="startGame()"
+            />
+          </div>
+        </section>
+        <!---------------------->
       </div>
       <section id="Canvas_Footer" class="start-screen-footer">
         <div class="start-screen-footer-left-div">
@@ -49,7 +65,7 @@
           id="Mobile_Movement_Right"
           class="mobile-movement mobile-movement-right"
         >
-          <img src="./img/mobileJump.png" />
+          <img id="Jump_Button" src="./img/mobileJump.png" />
           <img src="./img/mobileThrowBottle.png" />
         </div>
 
