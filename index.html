@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="style.css" />
     <script src="classes/drawable-object.class.js"></script>
     <script src="classes/moveable-objects.class.js"></script>
+    <script src="classes/collision.class.js"></script>
     <script src="classes/status-bar.class.js"></script>
     <script src="classes/character.class.js"></script>
     <script src="classes/chicken.class.js"></script>
@@ -28,7 +29,16 @@
       <h1 id="Headline">El Pollo Loco</h1>
       <div id="Start_Screen" class="start-screen">
         <canvas id="Canvas" width="720" height="480"></canvas>
+        <!-- START-GAME-BUTTON -->
         <h2 id="Start_Game_Button" onclick="startGame()">Lets Play</h2>
+        <!----------------------->
+        <!-- OPTIONS -->
+        <div id="Keyboard_Command_Div">
+          <img src="./img/book.png" onclick="showKeyboardCommands()" />
+          <img src="./img/info.png" id="Policy_Btn" onclick="showPolicy()" />
+          <img src="./img/fullscreen.png" />
+        </div>
+        <!------------->
         <!-- IMPRESSUM -->
         <section id="Policy"></section>
         <!--------------->
@@ -48,31 +58,29 @@
           </div>
         </section>
         <!---------------------->
-      </div>
-      <section id="Canvas_Footer" class="start-screen-footer">
-        <div class="start-screen-footer-left-div">
-          <img src="./img/book.png" onclick="showKeyboardCommands()" />
-          <img src="./img/info.png" id="Policy_Btn" onclick="showPolicy()" />
-        </div>
-        <div
-          id="Mobile_Movement_Left"
-          class="mobile-movement mobile-movement-left"
-        >
-          <img id="Walk_Left_Button" src="./img/mobileWalkLeft.png" />
-          <img id="Walk_Right_Button" src="./img/mobileWalkRight.png" />
-        </div>
-        <div
-          id="Mobile_Movement_Right"
-          class="mobile-movement mobile-movement-right"
-        >
-          <img id="Jump_Button" src="./img/mobileJump.png" />
-          <img src="./img/mobileThrowBottle.png" />
-        </div>
+        <!-- WIN-SCREEN -->
+        <section>
 
-        <div>
-          <img src="./img/fullscreen.png" />
-        </div>
-      </section>
+        </section>
+        <!---------------->
+        <!-- MOBILE MOVEMENT -->
+        <section id="Mobile_Movement">
+          <div
+            id="Mobile_Movement_Left"
+            class="mobile-movement mobile-movement-left"
+          >
+            <img id="Walk_Left_Button" src="./img/mobileWalkLeft.png" />
+            <img id="Walk_Right_Button" src="./img/mobileWalkRight.png" />
+          </div>
+          <div
+            id="Mobile_Movement_Right"
+            class="mobile-movement mobile-movement-right"
+          >
+            <img id="Jump_Button" src="./img/mobileJump.png" />
+            <img src="./img/mobileThrowBottle.png" />
+          </div>
+        </section>
+      </div>
     </main>
   </body>
 </html>

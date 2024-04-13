@@ -4,6 +4,8 @@ class Endboss extends MoveableObject {
   y = 70;
   isDeadAnimationPlayed = false;
   endboss_damage_sound = new Audio("audio/endboss-damage.mp3");
+  endboss_eliminated_sound = new Audio("audio/endboss_eliminated.mp3");
+  endbossIsAlive = true;
 
   IMAGES_WALKING = [
     "img/4_enemie_boss_chicken/2_alert/G5.png",
@@ -43,6 +45,7 @@ class Endboss extends MoveableObject {
     this.x = 2500;
     this.animate();
   }
+
   endbossInterval;
   animate() {
     this.endbossInterval = setInterval(() => {
@@ -50,6 +53,7 @@ class Endboss extends MoveableObject {
         this.endboss_damage_sound.play();
         this.playAnimation(this.IMAGES_HURT);
       } else if (this.isDead(this.endbossEnergy)) {
+        /* clearInterval(this.endbossInterval); */
         this.playDeathAnimation();
       } else {
         this.playAnimation(this.IMAGES_WALKING);
@@ -61,6 +65,9 @@ class Endboss extends MoveableObject {
     if (!this.isDeadAnimationPlayed) {
       this.isDeadAnimationPlayed = true;
       this.playAnimation(this.IMAGES_DEAD);
+      this.endboss_eliminated_sound.play();
+      this.endbossIsAlive = false;
+      console.log(this.endbossIsAlive);
     }
   }
 }

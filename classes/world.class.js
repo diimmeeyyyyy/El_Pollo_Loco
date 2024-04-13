@@ -1,6 +1,7 @@
 class World {
   gameCharacter = new Character();
   level = level1;
+  collision = new Collision();
   canvas;
   ctx;
   keyboard;
@@ -10,7 +11,6 @@ class World {
   statusBar_bottle = new StatusBar(30, 100, "bottle", 0);
   statusBar_endboss = new StatusBar(500, 0, "endboss", 100);
   throwableObjects = [];
-  /* gameOverScreen = "img/9_intro_outro_screens/game_over/game over!.png"; */
 
   constructor(canvas, keyboard) {
     this.ctx = canvas.getContext("2d");
@@ -18,146 +18,22 @@ class World {
     this.keyboard = keyboard;
     this.draw();
     this.setWorld();
-    this.run();
+    this.checkConstantly();
   }
 
   gameInterval;
   collisionInterval;
-  run() {
+  checkConstantly() {
     this.gameInterval = setInterval(() => {
-      this.checkBottlesOnGround();
-      this.checkCoins();
-      this.CheckCharacterJump();
-      this.checkCharacterLife();
+      this.collision.checkGameInterval();
     }, 1000 / 60);
-
     this.collisionInterval = setInterval(() => {
-      this.checkCollisions();
-      this.checkThrowableObjects();
-      this.checkBottleCollision();
+      this.collision.checkCollisionInterval();
     }, 200);
   }
 
-  checkCharacterLife() {
-    if (this.gameCharacter.isAlive == false) {
-      this.stopGame();
-      this.showGameOverScreen();
-      this.removeMobileArrows();
-    }
-  }
-
-  checkBottleCollision() {
-    this.throwableObjects.forEach((bottle) => {
-      this.level.enemies.forEach((enemy) => {
-        if (bottle.isColliding(enemy)) {
-          if (enemy instanceof Endboss) {
-            enemy.endbossIsCollidingBottle();
-            this.statusBar_endboss.setPercentage(
-              enemy.endbossEnergy,
-              "endboss"
-            );
-          }
-        }
-      });
-    });
-  }
-
-  checkCollisions() {
-    this.level.enemies.forEach((enemy) => {
-      if (
-        this.gameCharacter.isColliding(enemy) &&
-        !this.gameCharacter.isAboveGround() &&
-        enemy.enemyIsdead === false
-      ) {
-        this.gameCharacter.hit();
-        this.statusBar_health.setPercentage(
-          this.gameCharacter.energy,
-          "health"
-        );
-      }
-    });
-  }
-
-  CheckCharacterJump() {
-    this.level.enemies = this.level.enemies.filter((enemy) => {
-      if (
-        this.gameCharacter.isColliding(enemy) &&
-        this.gameCharacter.isAboveGround() &&
-        this.gameCharacter.speedY < 0 &&
-        enemy.enemyIsdead === false
-      ) {
-        console.log("Character is jumping on enemy");
-        if (enemy instanceof Chicken) {
-          enemy.enemyIsdead = true;
-          enemy.img.src = enemy.IMAGES_DEAD;
-          enemy.jump_on_chicken_sound.play();
-          if (enemy.enemyIsdead) {
-            setTimeout(() => {
-              enemy.img = null;
-            }, 2000);
-          }
-        }
-        /* return false; */
-        //add animation of dead chicken
-      }
-      return true;
-    });
-  }
-
-  checkBottlesOnGround() {
-    this.level.salsaBottles = this.level.salsaBottles.filter((bottle) => {
-      if (
-        this.gameCharacter.isColliding(bottle) &&
-        this.gameCharacter.bottlesAmount !== 100
-      ) {
-        this.gameCharacter.isCollecting("bottle");
-        this.statusBar_bottle.setPercentage(
-          this.gameCharacter.bottlesAmount,
-          "bottle"
-        );
-        // if character collides with bottle, i remove it from array
-        return false;
-      }
-      // if character doesnt collide with bottle, i keep it in the game
-      return true;
-    });
-  }
-
-  checkCoins() {
-    this.level.coins = this.level.coins.filter((coin) => {
-      if (
-        this.gameCharacter.isColliding(coin) &&
-        this.gameCharacter.coinAmount !== 100
-      ) {
-        this.gameCharacter.isCollecting("coin");
-        this.statusBar_coins.setPercentage(
-          this.gameCharacter.coinAmount,
-          "coins"
-        );
-        return false;
-      }
-      return true;
-    });
-  }
-
-  checkThrowableObjects() {
-    if (this.keyboard.D && this.gameCharacter.bottlesAmount > 0) {
-      this.gameCharacter.idleTimer = 0;
-      let bottle = new ThrowableObject(
-        this.gameCharacter.x + 100,
-        this.gameCharacter.y
-      );
-      this.throwableObjects.push(bottle);
-      this.gameCharacter.bottlesAmount -= 20;
-      this.statusBar_bottle.setPercentage(
-        this.gameCharacter.bottlesAmount,
-        "bottle"
-      );
-    }
-  }
-
   showGameOverScreen() {
-     let canvas = document.getElementById("Canvas");
+    let canvas = document.getElementById("Canvas");
     let ctx = canvas.getContext("2d");
 
     let img = new Image();
@@ -193,6 +69,7 @@ class World {
 
   setWorld() {
     this.gameCharacter.world = this;
+    this.collision.world = this;
   }
 
   draw() {

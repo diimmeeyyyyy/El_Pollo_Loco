@@ -43,7 +43,7 @@ h2 {
 }
 
 #Fullscreen {
-  position: relative;
+  /* position: relative; */
   display: flex;
   align-items: center;
   justify-content: center;
@@ -55,19 +55,18 @@ canvas {
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center;
-  border-top-left-radius: 20px;
-  border-top-right-radius: 20px;
+  border-radius: 20px;
   display: block;
 }
 
 .start-screen {
-  /* position: relative; */
+  position: relative;
   display: flex;
 }
 
 #Start_Game_Button {
   position: absolute;
-  top: 20%;
+  top: 15%;
   left: 50%;
   transform: translate(-50%, -50%);
   background-color: rgb(128, 154, 71);
@@ -83,47 +82,47 @@ canvas {
   color: rgb(67, 95, 73);
 }
 
-/* =============
-FOOTER
-=================*/
-.start-screen-footer {
-  position: relative;
-  background-color: rgb(152, 68, 10);
-  width: 672px;
+#Keyboard_Command_Div {
+  position: absolute;
+  top: 15px;
+  left: 20px;
   display: flex;
-  justify-content: space-between;
-  padding-inline: 24px;
-  padding-block: 12px;
-  border-bottom-left-radius: 20px;
-  border-bottom-right-radius: 20px;
+  gap: 25px;
 }
-.start-screen-footer img {
-  cursor: pointer;
+
+.centerContainer {
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+#Keyboard_Command_Div img {
   width: 32px;
   height: 32px;
+  cursor: pointer;
 }
-.start-screen-footer img:hover {
+
+#Keyboard_Command_Div img:hover {
   filter: invert(90%) sepia(96%) saturate(6682%) hue-rotate(310deg)
     brightness(97%) contrast(99%);
 }
-.start-screen-footer-left-div {
-  display: flex;
-  gap: 20px;
-}
 
+
+/* ============
+MOBILE-MOVEMENT
+=============*/
 .mobile-movement {
   display: none;
   gap: 45px;
-  bottom: 30px;
+  bottom: 0px;
   position: absolute;
 }
 
 .mobile-movement-left {
-  left: 150px;
+  left: 65px;
 }
 
 .mobile-movement-right {
-  right: 150px;
+  right: 65px;
 }
 .mobile-movement img {
   width: 50px;

@@ -29,6 +29,7 @@ function exitFullscreen() {
 
 function startGame() {
   removeButtons();
+  centerKeyboardCommandDiv();
   addMobileButtons();
   canvas = document.getElementById("Canvas");
   initLevel();
@@ -36,10 +37,6 @@ function startGame() {
   keyboard.bindButtonPressEvents();
   document.querySelector(".game-over-screen").classList.add("d-none");
 }
-
-/* function showGameOverScreen(){
-  let canvas = document.getElementById("Canvas");
-} */
 
 function addMobileButtons() {
   document.getElementById("Mobile_Movement_Left").style.display = "flex";
@@ -49,6 +46,12 @@ function addMobileButtons() {
 function removeButtons() {
   document.getElementById("Start_Game_Button").style.display = "none";
   document.getElementById("Policy_Btn").style.display = "none";
+}
+
+function centerKeyboardCommandDiv() {
+  document.getElementById("Keyboard_Command_Div").style.left = "50%";
+  document.getElementById("Keyboard_Command_Div").style.transform =
+    "translateX(-50%)";
 }
 
 function showKeyboardCommands() {
