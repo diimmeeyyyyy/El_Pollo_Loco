@@ -32,41 +32,6 @@ class World {
     }, 200);
   }
 
-  showGameOverScreen() {
-    let canvas = document.getElementById("Canvas");
-    let ctx = canvas.getContext("2d");
-
-    let img = new Image();
-    img.onload = function () {
-      ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
-    };
-    img.src = "img/9_intro_outro_screens/game_over/game over!.png";
-    let gameOverScreen = document.querySelector(".game-over-screen");
-    gameOverScreen.classList.remove("d-none");
-  }
-
-  stopGame() {
-    clearInterval(this.gameInterval);
-    clearInterval(this.collisionInterval);
-
-    this.level.enemies.forEach((enemy) => {
-      clearInterval(enemy.chickenInterval1);
-      clearInterval(enemy.chickenInterval2);
-      clearInterval(enemy.endbossDamageInterval);
-      clearInterval(enemy.endbossWaking);
-    });
-
-    clearInterval(this.gameCharacter.characterInterval1);
-    clearInterval(this.gameCharacter.characterInterval2);
-  }
-
-  removeMobileArrows() {
-    let allButtons = document.querySelectorAll(".mobile-movement");
-    allButtons.forEach((button) => {
-      button.style.display = "none";
-    });
-  }
-
   setWorld() {
     this.gameCharacter.world = this;
     this.collision.world = this;
