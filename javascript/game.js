@@ -2,9 +2,17 @@ let canvas;
 let world;
 let keyboard = new Keyboard();
 
+let fullscreenIsActivated = false;
+
 function showFullscreen() {
   let fullscreen = document.getElementById("Start_Screen");
-  enterFullscreen(fullscreen);
+  if (!fullscreenIsActivated) {
+    enterFullscreen(fullscreen);
+    fullscreenIsActivated = true;
+  } else {
+    exitFullscreen();
+    fullscreenIsActivated = false;
+  }
 }
 
 function enterFullscreen(element) {
@@ -28,7 +36,7 @@ function exitFullscreen() {
 }
 
 function startGame() {
-  removeButtons();
+  removeStartGameButton();
   centerKeyboardCommandDiv();
   addMobileButtons();
   canvas = document.getElementById("Canvas");
@@ -39,11 +47,13 @@ function startGame() {
 }
 
 function addMobileButtons() {
-  document.getElementById("Mobile_Movement_Left").style.display = "flex";
-  document.getElementById("Mobile_Movement_Right").style.display = "flex";
+  if (window.innerWidth <= 800) {
+    document.getElementById("Mobile_Movement_Left").style.display = "flex";
+    document.getElementById("Mobile_Movement_Right").style.display = "flex";
+  }
 }
 
-function removeButtons() {
+function removeStartGameButton() {
   document.getElementById("Start_Game_Button").style.display = "none";
   document.getElementById("Policy_Btn").style.display = "none";
 }

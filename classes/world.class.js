@@ -39,7 +39,6 @@ class World {
     let img = new Image();
     img.onload = function () {
       ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
-      console.log("BILD WAS LOADED");
     };
     img.src = "img/9_intro_outro_screens/game_over/game over!.png";
     let gameOverScreen = document.querySelector(".game-over-screen");
@@ -53,7 +52,8 @@ class World {
     this.level.enemies.forEach((enemy) => {
       clearInterval(enemy.chickenInterval1);
       clearInterval(enemy.chickenInterval2);
-      clearInterval(enemy.endbossInterval);
+      clearInterval(enemy.endbossDamageInterval);
+      clearInterval(enemy.endbossWaking);
     });
 
     clearInterval(this.gameCharacter.characterInterval1);

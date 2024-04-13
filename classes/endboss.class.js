@@ -45,20 +45,23 @@ class Endboss extends MoveableObject {
     this.x = 2500;
     this.animate();
   }
-
-  endbossInterval;
+  endbossWaking;
+  endbossDamageInterval;
   animate() {
-    this.endbossInterval = setInterval(() => {
+    this.endbossDamageInterval = setInterval(() => {
       if (this.isHurt()) {
         this.endboss_damage_sound.play();
         this.playAnimation(this.IMAGES_HURT);
       } else if (this.isDead(this.endbossEnergy)) {
-        /* clearInterval(this.endbossInterval); */
         this.playDeathAnimation();
-      } else {
+      }
+    }, 200);
+
+    this.endbossWaking = setInterval(() => {
+      if (!this.isHurt() && !this.isDead(this.endbossEnergy)) {
         this.playAnimation(this.IMAGES_WALKING);
       }
-    }, 500);
+    }, 400);
   }
 
   playDeathAnimation() {
@@ -67,7 +70,6 @@ class Endboss extends MoveableObject {
       this.playAnimation(this.IMAGES_DEAD);
       this.endboss_eliminated_sound.play();
       this.endbossIsAlive = false;
-      console.log(this.endbossIsAlive);
     }
   }
 }
