@@ -86,8 +86,9 @@ class Collision {
       this.world.level.enemies[this.world.level.enemies.length - 1]
         .endbossIsAlive === false
     ) {
-      this.world.stopGame();
-      this.world.removeMobileArrows();
+      this.stopGame();
+      this.removeMobileArrows();
+      this.showWinScreen();
     }
   }
 
@@ -99,12 +100,16 @@ class Collision {
 
   checkCollisions() {
     this.world.level.enemies.forEach((enemy) => {
-      if (
-        this.world.gameCharacter.isColliding(enemy) &&
-        !this.world.gameCharacter.isAboveGround() &&
-        enemy.enemyIsdead === false
-      ) {
-        this.world.gameCharacter.hit();
+      if (this.world.gameCharacter.isColliding(enemy)) {
+        if (
+          !this.world.gameCharacter.isAboveGround() &&
+          enemy.enemyIsdead === false
+        ) {
+          this.world.gameCharacter.hit();
+        } else if (enemy instanceof Endboss && enemy.endbossIsAlive === true) {
+          this.world.gameCharacter.endbossHit();
+        }
+
         this.world.statusBar_health.setPercentage(
           this.world.gameCharacter.energy,
           "health"
@@ -145,41 +150,38 @@ class Collision {
     });
   }
 
-  /* =========
+  /* ======
 GAME-OVER
-=============*/
-showGameOverScreen() {
-  let canvas = document.getElementById("Canvas");
-  let ctx = canvas.getContext("2d");
+===========*/
+  showGameOverScreen() {
+    let gameOverScreen = document.getElementById("Game_Over_Screen");
+    gameOverScreen.classList.remove("d-none");
+  }
 
-  let img = new Image();
-  img.onload = function () {
-    ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
-  };
-  img.src = "img/9_intro_outro_screens/game_over/game over!.png";
-  let gameOverScreen = document.querySelector(".game-over-screen");
-  gameOverScreen.classList.remove("d-none");
-}
+  stopGame() {
+    clearInterval(this.world.gameInterval);
+    clearInterval(this.world.collisionInterval);
 
-stopGame() {
-  clearInterval(this.world.gameInterval);
-  clearInterval(this.world.collisionInterval);
+    this.world.level.enemies.forEach((enemy) => {
+      clearInterval(enemy.chickenInterval1);
+      clearInterval(enemy.chickenInterval2);
+      clearInterval(enemy.endbossDamageInterval);
+      clearInterval(enemy.endbossWaking);
+    });
 
-  this.world.level.enemies.forEach((enemy) => {
-    clearInterval(enemy.chickenInterval1);
-    clearInterval(enemy.chickenInterval2);
-    clearInterval(enemy.endbossDamageInterval);
-    clearInterval(enemy.endbossWaking);
-  });
+    clearInterval(this.world.gameCharacter.characterInterval1);
+    clearInterval(this.world.gameCharacter.characterInterval2);
+  }
 
-  clearInterval(this.world.gameCharacter.characterInterval1);
-  clearInterval(this.world.gameCharacter.characterInterval2);
-}
+  removeMobileArrows() {
+    let allButtons = document.querySelectorAll(".mobile-movement");
+    allButtons.forEach((button) => {
+      button.style.display = "none";
+    });
+  }
 
-removeMobileArrows() {
-  let allButtons = document.querySelectorAll(".mobile-movement");
-  allButtons.forEach((button) => {
-    button.style.display = "none";
-  });
-}
+  showWinScreen() {
+    let winningScreen = document.getElementById("Win_Screen");
+    winningScreen.classList.remove("d-none");
+  }
 }

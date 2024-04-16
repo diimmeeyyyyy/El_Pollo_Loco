@@ -10,8 +10,7 @@ class MoveableObject extends DrawableObject {
   collectBottle_sound = new Audio("audio/collectBottle.mp3");
   collectCoin_sound = new Audio("audio/collectCoin.mp3");
   endbossEnergy = 100;
-  /* endbossIsAlive = true; */
- /*  intervalIDs = []; */
+  /*  intervalIDs = []; */
 
   offset = {
     top: 0,
@@ -65,6 +64,15 @@ class MoveableObject extends DrawableObject {
 
   hit() {
     this.energy -= 5;
+    if (this.energy < 0) {
+      this.energy = 0;
+    } else {
+      this.lastHit = new Date().getTime(); // thats how i save time in number format
+    }
+  }
+
+  endbossHit() {
+    this.energy -= 10;
     if (this.energy < 0) {
       this.energy = 0;
     } else {

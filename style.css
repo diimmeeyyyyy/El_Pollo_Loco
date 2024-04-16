@@ -106,7 +106,6 @@ canvas {
     brightness(97%) contrast(99%);
 }
 
-
 /* ============
 MOBILE-MOVEMENT
 =============*/
@@ -230,13 +229,18 @@ START-SCREEN POLICY
 /* =============
 GAME-OVER-SCREEN
 ================*/
-.d-none {
-  display: none;
+#Game_Over_Screen {
+  position: absolute;
+  height: 100%;
 }
 
-.game-over-buttons {
-  cursor: pointer;
-  filter: drop-shadow(2px 4px 6px black);
+.game-over-img {
+  height: 100%;
+  width: 100%;
+  border-radius: 20px;
+}
+.d-none {
+  display: none;
 }
 
 .button-container {
@@ -246,6 +250,23 @@ GAME-OVER-SCREEN
   top: 100px;
   left: 50%;
   transform: translate(-50%, -50%);
+}
+
+.button-container img {
+  cursor: pointer;
+  filter: drop-shadow(2px 4px 6px black);
+}
+
+/* ======== 
+WIN - SCREEN
+===========*/
+#Win_Screen {
+  position: absolute;
+  height: 100%;
+}
+.win-img {
+  height: 100%;
+  border-radius: 20px;
 }
 
 /* SMARTPHONES */

@@ -38,15 +38,20 @@ function exitFullscreen() {
 function startGame() {
   removeStartGameButton();
   centerKeyboardCommandDiv();
-  addMobileButtons();
+  mobileButtons();
+  removeEndscreens();
   canvas = document.getElementById("Canvas");
   initLevel();
   world = new World(canvas, keyboard);
   keyboard.bindButtonPressEvents();
-  document.querySelector(".game-over-screen").classList.add("d-none");
 }
 
-function addMobileButtons() {
+function removeEndscreens() {
+  document.getElementById("Game_Over_Screen").classList.add("d-none");
+  document.getElementById("Win_Screen").classList.add("d-none");
+}
+
+function mobileButtons() {
   if (window.innerWidth <= 800) {
     document.getElementById("Mobile_Movement_Left").style.display = "flex";
     document.getElementById("Mobile_Movement_Right").style.display = "flex";

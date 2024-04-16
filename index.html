@@ -12,6 +12,7 @@
     <script src="classes/status-bar.class.js"></script>
     <script src="classes/character.class.js"></script>
     <script src="classes/chicken.class.js"></script>
+    <script src="classes/endscreen.class.js"></script>
     <script src="classes/endboss.class.js"></script>
     <script src="classes/salsa-bottles.class.js"></script>
     <script src="classes/coins.class.js"></script>
@@ -46,7 +47,11 @@
         <section id="Policy"></section>
         <!--------------->
         <!-- GAME-OVER-SCREEN -->
-        <section class="game-over-screen d-none">
+        <section id="Game_Over_Screen" class="d-none">
+          <img
+            src="img/9_intro_outro_screens/game_over/game over!.png"
+            class="game-over-img"
+          />
           <div class="button-container">
             <img
               class="game-over-buttons"
@@ -62,8 +67,15 @@
         </section>
         <!---------------------->
         <!-- WIN-SCREEN -->
-        <section>
-          <!-- SHOW WINNING SCREEN -->
+        <section id="Win_Screen" class="d-none">
+          <img src="img/winningScreen.jpg" class="win-img" />
+          <div class="button-container">
+            <img
+              src="./img/backToStartScreen.png"
+              onclick="location.reload()"
+            />
+            <img src="./img/restart.png" onclick="startGame()" />
+          </div>
         </section>
         <!---------------->
         <!-- MOBILE MOVEMENT -->
