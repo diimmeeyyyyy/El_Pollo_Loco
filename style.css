@@ -106,6 +106,25 @@ canvas {
     brightness(97%) contrast(99%);
 }
 
+.fullscreen-and-sound-div {
+  position: absolute;
+  top: 15px;
+  right: 20px;
+  display: flex;
+  gap: 25px;
+}
+
+.option-img img {
+  width: 32px;
+  height: 32px;
+  cursor: pointer;
+}
+
+.option-img img:hover {
+  filter: invert(90%) sepia(96%) saturate(6682%) hue-rotate(310deg)
+    brightness(97%) contrast(99%);
+}
+
 /* ============
 MOBILE-MOVEMENT
 =============*/
@@ -263,10 +282,23 @@ WIN - SCREEN
 #Win_Screen {
   position: absolute;
   height: 100%;
+  width: 100%;
 }
 .win-img {
   height: 100%;
   border-radius: 20px;
+  width: 100%;
+  background: rgba(0, 0, 0, 0.7);
+}
+
+.win-text {
+  position: absolute;
+  bottom: 40px;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: rgb(255, 183, 0);
+  font-size: 45px;
+  font-family: "zabras", Arial, Helvetica, sans-serif;
 }
 
 /* SMARTPHONES */
