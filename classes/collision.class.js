@@ -55,7 +55,6 @@ class Collision {
         this.world.gameCharacter.speedY < 0 &&
         enemy.enemyIsdead === false
       ) {
-        console.log("Character is jumping on enemy");
         if (enemy instanceof Chicken) {
           enemy.enemyIsdead = true;
           enemy.img.src = enemy.IMAGES_DEAD;
@@ -66,8 +65,6 @@ class Collision {
             }, 2000);
           }
         }
-        /* return false; */
-        //add animation of dead chicken
       }
       return true;
     });
@@ -96,6 +93,7 @@ class Collision {
     this.checkCollisions();
     this.checkThrowableObjects();
     this.checkBottleCollision();
+    /*   this.checkBottleCollisionChicken(); */
   }
 
   checkCollisions() {
@@ -127,6 +125,7 @@ class Collision {
       );
       this.world.throwableObjects.push(bottle);
       this.world.gameCharacter.bottlesAmount -= 20;
+      this.world.gameCharacter.throwBottle_sound.play();
       this.world.statusBar_bottle.setPercentage(
         this.world.gameCharacter.bottlesAmount,
         "bottle"
@@ -144,6 +143,25 @@ class Collision {
               enemy.endbossEnergy,
               "endboss"
             );
+          }
+        }
+      });
+    });
+  }
+
+    checkBottleCollisionChicken() {
+    this.world.throwableObjects.forEach((bottle) => {
+      this.world.level.enemies.forEach((enemy) => {
+        if (bottle.isColliding(enemy)) {
+          if (enemy instanceof Chicken) {
+            enemy.enemyIsdead = true;
+            enemy.img.src = enemy.IMAGES_DEAD;
+            enemy.jump_on_chicken_sound.play();
+            if (enemy.enemyIsdead) {
+              setTimeout(() => {
+                enemy.img = null;
+              }, 2000);
+            }
           }
         }
       });

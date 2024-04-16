@@ -24,13 +24,17 @@ class World {
 
   gameInterval;
   collisionInterval;
+  collisionIntervalChicken;
   checkConstantly() {
     this.gameInterval = setInterval(() => {
       this.collision.checkGameInterval();
     }, 1000 / 60);
     this.collisionInterval = setInterval(() => {
       this.collision.checkCollisionInterval();
-    }, 200);
+    }, 300);
+    this.collisionIntervalChicken = setInterval(() => {
+      this.collision.checkBottleCollisionChicken();
+    }, 100);
   }
 
   setWorld() {

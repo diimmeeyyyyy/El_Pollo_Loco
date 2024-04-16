@@ -185,7 +185,6 @@ class Character extends MoveableObject {
 
   playDeathAnimation() {
     if (!this.deadAnimationPlayed) {
-      // Todesanimation abspielen
       this.playAnimation(this.IMAGES_DEAD);
       this.deadAnimationPlayed = true;
 
@@ -201,11 +200,18 @@ class Character extends MoveableObject {
   }
 
   throwBottle() {
+    if (this.bottlesAmount <= 0) {
+      this.playAnimation(this.IMAGES_IDLE);
+      this.playSound(this.noBottlesToThrow_sound);
+    }
+  }
+
+/*   throwBottle() {
     if (this.bottlesAmount > 0) {
       this.playAnimation(this.IMAGES_IDLE);
       this.playSound(this.throwBottle_sound);
     } else {
       this.playSound(this.noBottlesToThrow_sound);
     }
-  }
+  } */
 }
