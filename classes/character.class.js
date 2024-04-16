@@ -163,10 +163,12 @@ class Character extends MoveableObject {
   }
 
   noKeyPressed() {
-    !this.world.keyboard.SPACE &&
+    return (
+      !this.world.keyboard.SPACE &&
       !this.world.keyboard.RIGHT &&
       !this.world.keyboard.LEFT &&
-      !this.world.keyboard.D;
+      !this.world.keyboard.D
+    );
   }
 
   checkIdleAnimation() {
@@ -174,7 +176,7 @@ class Character extends MoveableObject {
       if (this.idleTimer >= 60 * 5) {
         // bc 60 frames per second * 5 seconds
         this.playAnimation(this.IMAGES_LONG_IDLE);
-      } else if (this.idleTimer >= 60 * 3) {
+      } else if (this.idleTimer >= 60 * 1) {
         // bc 60 frames per second * 3 seconds
         this.playAnimation(this.IMAGES_IDLE);
       }
@@ -198,11 +200,16 @@ class Character extends MoveableObject {
     this.jump_sound.play();
   }
 
+  throws() {
+    this.playAnimation(this.IMAGES_IDLE);
+  }
+
   checkBottleAmount() {
     if (this.bottlesAmount === 0) {
       this.playSound(this.noBottlesToThrow_sound);
-    } /* else {
+    } else {
+      this.throws();
       this.playSound(this.throwBottle_sound);
-    } */
+    }
   }
 }
