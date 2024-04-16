@@ -4,11 +4,10 @@ class MoveableObject extends DrawableObject {
   speedY = 0;
   acceleration = 2; //gravity-acceleration
   lastHit = 0;
-  coinAmount = 0;
   collectBottle_sound = new Audio("audio/collectBottle.mp3");
   collectCoin_sound = new Audio("audio/collectCoin.mp3");
   endbossEnergy = 100;
-  /*  intervalIDs = []; */
+  intervalIDs = [];
 
   offset = {
     top: 0,
@@ -74,7 +73,7 @@ class MoveableObject extends DrawableObject {
     if (this.energy < 0) {
       this.energy = 0;
     } else {
-      this.lastHit = new Date().getTime(); // thats how i save time in number format
+      this.lastHit = new Date().getTime();
     }
   }
 

@@ -68,6 +68,7 @@ class Character extends MoveableObject {
   world;
   speed = 10;
   bottlesAmount = 0;
+  coinAmount = 0;
   energy = 100;
   walking_sound = new Audio("audio/walking.mp3");
   damage_sound = new Audio("audio/damage.mp3");
@@ -101,12 +102,12 @@ class Character extends MoveableObject {
   characterAnimationInterval;
 
   animate() {
-    this.characterMovementInterval = this.checkCharacterMovement();
-    this.characterAnimationInterval = this.checkCharacterAnimation();
+    this.checkCharacterMovement();
+    this.checkCharacterAnimation();
   }
 
   checkCharacterMovement() {
-    setInterval(() => {
+    this.characterMovementInterval = setInterval(() => {
       this.walking_sound.pause();
       if (this.world.keyboard.RIGHT && this.x < this.world.level.levelEndX) {
         this.moveRight();
@@ -121,11 +122,11 @@ class Character extends MoveableObject {
         this.idleTimer = 0;
       }
       if (this.world.keyboard.SPACE && !this.isAboveGround()) {
-        this.jump();
+        this.jumps();
         this.idleTimer = 0;
       }
       if (this.world.keyboard.D) {
-        this.checkBottleAmount();
+        this.throwBottle();
         this.idleTimer = 0;
       }
       if (this.noKeyPressed()) {
@@ -137,11 +138,10 @@ class Character extends MoveableObject {
   }
 
   checkCharacterAnimation() {
-    setInterval(() => {
+    this.characterAnimationInterval = setInterval(() => {
       if (this.isDead(this.energy)) {
         //dead animation
         this.playDeathAnimation();
-        this.dies();
       } else if (this.isAboveGround()) {
         //jump animation
         this.playAnimation(this.IMAGES_JUMPING);
@@ -157,7 +157,7 @@ class Character extends MoveableObject {
   }
 
   playSound(sound) {
-    if (!this.isAboveGround()) {
+    if (!this.isAboveGround() && sound.paused) {
       sound.play();
     }
   }
@@ -176,8 +176,8 @@ class Character extends MoveableObject {
       if (this.idleTimer >= 60 * 5) {
         // bc 60 frames per second * 5 seconds
         this.playAnimation(this.IMAGES_LONG_IDLE);
-      } else if (this.idleTimer >= 60 * 1) {
-        // bc 60 frames per second * 3 seconds
+      } else if (this.idleTimer >= 60 * 0.5) {
+        // bc 60 frames per second * 0.5 seconds
         this.playAnimation(this.IMAGES_IDLE);
       }
     }
@@ -188,28 +188,24 @@ class Character extends MoveableObject {
       // Todesanimation abspielen
       this.playAnimation(this.IMAGES_DEAD);
       this.deadAnimationPlayed = true;
+
+      setTimeout(() => {
+        this.isAlive = false;
+      }, 250);
     }
   }
 
-  dies() {
-    this.isAlive = false;
-  }
-
-  jump() {
+  jumps() {
     this.speedY = 30;
     this.jump_sound.play();
   }
 
-  throws() {
-    this.playAnimation(this.IMAGES_IDLE);
-  }
-
-  checkBottleAmount() {
-    if (this.bottlesAmount === 0) {
-      this.playSound(this.noBottlesToThrow_sound);
-    } else {
-      this.throws();
+  throwBottle() {
+    if (this.bottlesAmount > 0) {
+      this.playAnimation(this.IMAGES_IDLE);
       this.playSound(this.throwBottle_sound);
+    } else {
+      this.playSound(this.noBottlesToThrow_sound);
     }
   }
 }

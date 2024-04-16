@@ -11,6 +11,7 @@ class World {
   statusBar_bottle = new StatusBar(30, 100, "bottle", 0);
   statusBar_endboss = new StatusBar(500, 0, "endboss", 100);
   throwableObjects = [];
+  /* gameEnd = false; */
 
   constructor(canvas, keyboard) {
     this.ctx = canvas.getContext("2d");
