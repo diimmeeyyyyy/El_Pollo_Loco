@@ -3,9 +3,7 @@ class MoveableObject extends DrawableObject {
   otherDirection = false;
   speedY = 0;
   acceleration = 2; //gravity-acceleration
-  energy = 100;
   lastHit = 0;
-  bottlesAmount = 0;
   coinAmount = 0;
   collectBottle_sound = new Audio("audio/collectBottle.mp3");
   collectCoin_sound = new Audio("audio/collectCoin.mp3");

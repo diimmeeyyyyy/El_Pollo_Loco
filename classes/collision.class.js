@@ -102,6 +102,7 @@ class Collision {
     this.world.level.enemies.forEach((enemy) => {
       if (this.world.gameCharacter.isColliding(enemy)) {
         if (
+          //of normal chicken
           !this.world.gameCharacter.isAboveGround() &&
           enemy.enemyIsdead === false
         ) {
@@ -109,7 +110,6 @@ class Collision {
         } else if (enemy instanceof Endboss && enemy.endbossIsAlive === true) {
           this.world.gameCharacter.endbossHit();
         }
-
         this.world.statusBar_health.setPercentage(
           this.world.gameCharacter.energy,
           "health"
@@ -169,8 +169,8 @@ GAME-OVER
       clearInterval(enemy.endbossWaking);
     });
 
-    clearInterval(this.world.gameCharacter.characterInterval1);
-    clearInterval(this.world.gameCharacter.characterInterval2);
+    clearInterval(this.world.gameCharacter.characterMovementInterval);
+    clearInterval(this.world.gameCharacter.characterAnimationInterval);
   }
 
   removeMobileArrows() {
