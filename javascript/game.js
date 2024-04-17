@@ -1,7 +1,9 @@
 let canvas;
 let world;
 let keyboard = new Keyboard();
-
+let backgroundMusic = new Audio("audio/backgroundMusic.mp3");
+backgroundMusic.loop = true;
+let musicPlays = false;
 let fullscreenIsActivated = false;
 
 function showFullscreen() {
@@ -144,4 +146,16 @@ function closePolicy() {
   document.getElementById("Policy").style.display = "none";
   document.getElementById("Canvas").style.display = "flex";
   document.getElementById("Start_Game_Button").style.display = "flex";
+}
+
+function turnMusicOnOrOff() {
+  if (!musicPlays) {
+    backgroundMusic.play();
+    musicPlays = true;
+    document.getElementById("Sound_Img").src = "img/soundOn.png";
+  } else {
+    backgroundMusic.pause();
+    musicPlays = false;
+    document.getElementById("Sound_Img").src = "img/soundOff.png";
+  }
 }
