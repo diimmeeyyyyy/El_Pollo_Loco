@@ -47,9 +47,11 @@ class World {
     if (!soundIsOn) {
       this.allAudios.forEach((audio) => {
         audio.volume = 0;
+        backgroundMusic.pause();
       });
     } else {
       this.allAudios.forEach((audio) => (audio.volume = 1));
+      backgroundMusic.play();
     }
     if (this.gameOver) {
       this.gameOver_sound.play();
@@ -57,9 +59,6 @@ class World {
     if (this.gameWin) {
       backgroundMusic.pause();
       this.gameWin_sound.play();
-      setTimeout(() => {
-        backgroundMusic.play();
-      }, 27000);
     }
   }
 

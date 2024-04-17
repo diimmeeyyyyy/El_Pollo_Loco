@@ -43,7 +43,11 @@
           <img src="./img/info.png" id="Policy_Btn" onclick="showPolicy()" />
         </div>
         <div class="fullscreen-and-sound-div option-img">
-          <img id="Sound_Img" src="./img/soundOff.png" onclick="turnSoundOnOrOff()" />
+          <img
+            id="Sound_Img"
+            src="./img/soundOff.png"
+            onclick="turnSoundOnOrOff()"
+          />
           <img src="./img/fullscreen.png" onclick="showFullscreen()" />
         </div>
         <!------------->
@@ -78,9 +82,13 @@
               src="./img/backToStartScreen.png"
               onclick="location.reload()"
             />
-            <img src="./img/restart.png" onclick="startGame()" />
+            <img
+              id="Restart_Game"
+              src="./img/restart.png"
+              onclick="stopWinMusic();startGame()"
+            />
           </div>
-          <span class="win-text">Ganaste Wey, felicidades!</span>
+          <span class="win-text">YOU WON!</span>
         </section>
         <!---------------->
         <!-- MOBILE MOVEMENT -->

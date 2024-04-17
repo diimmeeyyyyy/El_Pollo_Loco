@@ -41,17 +41,30 @@ function startGame() {
   removeStartGameButton();
   centerKeyboardCommandDiv();
   mobileButtons();
-  removeEndscreens();
   canvas = document.getElementById("Canvas");
   initLevel();
   world = new World(canvas, keyboard);
   keyboard.bindButtonPressEvents();
-  /* turnSoundOnOrOff(); */
+  removeEndscreens();
+  world.checkSound();
 }
 
 function removeEndscreens() {
-  document.getElementById("Game_Over_Screen").classList.add("d-none");
+  closeGameOverScreen();
+  closeWinScreen();
+}
+
+function stopWinMusic() {
+  world.gameWin_sound.pause();
+  world.gameWin_sound.currentTime = 0;
+}
+
+function closeWinScreen() {
   document.getElementById("Win_Screen").classList.add("d-none");
+}
+
+function closeGameOverScreen() {
+  document.getElementById("Game_Over_Screen").classList.add("d-none");
 }
 
 function mobileButtons() {
