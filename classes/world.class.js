@@ -11,7 +11,21 @@ class World {
   statusBar_bottle = new StatusBar(30, 100, "bottle", 0);
   statusBar_endboss = new StatusBar(500, 0, "endboss", 100);
   throwableObjects = [];
-  /* gameEnd = false; */
+
+  allAudios = [
+    this.gameCharacter.walking_sound,
+    this.gameCharacter.damage_sound,
+    this.gameCharacter.jump_sound,
+    this.gameCharacter.noBottlesToThrow_sound,
+    this.gameCharacter.throwBottle_sound,
+    this.gameCharacter.collectCoin_sound,
+    this.gameCharacter.collectBottle_sound,
+    this.level.enemies[0].jump_on_chicken_sound,
+    this.level.enemies[1].jump_on_chicken_sound,
+    this.level.enemies[2].jump_on_chicken_sound,
+    this.level.enemies[3].endboss_damage_sound,
+    this.level.enemies[3].endboss_eliminated_sound,
+  ];
 
   constructor(canvas, keyboard) {
     this.ctx = canvas.getContext("2d");
@@ -19,7 +33,19 @@ class World {
     this.keyboard = keyboard;
     this.draw();
     this.setWorld();
+    this.checkSound();
     this.checkConstantly();
+  }
+
+  checkSound() {
+    if (!soundIsOn) {
+      console.log(soundIsOn);
+      this.allAudios.forEach((audio) => {
+        audio.volume = 0;
+      });
+    } else {
+      this.allAudios.forEach((audio) => (audio.volume = 1));
+    }
   }
 
   gameInterval;

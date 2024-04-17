@@ -149,7 +149,7 @@ class Collision {
     });
   }
 
-    checkBottleCollisionChicken() {
+  checkBottleCollisionChicken() {
     this.world.throwableObjects.forEach((bottle) => {
       this.world.level.enemies.forEach((enemy) => {
         if (bottle.isColliding(enemy)) {
@@ -169,7 +169,7 @@ class Collision {
   }
 
   /* ======
-GAME-OVER
+ENDSCREENS
 ===========*/
   showGameOverScreen() {
     let gameOverScreen = document.getElementById("Game_Over_Screen");

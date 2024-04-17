@@ -3,7 +3,7 @@ let world;
 let keyboard = new Keyboard();
 let backgroundMusic = new Audio("audio/backgroundMusic.mp3");
 backgroundMusic.loop = true;
-let musicPlays = false;
+let soundIsOn = false;
 let fullscreenIsActivated = false;
 
 function showFullscreen() {
@@ -46,6 +46,7 @@ function startGame() {
   initLevel();
   world = new World(canvas, keyboard);
   keyboard.bindButtonPressEvents();
+  /* turnSoundOnOrOff(); */
 }
 
 function removeEndscreens() {
@@ -66,9 +67,12 @@ function removeStartGameButton() {
 }
 
 function centerKeyboardCommandDiv() {
-  document.getElementById("Keyboard_Command_Div").style.left = "50%";
-  document.getElementById("Keyboard_Command_Div").style.transform =
-    "translateX(-50%)";
+  let targetDiv = document.querySelector(".fullscreen-and-sound-div");
+  targetDiv.style.left = "50%";
+  targetDiv.style.transform = "translateX(-50%)";
+  targetDiv.style.right = "unset";
+  let keyboardInstructionsImg = document.getElementById("Keyboard_Commands");
+  targetDiv.appendChild(keyboardInstructionsImg);
 }
 
 function showKeyboardCommands() {
@@ -148,14 +152,20 @@ function closePolicy() {
   document.getElementById("Start_Game_Button").style.display = "flex";
 }
 
-function turnMusicOnOrOff() {
-  if (!musicPlays) {
-    backgroundMusic.play();
-    musicPlays = true;
+function turnSoundOnOrOff() {
+  if (!soundIsOn) {
+    soundIsOn = true;
     document.getElementById("Sound_Img").src = "img/soundOn.png";
+    backgroundMusic.play(); // .play -> bc backgroundMusic an Audio in loop
+    if (world) {
+      world.allAudios.forEach((audio) => (audio.volume = 1));
+    }
   } else {
     backgroundMusic.pause();
-    musicPlays = false;
+    soundIsOn = false;
     document.getElementById("Sound_Img").src = "img/soundOff.png";
+    if (world) {
+      world.allAudios.forEach((audio) => (audio.volume = 0));
+    }
   }
 }
