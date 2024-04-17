@@ -93,7 +93,6 @@ class Collision {
     this.checkCollisions();
     this.checkThrowableObjects();
     this.checkBottleCollision();
-    /*   this.checkBottleCollisionChicken(); */
   }
 
   checkCollisions() {
@@ -174,6 +173,8 @@ ENDSCREENS
   showGameOverScreen() {
     let gameOverScreen = document.getElementById("Game_Over_Screen");
     gameOverScreen.classList.remove("d-none");
+    this.world.gameOver = true;
+    this.world.checkSound();
   }
 
   stopGame() {
@@ -201,5 +202,7 @@ ENDSCREENS
   showWinScreen() {
     let winningScreen = document.getElementById("Win_Screen");
     winningScreen.classList.remove("d-none");
+    this.world.gameWin = true;
+    this.world.checkSound();
   }
 }

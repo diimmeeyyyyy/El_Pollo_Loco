@@ -11,6 +11,10 @@ class World {
   statusBar_bottle = new StatusBar(30, 100, "bottle", 0);
   statusBar_endboss = new StatusBar(500, 0, "endboss", 100);
   throwableObjects = [];
+  gameOver = false;
+  gameOver_sound = new Audio("audio/lost.mp3");
+  gameWin = false;
+  gameWin_sound = new Audio("audio/winMusic.mp3");
 
   allAudios = [
     this.gameCharacter.walking_sound,
@@ -25,6 +29,8 @@ class World {
     this.level.enemies[2].jump_on_chicken_sound,
     this.level.enemies[3].endboss_damage_sound,
     this.level.enemies[3].endboss_eliminated_sound,
+    this.gameOver_sound,
+    this.gameWin_sound,
   ];
 
   constructor(canvas, keyboard) {
@@ -39,12 +45,21 @@ class World {
 
   checkSound() {
     if (!soundIsOn) {
-      console.log(soundIsOn);
       this.allAudios.forEach((audio) => {
         audio.volume = 0;
       });
     } else {
       this.allAudios.forEach((audio) => (audio.volume = 1));
+    }
+    if (this.gameOver) {
+      this.gameOver_sound.play();
+    }
+    if (this.gameWin) {
+      backgroundMusic.pause();
+      this.gameWin_sound.play();
+      setTimeout(() => {
+        backgroundMusic.play();
+      }, 27000);
     }
   }
 
