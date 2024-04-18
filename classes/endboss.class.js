@@ -8,14 +8,10 @@ class Endboss extends MoveableObject {
   endbossIsAlive = true;
 
   IMAGES_WALKING = [
-    "img/4_enemie_boss_chicken/2_alert/G5.png",
-    "img/4_enemie_boss_chicken/2_alert/G6.png",
-    "img/4_enemie_boss_chicken/2_alert/G7.png",
-    "img/4_enemie_boss_chicken/2_alert/G8.png",
-    "img/4_enemie_boss_chicken/2_alert/G9.png",
-    "img/4_enemie_boss_chicken/2_alert/G10.png",
-    "img/4_enemie_boss_chicken/2_alert/G11.png",
-    "img/4_enemie_boss_chicken/2_alert/G12.png",
+    "img/4_enemie_boss_chicken/1_walk/G1.png",
+    "img/4_enemie_boss_chicken/1_walk/G2.png",
+    "img/4_enemie_boss_chicken/1_walk/G3.png",
+    "img/4_enemie_boss_chicken/1_walk/G4.png",
   ];
 
   IMAGES_HURT = [
@@ -42,13 +38,13 @@ class Endboss extends MoveableObject {
     this.loadImages(this.IMAGES_WALKING);
     this.loadImages(this.IMAGES_HURT);
     this.loadImages(this.IMAGES_DEAD);
-    /* this.x = 2500; */
     this.x = 2900;
     this.animate();
   }
 
-  endbossWaking;
+  endbossWakingAnimation;
   endbossDamageInterval;
+  endbossWalkingMovement;
 
   animate() {
     this.checkEndbossDamage();
@@ -66,11 +62,14 @@ class Endboss extends MoveableObject {
   }
 
   checkEndbossWalking() {
-    this.endbossWaking = setInterval(() => {
+    this.endbossWakingAnimation = setInterval(() => {
       if (!this.isHurt() && !this.isDead(this.endbossEnergy)) {
         this.playAnimation(this.IMAGES_WALKING);
       }
-    }, 400);
+    }, 200);
+    this.endbossWalkingMovement = setInterval(() => {
+      this.moveLeft();
+    }, 1000 / 80);
   }
 
   playIsHurtAnimation() {

@@ -75,6 +75,7 @@ class Character extends MoveableObject {
   jump_sound = new Audio("audio/jump.mp3");
   noBottlesToThrow_sound = new Audio("audio/noBottlesToThrow.mp3");
   throwBottle_sound = new Audio("audio/throwBottle.mp3");
+  snoring_sound = new Audio("audio/snoring.m4a");
   deadAnimationPlayed = false;
   isAlive = true;
 
@@ -176,6 +177,7 @@ class Character extends MoveableObject {
       if (this.idleTimer >= 60 * 5) {
         // bc 60 frames per second * 5 seconds
         this.playAnimation(this.IMAGES_LONG_IDLE);
+        this.snoring_sound.play();
       } else if (this.idleTimer >= 60 * 0.5) {
         // bc 60 frames per second * 0.5 seconds
         this.playAnimation(this.IMAGES_IDLE);
@@ -206,7 +208,7 @@ class Character extends MoveableObject {
     }
   }
 
-/*   throwBottle() {
+  /*   throwBottle() {
     if (this.bottlesAmount > 0) {
       this.playAnimation(this.IMAGES_IDLE);
       this.playSound(this.throwBottle_sound);

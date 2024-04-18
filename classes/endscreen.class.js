@@ -18,8 +18,10 @@ class Endscreen {
     this.world.level.enemies.forEach((enemy) => {
       clearInterval(enemy.chickenInterval1);
       clearInterval(enemy.chickenInterval2);
+      clearInterval(enemy.smallChickenJumpInterval);
       clearInterval(enemy.endbossDamageInterval);
-      clearInterval(enemy.endbossWaking);
+      clearInterval(enemy.endbossWakingAnimation);
+      clearInterval(enemy.endbossWalkingMovement);
     });
 
     clearInterval(this.world.gameCharacter.characterMovementInterval);

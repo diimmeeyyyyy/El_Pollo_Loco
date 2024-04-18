@@ -6,6 +6,16 @@ backgroundMusic.loop = true;
 let soundIsOn = false;
 let fullscreenIsActivated = false;
 
+window.addEventListener("resize", function () {
+  let landscape = window.innerWidth > window.innerHeight;
+  let turnDevice = document.getElementById("Turn_Device");
+  if (landscape) {
+    turnDevice.style.display = "none";
+  } else {
+    turnDevice.style.display = "flex";
+  }
+});
+
 function showFullscreen() {
   let fullscreen = document.getElementById("Start_Screen");
   if (!fullscreenIsActivated) {
