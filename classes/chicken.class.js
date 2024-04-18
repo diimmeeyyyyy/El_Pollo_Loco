@@ -26,18 +26,18 @@ class Chicken extends MoveableObject {
     this.speed = 0.15 + Math.random() * 0.25;
     this.animate();
   }
-  enemyIsdead = false;
+  enemyIsDead = false;
   chickenInterval1;
   chickenInterval2;
 
   animate() {
     this.chickenInterval1 = setInterval(() => {
-      if (this.enemyIsdead == false) {
+      if (this.enemyIsDead == false) {
         this.moveLeft();
       }
     }, 1000 / 60);
     this.chickenInterval2 = setInterval(() => {
-      if (this.enemyIsdead == false) {
+      if (this.enemyIsDead == false) {
         this.playAnimation(this.IMAGES_WALKING);
       }
     }, 250);

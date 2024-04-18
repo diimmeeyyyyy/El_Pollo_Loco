@@ -57,17 +57,28 @@ class Collision {
         this.world.gameCharacter.isColliding(enemy) &&
         this.world.gameCharacter.isAboveGround() &&
         this.world.gameCharacter.speedY < 0 &&
-        enemy.enemyIsdead === false
+        (enemy.enemyIsDead === false || enemy.smallEnemyIsDead === false)
       ) {
+        let isDead = false;
+        let sound = null;
+
         if (enemy instanceof Chicken) {
-          enemy.enemyIsdead = true;
-          enemy.img.src = enemy.IMAGES_DEAD;
-          enemy.jump_on_chicken_sound.play();
-          if (enemy.enemyIsdead) {
-            setTimeout(() => {
-              enemy.img = null;
-            }, 2000);
-          }
+          enemy.enemyIsDead = true;
+          sound = enemy.jump_on_chicken_sound;
+          isDead = enemy.enemyIsDead;
+        } else if (enemy instanceof ChickenSmall) {
+          enemy.smallEnemyIsDead = true;
+          sound = enemy.jump_on_small_chicken_sound;
+          isDead = enemy.smallEnemyIsDead;
+        }
+        
+        enemy.img.src = enemy.IMAGES_DEAD;
+        sound.play();
+
+        if (isDead) {
+          setTimeout(() => {
+            enemy.img = null;
+          }, 2000);
         }
       }
       return true;
@@ -105,7 +116,7 @@ class Collision {
         if (
           //of normal chicken
           !this.world.gameCharacter.isAboveGround() &&
-          enemy.enemyIsdead === false
+          enemy.enemyIsDead === false
         ) {
           this.world.gameCharacter.hit();
         } else if (enemy instanceof Endboss && enemy.endbossIsAlive === true) {
@@ -157,10 +168,10 @@ class Collision {
       this.world.level.enemies.forEach((enemy) => {
         if (bottle.isColliding(enemy)) {
           if (enemy instanceof Chicken) {
-            enemy.enemyIsdead = true;
+            enemy.enemyIsDead = true;
             enemy.img.src = enemy.IMAGES_DEAD;
             enemy.jump_on_chicken_sound.play();
-            if (enemy.enemyIsdead) {
+            if (enemy.enemyIsDead) {
               setTimeout(() => {
                 enemy.img = null;
               }, 2000);
