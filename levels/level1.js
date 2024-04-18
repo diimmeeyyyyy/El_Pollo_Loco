@@ -18,7 +18,7 @@ function initLevel() {
       new Coins(),
       new Coins(),
     ],
-    [new Chicken(), new Chicken(), new Chicken(), new Endboss()],
+    [new Chicken(), new Chicken(), new Chicken(), new ChickenSmall(), new ChickenSmall(), new Endboss()],
     [new Clouds()],
     [
       new BackgroundObject("img/5_background/layers/air.png", -719, 720, 480), //NEWONE LEFT

@@ -1,5 +1,9 @@
 class Collision {
   world;
+  /* constructor() {
+    this.world = world;
+    this.endscreen = new Endscreen(this.world);
+  } */
 
   checkGameInterval() {
     this.checkBottlesOnGround();
@@ -72,9 +76,9 @@ class Collision {
 
   checkCharacterLife() {
     if (this.world.gameCharacter.isAlive == false) {
-      this.stopGame();
-      this.showGameOverScreen();
-      this.removeMobileArrows();
+      this.world.endscreen.stopGame();
+      this.world.endscreen.showGameOverScreen();
+      this.world.endscreen.removeMobileArrows();
     }
   }
 
@@ -83,9 +87,9 @@ class Collision {
       this.world.level.enemies[this.world.level.enemies.length - 1]
         .endbossIsAlive === false
     ) {
-      this.stopGame();
-      this.removeMobileArrows();
-      this.showWinScreen();
+      this.world.endscreen.stopGame();
+      this.world.endscreen.removeMobileArrows();
+      this.world.endscreen.showWinScreen();
     }
   }
 
@@ -167,10 +171,10 @@ class Collision {
     });
   }
 
-  /* ======
-ENDSCREENS
-===========*/
-  showGameOverScreen() {
+  /* =======
+ENDSCREEN
+==========*/
+  /*    showGameOverScreen() {
     let gameOverScreen = document.getElementById("Game_Over_Screen");
     gameOverScreen.classList.remove("d-none");
     this.world.gameOver = true;
@@ -204,5 +208,5 @@ ENDSCREENS
     winningScreen.classList.remove("d-none");
     this.world.gameWin = true;
     this.world.checkSound();
-  }
+  } */
 }

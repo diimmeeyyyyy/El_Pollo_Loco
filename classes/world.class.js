@@ -2,6 +2,7 @@ class World {
   gameCharacter = new Character();
   level = level1;
   collision = new Collision();
+  endscreen = new Endscreen();
   canvas;
   ctx;
   keyboard;
@@ -27,8 +28,8 @@ class World {
     this.level.enemies[0].jump_on_chicken_sound,
     this.level.enemies[1].jump_on_chicken_sound,
     this.level.enemies[2].jump_on_chicken_sound,
-    this.level.enemies[3].endboss_damage_sound,
-    this.level.enemies[3].endboss_eliminated_sound,
+    this.level.enemies[5].endboss_damage_sound,
+    this.level.enemies[5].endboss_eliminated_sound,
     this.gameOver_sound,
     this.gameWin_sound,
   ];
@@ -80,6 +81,7 @@ class World {
   setWorld() {
     this.gameCharacter.world = this;
     this.collision.world = this;
+    this.endscreen.world = this;
   }
 
   draw() {

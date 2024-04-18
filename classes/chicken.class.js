@@ -1,5 +1,5 @@
 class Chicken extends MoveableObject {
-  height = 95;
+  height = 100;
   y = 350;
   jump_on_chicken_sound = new Audio("audio/deadChicken.mp3");
 
@@ -40,6 +40,6 @@ class Chicken extends MoveableObject {
       if (this.enemyIsdead == false) {
         this.playAnimation(this.IMAGES_WALKING);
       }
-    }, 500);
+    }, 250);
   }
 }
