@@ -12,9 +12,9 @@ class SalsaBottles extends DrawableObject {
     left: 15,
   };
 
-  constructor(x) {
+  constructor() {
     super();
-    this.x = x;
+    this.x = 100 + Math.random() * 2200;
     this.loadImage(this.IMAGE_SALSA_BOTTLE);
   }
 }

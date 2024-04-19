@@ -1,6 +1,7 @@
 class MoveableObject extends DrawableObject {
   speed = 0.15;
   otherDirection = false;
+  otherDirectionEnemy = false;
   speedY = 0;
   acceleration = 2; //gravity-acceleration
   lastHit = 0;
@@ -69,7 +70,7 @@ class MoveableObject extends DrawableObject {
   }
 
   endbossHit() {
-    this.energy -= 10;
+    this.energy -= 25;
     if (this.energy < 0) {
       this.energy = 0;
     } else {

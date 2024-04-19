@@ -22,7 +22,7 @@ class ChickenSmall extends MoveableObject {
     super().loadImage("img/3_enemies_chicken/chicken_small/1_walk/1_w.png");
     this.loadImages(this.IMAGES_WALKING);
     this.loadImages(this.IMAGES_DEAD);
-    this.x = 400 + Math.random() * 1600;
+    this.x = 400 + Math.random() * 1700;
     this.speed = 0.15 + Math.random() * 0.25;
     this.animate();
   }
@@ -30,12 +30,12 @@ class ChickenSmall extends MoveableObject {
   smallEnemyIsDead = false;
   smallChickenInterval1;
   smallChickenInterval2;
-  
+  smallChickenDirectionChangeInterval;
+
   animate() {
     this.smallChickenInterval1 = setInterval(() => {
       if (!this.smallEnemyIsDead) {
-        this.moveLeft();
-        this.jump();
+        this.move();
       }
     }, 1000 / 60);
     this.smallChickenInterval2 = setInterval(() => {
@@ -43,5 +43,16 @@ class ChickenSmall extends MoveableObject {
         this.playAnimation(this.IMAGES_WALKING);
       }
     }, 200);
+    this.smallChickenDirectionChangeInterval = setInterval(() => {
+      this.otherDirectionEnemy = !this.otherDirectionEnemy;
+    }, 5000);
+  }
+
+  move() {
+    if (this.otherDirectionEnemy === false) {
+      this.moveLeft();
+    } else {
+      this.moveRight();
+    }
   }
 }

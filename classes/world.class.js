@@ -29,10 +29,12 @@ class World {
     this.level.enemies[0].jump_on_chicken_sound,
     this.level.enemies[1].jump_on_chicken_sound,
     this.level.enemies[2].jump_on_chicken_sound,
-    this.level.enemies[3].jump_on_small_chicken_sound,
+    this.level.enemies[3].jump_on_chicken_sound,
     this.level.enemies[4].jump_on_small_chicken_sound,
-    this.level.enemies[5].endboss_damage_sound,
-    this.level.enemies[5].endboss_eliminated_sound,
+    this.level.enemies[5].jump_on_small_chicken_sound,
+    this.level.enemies[6].jump_on_small_chicken_sound,
+    this.level.enemies[7].endboss_damage_sound,
+    this.level.enemies[7].endboss_eliminated_sound,
     this.gameOver_sound,
     this.gameWin_sound,
   ];
@@ -149,13 +151,13 @@ class World {
   }
 
   addToGame(moveableObject) {
-    if (moveableObject.otherDirection) {
+    if (moveableObject.otherDirection || moveableObject.otherDirectionEnemy) {
       this.flipImage(moveableObject);
     }
     moveableObject.draw(this.ctx);
     moveableObject.drawFrame(this.ctx);
 
-    if (moveableObject.otherDirection) {
+    if (moveableObject.otherDirection || moveableObject.otherDirectionEnemy) {
       this.flipImageBack(moveableObject);
     }
   }
