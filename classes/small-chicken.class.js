@@ -31,6 +31,7 @@ class ChickenSmall extends MoveableObject {
   smallChickenInterval1;
   smallChickenInterval2;
   smallChickenDirectionChangeInterval;
+  smallChickenJumpInterval;
 
   animate() {
     this.smallChickenInterval1 = setInterval(() => {
@@ -46,6 +47,9 @@ class ChickenSmall extends MoveableObject {
     this.smallChickenDirectionChangeInterval = setInterval(() => {
       this.otherDirectionEnemy = !this.otherDirectionEnemy;
     }, 5000);
+    this.smallChickenJumpInterval = setInterval(() => {
+      this.speedY = 20;
+    }, 3000);
   }
 
   move() {
@@ -54,5 +58,17 @@ class ChickenSmall extends MoveableObject {
     } else {
       this.moveRight();
     }
+    this.y -= this.speedY; //Um die Y-Position zu ändern
+    if (this.smallChickenIsAboveGround()) {
+      this.speedY -= 1;
+    } else {
+      //If chicken touches ground
+      this.y = 370;
+      this.speedY = 0;
+    }
+  }
+
+  smallChickenIsAboveGround() {
+    return this.y < 370;
   }
 }

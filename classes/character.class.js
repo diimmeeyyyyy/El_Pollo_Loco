@@ -110,21 +110,11 @@ class Character extends MoveableObject {
   checkCharacterMovement() {
     this.characterMovementInterval = setInterval(() => {
       this.walking_sound.pause();
-      if (this.canMoveRight()) {
-        this.moveRight();
-      }
-      if (this.canMoveLeft()) {
-        this.moveLeft();
-      }
-      if (this.canJump()) {
-        this.jump();
-      }
-      if (this.canThrowBottle()) {
-        this.throwBottle();
-      }
-      if (this.noKeyPressed()) {
-        this.idleTimer += 1;
-      }
+      if (this.canMoveRight()) this.moveRight();
+      if (this.canMoveLeft()) this.moveLeft();
+      if (this.canJump()) this.jump();
+      if (this.canThrowBottle()) this.throwBottle();
+      if (this.noKeyPressed()) this.idleTimer += 1;
       this.checkIdleAnimation();
       this.world.camera_x = -this.x + 100;
     }, 1000 / 60);
