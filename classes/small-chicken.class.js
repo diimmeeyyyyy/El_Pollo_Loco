@@ -28,18 +28,21 @@ class ChickenSmall extends MoveableObject {
   }
 
   smallEnemyIsDead = false;
-  smallChickenInterval1;
-  smallChickenInterval2;
+  smallChickenMovementInterval;
+  smallChickenAnimationInterval;
   smallChickenDirectionChangeInterval;
   smallChickenJumpInterval;
 
+  /**
+   * Animates the small chicken in the game
+   */
   animate() {
-    this.smallChickenInterval1 = setInterval(() => {
+    this.smallChickenMovementInterval = setInterval(() => {
       if (!this.smallEnemyIsDead) {
         this.move();
       }
     }, 1000 / 60);
-    this.smallChickenInterval2 = setInterval(() => {
+    this.smallChickenAnimationInterval = setInterval(() => {
       if (!this.smallEnemyIsDead) {
         this.playAnimation(this.IMAGES_WALKING);
       }
@@ -52,6 +55,9 @@ class ChickenSmall extends MoveableObject {
     }, 3000);
   }
 
+  /**
+   * Moves the small chicken in the game
+   */
   move() {
     if (this.otherDirectionEnemy === false) {
       this.moveLeft();
@@ -68,6 +74,11 @@ class ChickenSmall extends MoveableObject {
     }
   }
 
+  /**
+   * Checks if the small chicken is above the ground
+   * 
+   * @returns {boolean} Returns true if the y-position of the small chicken is less than 370; otherwise, returns false
+   */
   smallChickenIsAboveGround() {
     return this.y < 370;
   }
