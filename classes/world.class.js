@@ -49,6 +49,9 @@ class World {
     this.checkConstantly();
   }
 
+  /**
+   * Used to check if sound is turned on/ off
+   */
   checkSound() {
     if (!soundIsOn) {
       this.allAudios.forEach((audio) => {
@@ -71,6 +74,9 @@ class World {
   gameInterval;
   collisionInterval;
   collisionIntervalChicken;
+  /**
+   * Continuously checks various game states and collisions
+   */
   checkConstantly() {
     this.gameInterval = setInterval(() => {
       this.collision.checkGameInterval();
@@ -83,12 +89,22 @@ class World {
     }, 100);
   }
 
+  /**
+   * Sets the world property of gameCharacter, collision, and endscreen to this world instance
+   */
   setWorld() {
     this.gameCharacter.world = this;
     this.collision.world = this;
     this.endscreen.world = this;
   }
 
+  /**
+   * Draws the game world on the canvas
+   *
+   * Function clears the canvas, translates the context based on the camera position,
+   * adds various objects to the game, and then calls itself again using requestAnimationFrame
+   * if game character is still alive.
+   */
   draw() {
     this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
 
@@ -144,12 +160,22 @@ class World {
     });
   }
 
+  /**
+   * Adds multiple objects to the game
+   *
+   * @param {Array} objects - An array of objects to be added to the game
+   */
   addObjectsToGame(objects) {
     objects.forEach((object) => {
       this.addToGame(object);
     });
   }
 
+  /**
+   *  Adds a moveable object to the game
+   *
+   * @param {Object} moveableObject - The object to be added to the game
+   */
   addToGame(moveableObject) {
     if (moveableObject.otherDirection || moveableObject.otherDirectionEnemy) {
       this.flipImage(moveableObject);
@@ -162,6 +188,11 @@ class World {
     }
   }
 
+  /**
+   * Flips the image of a moveable object in the game
+   *
+   * @param {Object} moveableObject - The object whose image is to be flipped
+   */
   flipImage(moveableObject) {
     this.ctx.save();
     this.ctx.translate(moveableObject.width, 0); //verursacht Verchiebung
@@ -169,6 +200,11 @@ class World {
     moveableObject.x = moveableObject.x * -1; //X-Achse spiegeln
   }
 
+  /**
+   * Flips back the image of a moveable object in the game to its original state
+   *
+   * @param {object} moveableObject - The object whose image is to be flipped back
+   */
   flipImageBack(moveableObject) {
     moveableObject.x = moveableObject.x * -1;
     this.ctx.restore();

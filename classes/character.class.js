@@ -82,7 +82,7 @@ class Character extends MoveableObject {
   offset = {
     top: 120,
     bottom: 10,
-    right: 20,
+    right: 30,
     left: 20,
   };
 
@@ -176,20 +176,21 @@ class Character extends MoveableObject {
   checkCharacterAnimation() {
     this.characterAnimationInterval = setInterval(() => {
       if (this.isDead(this.energy)) {
-        //dead animation
         this.playDeathAnimation();
       } else if (this.isAboveGround()) {
-        //jump animation
         this.playAnimation(this.IMAGES_JUMPING);
       } else if (this.world.keyboard.RIGHT || this.world.keyboard.LEFT) {
-        //Walk animation
         this.playAnimation(this.IMAGES_WALKING);
       } else if (this.isHurt()) {
-        this.playAnimation(this.IMAGES_HURT);
-        this.playSound(this.damage_sound);
-        this.idleTimer = 0;
+        this.playHurtAnimation();
       }
     }, 50);
+  }
+
+  playHurtAnimation() {
+    this.playAnimation(this.IMAGES_HURT);
+    this.playSound(this.damage_sound);
+    this.idleTimer = 0;
   }
 
   playSound(sound) {
