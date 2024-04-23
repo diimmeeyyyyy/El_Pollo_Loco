@@ -116,25 +116,9 @@ class Character extends MoveableObject {
       if (this.canJump()) this.jump();
       if (this.canThrowBottle()) this.throwBottle();
       if (this.noKeyPressed()) this.idleTimer += 1;
-      this.checkIdleAnimation();
-      this.stopLongIdle();
+      this.checkIdleStatus();
       this.world.camera_x = -this.x + 100;
     }, 1000 / 60);
-  }
-
-  stopLongIdle() {
-    if (
-      this.world.keyboard.RIGHT ||
-      this.world.keyboard.LEFT ||
-      this.world.keyboard.SPACE ||
-      this.world.keyboard.D
-    ) {
-      if (this.longIdleInterval) {
-        clearInterval(this.longIdleInterval);
-        this.longIdleInterval = null;
-      }
-      this.stopSnoringSound();
-    }
   }
 
   canMoveRight() {
@@ -142,10 +126,10 @@ class Character extends MoveableObject {
   }
 
   moveRight() {
+    this.stopLongIdle();
     super.moveRight();
     this.otherDirection = false;
     this.playSound(this.walking_sound);
-    this.idleTimer = 0;
   }
 
   canMoveLeft() {
@@ -153,10 +137,10 @@ class Character extends MoveableObject {
   }
 
   moveLeft() {
+    this.stopLongIdle();
     super.moveLeft();
     this.otherDirection = true;
     this.playSound(this.walking_sound);
-    this.idleTimer = 0;
   }
 
   canJump() {
@@ -164,9 +148,9 @@ class Character extends MoveableObject {
   }
 
   jump() {
+    this.stopLongIdle();
     this.speedY = 30;
     this.jump_sound.play();
-    this.idleTimer = 0;
   }
 
   canThrowBottle() {
@@ -174,11 +158,11 @@ class Character extends MoveableObject {
   }
 
   throwBottle() {
+    this.stopLongIdle();
     if (this.bottlesAmount <= 0) {
       this.playAnimation(this.IMAGES_IDLE);
       this.playSound(this.noBottlesToThrow_sound);
     }
-    this.idleTimer = 0;
   }
 
   noKeyPressed() {
@@ -187,6 +171,15 @@ class Character extends MoveableObject {
       !this.world.keyboard.RIGHT &&
       !this.world.keyboard.LEFT &&
       !this.world.keyboard.D
+    );
+  }
+
+  keyPressed() {
+    return (
+      this.world.keyboard.SPACE &&
+      this.world.keyboard.RIGHT &&
+      this.world.keyboard.LEFT &&
+      this.world.keyboard.D
     );
   }
 
@@ -201,18 +194,14 @@ class Character extends MoveableObject {
       } else if (this.isHurt()) {
         this.playHurtAnimation();
       }
-    }, 50);
+    }, 100);
   }
 
   playHurtAnimation() {
+    this.stopLongIdle();
     this.stopSnoringSound();
-    /* this.isAnimating = true; */
     this.playAnimation(this.IMAGES_HURT);
     this.playSound(this.damage_sound);
-    this.idleTimer = 0;
-    /* setTimeout(() => {
-      this.isAnimating = false;
-    }, 1000); */
   }
 
   playSound(sound) {
@@ -223,6 +212,13 @@ class Character extends MoveableObject {
 
   idleInterval;
   longIdleInterval;
+
+  checkIdleStatus() {
+    if (this.keyPressed()) {
+      this.stopLongIdle();
+    }
+    this.checkIdleAnimation();
+  }
 
   checkIdleAnimation() {
     if (!this.isDead()) {
@@ -259,6 +255,15 @@ class Character extends MoveableObject {
       }, 100); // adjust this value to change the speed of the animation
     }
     this.snoring_sound.play();
+  }
+
+  stopLongIdle() {
+    if (this.longIdleInterval) {
+      clearInterval(this.longIdleInterval);
+      this.longIdleInterval = null;
+    }
+    this.stopSnoringSound();
+    this.idleTimer = 0;
   }
 
   playDeathAnimation() {
