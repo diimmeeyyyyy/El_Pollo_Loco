@@ -221,27 +221,44 @@ class Character extends MoveableObject {
     }
   }
 
+  idleInterval;
   longIdleInterval;
 
   checkIdleAnimation() {
     if (!this.isDead()) {
       if (this.idleTimer >= 60 * 5) {
         // bc 60 frames per second * 5 seconds
-        if (!this.longIdleInterval) {
-          this.longIdleInterval = setInterval(() => {
-            this.playAnimation(this.IMAGES_LONG_IDLE);
-          }, 100); // adjust this value to change the speed of the animation
-        }
-        this.snoring_sound.play();
+        this.stopIdleAnimation();
+        this.playLongIdleAnimation();
       } else if (this.idleTimer >= 60 * 0.5) {
         // bc 60 frames per second * 0.5 seconds
-        if (this.longIdleInterval) {
-          clearInterval(this.longIdleInterval);
-          this.longIdleInterval = null;
-        }
-        this.playAnimation(this.IMAGES_IDLE);
+        this.playIdleAnimation();
       }
     }
+  }
+
+  playIdleAnimation() {
+    if (!this.idleInterval) {
+      this.idleInterval = setInterval(() => {
+        this.playAnimation(this.IMAGES_IDLE);
+      }, 300);
+    }
+  }
+
+  stopIdleAnimation() {
+    if (this.idleInterval) {
+      clearInterval(this.idleInterval);
+      this.idleInterval = null;
+    }
+  }
+
+  playLongIdleAnimation() {
+    if (!this.longIdleInterval) {
+      this.longIdleInterval = setInterval(() => {
+        this.playAnimation(this.IMAGES_LONG_IDLE);
+      }, 100); // adjust this value to change the speed of the animation
+    }
+    this.snoring_sound.play();
   }
 
   playDeathAnimation() {
