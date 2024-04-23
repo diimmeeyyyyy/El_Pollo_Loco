@@ -70,7 +70,7 @@ class MoveableObject extends DrawableObject {
   }
 
   endbossHit() {
-    this.energy -= 25;
+    this.energy -= 35;
     if (this.energy < 0) {
       this.energy = 0;
     } else {
@@ -99,7 +99,7 @@ class MoveableObject extends DrawableObject {
         this.y -= this.speedY;
         this.speedY -= this.acceleration;
       }
-    }, 1000 / 25);
+    }, 1000 / 35);
   }
 
   isAboveGround() {
@@ -117,6 +117,14 @@ class MoveableObject extends DrawableObject {
     this.img = this.imageCache[path];
     this.currentImage++;
   }
+
+  /* moveRight() {
+    if (this instanceof Character && !this.isAnimating) {
+      this.x += this.speed;
+    } else if (!this instanceof Character) {
+      this.x += this.speed;
+    }
+  } */
 
   moveRight() {
     this.x += this.speed;

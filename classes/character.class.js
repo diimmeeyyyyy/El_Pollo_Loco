@@ -78,6 +78,7 @@ class Character extends MoveableObject {
   snoring_sound = new Audio("audio/snoring.m4a");
   deadAnimationPlayed = false;
   isAlive = true;
+  /* isAnimating = false; */
 
   offset = {
     top: 120,
@@ -116,8 +117,20 @@ class Character extends MoveableObject {
       if (this.canThrowBottle()) this.throwBottle();
       if (this.noKeyPressed()) this.idleTimer += 1;
       this.checkIdleAnimation();
+      this.checkLongIdle();
       this.world.camera_x = -this.x + 100;
     }, 1000 / 60);
+  }
+
+  checkLongIdle() {
+    if (
+      this.world.keyboard.RIGHT ||
+      this.world.keyboard.LEFT ||
+      this.world.keyboard.SPACE ||
+      this.world.keyboard.D
+    ) {
+      this.stopSnoringSound();
+    }
   }
 
   canMoveRight() {
@@ -188,9 +201,14 @@ class Character extends MoveableObject {
   }
 
   playHurtAnimation() {
+    this.stopSnoringSound();
+    /* this.isAnimating = true; */
     this.playAnimation(this.IMAGES_HURT);
     this.playSound(this.damage_sound);
     this.idleTimer = 0;
+    /* setTimeout(() => {
+      this.isAnimating = false;
+    }, 1000); */
   }
 
   playSound(sound) {
@@ -221,5 +239,10 @@ class Character extends MoveableObject {
         this.isAlive = false;
       }, 250);
     }
+  }
+
+  stopSnoringSound() {
+    this.snoring_sound.pause();
+    this.snoring_sound.currentTime = 0;
   }
 }

@@ -115,6 +115,8 @@ class Collision {
           (enemy.enemyIsDead === false || enemy.smallEnemyIsDead === false)
         ) {
           this.world.gameCharacter.hit();
+          this.world.gameCharacter.x -= 50;
+          console.log("SCHADEN");
         } else if (enemy instanceof Endboss && enemy.endbossIsAlive === true) {
           this.world.gameCharacter.endbossHit();
         }

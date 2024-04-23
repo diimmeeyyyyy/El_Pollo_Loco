@@ -51,6 +51,9 @@ class Endboss extends MoveableObject {
     this.checkEndbossWalking();
   }
 
+  /**
+   * Checks the damage status of the end boss at regular intervals
+   */
   checkEndbossDamage() {
     this.endbossDamageInterval = setInterval(() => {
       if (this.isHurt()) {
@@ -61,24 +64,33 @@ class Endboss extends MoveableObject {
     }, 200);
   }
 
+  /**
+   * Checks the walking status of the end boss at regular intervals
+   */
   checkEndbossWalking() {
     this.endbossWakingAnimation = setInterval(() => {
       if (!this.isHurt() && !this.isDead(this.endbossEnergy)) {
         this.playAnimation(this.IMAGES_WALKING);
       }
-    }, 200);
+    }, 100);
     this.endbossWalkingMovement = setInterval(() => {
       if (!this.isHurt() || !this.isDead(this.endbossEnergy)) {
         this.moveLeft();
       }
-    }, 1000 / 80);
+    }, 1000 / 160);
   }
 
+  /**
+   * Plays the hurt animation and sound for the endboss
+   */
   playEndbossIsHurtAnimation() {
     this.endboss_damage_sound.play();
     this.playAnimation(this.IMAGES_HURT);
   }
 
+  /**
+   * Plays the death animation and sound for the endboss
+   */
   playEndbossDeathAnimation() {
     if (!this.isDeadAnimationPlayed) {
       this.isDeadAnimationPlayed = true;

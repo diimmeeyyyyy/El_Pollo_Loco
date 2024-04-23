@@ -3,12 +3,12 @@ let level1;
 function initLevel() {
   level1 = new Level(
     [
-      new SalsaBottles(/* 500 */),
-      new SalsaBottles(/* 600 */),
-      new SalsaBottles(/* 700 */),
-      new SalsaBottles(/* 1200 */),
-      new SalsaBottles(/* 1500 */),
-      new SalsaBottles(/* 2000 */),
+      new SalsaBottles(),
+      new SalsaBottles(),
+      new SalsaBottles(),
+      new SalsaBottles(),
+      new SalsaBottles(),
+      new SalsaBottles(),
     ],
     [
       new Coins(),
