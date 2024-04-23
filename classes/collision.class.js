@@ -149,6 +149,7 @@ class Collision {
     this.world.throwableObjects.forEach((bottle) => {
       this.world.level.enemies.forEach((enemy) => {
         if (bottle.isColliding(enemy)) {
+           bottle.splash(bottle.x, bottle.y);
           if (enemy instanceof Endboss) {
             enemy.endbossIsCollidingBottle();
             this.world.statusBar_endboss.setPercentage(

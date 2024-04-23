@@ -118,14 +118,6 @@ class MoveableObject extends DrawableObject {
     this.currentImage++;
   }
 
-  /* moveRight() {
-    if (this instanceof Character && !this.isAnimating) {
-      this.x += this.speed;
-    } else if (!this instanceof Character) {
-      this.x += this.speed;
-    }
-  } */
-
   moveRight() {
     this.x += this.speed;
   }
