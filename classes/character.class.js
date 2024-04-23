@@ -117,18 +117,22 @@ class Character extends MoveableObject {
       if (this.canThrowBottle()) this.throwBottle();
       if (this.noKeyPressed()) this.idleTimer += 1;
       this.checkIdleAnimation();
-      this.checkLongIdle();
+      this.stopLongIdle();
       this.world.camera_x = -this.x + 100;
     }, 1000 / 60);
   }
 
-  checkLongIdle() {
+  stopLongIdle() {
     if (
       this.world.keyboard.RIGHT ||
       this.world.keyboard.LEFT ||
       this.world.keyboard.SPACE ||
       this.world.keyboard.D
     ) {
+      if (this.longIdleInterval) {
+        clearInterval(this.longIdleInterval);
+        this.longIdleInterval = null;
+      }
       this.stopSnoringSound();
     }
   }
@@ -217,14 +221,24 @@ class Character extends MoveableObject {
     }
   }
 
+  longIdleInterval;
+
   checkIdleAnimation() {
     if (!this.isDead()) {
       if (this.idleTimer >= 60 * 5) {
         // bc 60 frames per second * 5 seconds
-        this.playAnimation(this.IMAGES_LONG_IDLE);
+        if (!this.longIdleInterval) {
+          this.longIdleInterval = setInterval(() => {
+            this.playAnimation(this.IMAGES_LONG_IDLE);
+          }, 100); // adjust this value to change the speed of the animation
+        }
         this.snoring_sound.play();
       } else if (this.idleTimer >= 60 * 0.5) {
         // bc 60 frames per second * 0.5 seconds
+        if (this.longIdleInterval) {
+          clearInterval(this.longIdleInterval);
+          this.longIdleInterval = null;
+        }
         this.playAnimation(this.IMAGES_IDLE);
       }
     }
