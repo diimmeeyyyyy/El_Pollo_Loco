@@ -7,6 +7,14 @@ let soundIsOn = false;
 let fullscreenIsActivated = false;
 let startGame_sound = new Audio("audio/startGame.mp3");
 
+function init() {
+  if (window.innerWidth <= 1030) {
+    document.getElementById("Canvas").style.borderRadius = "unset";
+    document.getElementById("Fullscreen_Button").style.display = "none";
+    document.getElementById("Keyboard_Commands").style.display = "none";
+  }
+}
+
 window.addEventListener("resize", function () {
   let landscape = window.innerWidth > window.innerHeight;
   let turnDevice = document.getElementById("Turn_Device");
@@ -83,7 +91,7 @@ function closeGameOverScreen() {
 }
 
 function mobileButtons() {
-  if (window.innerWidth <= 800) {
+  if (window.innerWidth <= 1030) {
     document.getElementById("Mobile_Movement_Left").style.display = "flex";
     document.getElementById("Mobile_Movement_Right").style.display = "flex";
   }

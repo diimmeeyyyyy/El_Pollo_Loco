@@ -16,10 +16,10 @@ class Endscreen {
       clearInterval(enemy.smallChickenMovementInterval);
       clearInterval(enemy.smallChickenAnimationInterval);
       clearInterval(enemy.smallChickenDirectionChangeInterval);
+      clearInterval(enemy.endbossAlertAnimation);
       clearInterval(enemy.endbossDamageInterval);
       clearInterval(enemy.endbossWakingAnimation);
       clearInterval(enemy.endbossWalkingMovement);
-      clearInterval(enemy.endbossAlertAnimation);
     });
 
     clearInterval(this.world.gameCharacter.characterMovementInterval);

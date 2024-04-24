@@ -82,8 +82,11 @@ class Endboss extends MoveableObject {
   checkEndbossDamage() {
     this.endbossDamageInterval = setInterval(() => {
       if (this.isHurt()) {
+        this.clearEndbossWalkingInterval();
         this.playEndbossIsHurtAnimation();
+        //WALKING ANIMATION WIEDER LAUFEN LASSEN
       } else if (this.isDead(this.endbossEnergy)) {
+        this.clearEndbossWalkingInterval();
         this.playEndbossDeathAnimation();
       }
     }, 200);
@@ -93,7 +96,6 @@ class Endboss extends MoveableObject {
    * Checks the walking status of the end boss at regular intervals
    */
   checkEndbossWalking() {
-    this.clearEndbossWalkingInterval();
     this.endbossWakingAnimation = setInterval(() => {
       if (!this.isHurt() && !this.isDead(this.endbossEnergy)) {
         this.playAnimation(this.IMAGES_WALKING);
@@ -103,24 +105,7 @@ class Endboss extends MoveableObject {
       if (!this.isHurt() || !this.isDead(this.endbossEnergy)) {
         this.moveLeft();
       }
-    }, 1000 / 150);
-    
-    this.endbossAlertAnimation = setInterval(() => {
-      this.stopEndboss();
-
-      // Play the alert animation
-      this.playEndbossAlertAnimation();
-
-      // After the alert animation, play the attack animation
-      setTimeout(() => {
-        this.playEndbossAttackAnimation();
-      }, 1500); // Assuming the alert animation lasts 1 second
-
-      // After the attack, start the endboss again
-      setTimeout(() => {
-        this.checkEndbossWalking();
-      }, 2500); // Assuming the attack lasts 1 second
-    }, 4000);
+    }, 1000 / 800);
   }
 
   clearEndbossWalkingInterval() {
@@ -130,24 +115,16 @@ class Endboss extends MoveableObject {
     if (this.endbossWalkingMovement) {
       clearInterval(this.endbossWalkingMovement);
     }
-    if (this.endbossAlertAnimation) {
-      clearInterval(this.endbossAlertAnimation);
-    }
   }
 
-  stopEndboss() {
-    clearInterval(this.endbossWalkingMovement);
-    clearInterval(this.endbossWakingAnimation);
-  }
-
-  playEndbossAlertAnimation() {
+  /*   playEndbossAlertAnimation() {
     // Play the alert animation
     this.playAnimation(this.IMAGES_ALERT);
   }
 
   playEndbossAttackAnimation() {
     this.playAnimation(this.IMAGES_ATTACK);
-  }
+  } */
 
   /**
    * Plays the hurt animation and sound for the endboss

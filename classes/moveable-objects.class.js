@@ -1,5 +1,6 @@
 class MoveableObject extends DrawableObject {
-  speed = 0.15;
+  /* speed = 0.15; */
+  speed = 0.1;
   otherDirection = false;
   otherDirectionEnemy = false;
   speedY = 0;
@@ -117,10 +118,18 @@ class MoveableObject extends DrawableObject {
   }
 
   moveRight() {
-    this.x += this.speed;
+    if (this instanceof Character) {
+      this.x += 5.0;
+    } else {
+      this.x += this.speed;
+    }
   }
 
   moveLeft() {
-    this.x -= this.speed;
+    if (this instanceof Character) {
+      this.x -= 5.0;
+    } else {
+      this.x -= this.speed;
+    }
   }
 }

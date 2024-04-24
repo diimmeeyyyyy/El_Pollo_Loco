@@ -8,7 +8,7 @@ class Keyboard {
 
   constructor() {
     this.bindKeyPressEvents();
-   /*  this.bindButtonPressEvents(); */
+    /*  this.bindButtonPressEvents(); */
   }
 
   bindKeyPressEvents() {
@@ -73,14 +73,14 @@ class Keyboard {
         e.preventDefault();
         keyboard.LEFT = true;
       });
-  
+
     document
       .getElementById("Walk_Left_Button")
       .addEventListener("touchend", (e) => {
         e.preventDefault();
         keyboard.LEFT = false;
       });
-  
+
     //WALK RIGHT
     document
       .getElementById("Walk_Right_Button")
@@ -88,12 +88,38 @@ class Keyboard {
         e.preventDefault();
         keyboard.RIGHT = true;
       });
-  
+
     document
       .getElementById("Walk_Right_Button")
       .addEventListener("touchend", (e) => {
         e.preventDefault();
         keyboard.RIGHT = false;
       });
+
+    //JUMP
+    document
+      .getElementById("Jump_Button")
+      .addEventListener("touchstart", (e) => {
+        e.preventDefault();
+        keyboard.SPACE = true;
+      });
+
+    document.getElementById("Jump_Button").addEventListener("touchend", (e) => {
+      e.preventDefault();
+      keyboard.SPACE = false;
+    });
+
+    //THROW BOTTLE
+    document
+      .getElementById("Throw_Bottle")
+      .addEventListener("touchstart", (e) => {
+        keyboard.D = true;
+      });
+
+    /* document
+      .getElementById("Throw_Bottle")
+      .addEventListener("touchend", (e) => {
+        keyboard.D = false;
+      }); */
   }
 }
