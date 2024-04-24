@@ -60,32 +60,21 @@ class MoveableObject extends DrawableObject {
     }
   }
 
+  damageValues = {
+    NormalChicken: 5,
+    Endboss: 35,
+  };
+
   gotHitBy(enemy) {
-    if (enemy === "NormalChicken") {
-      this.energy -= 5;
-      if (this.energy < 0) {
-        this.energy = 0;
-      } else {
-        this.lastHit = new Date().getTime(); // thats how i save time in number format
-      }
-    } else if (enemy === "Endboss") {
-      this.energy -= 35;
+    const damage = this.damageValues[enemy];
+    if (damage !== undefined) {
+      this.energy -= damage;
       if (this.energy < 0) {
         this.energy = 0;
       } else {
         this.lastHit = new Date().getTime();
       }
-    }
-
-    this.x -= 50;
-  }
-
-  endbossHit() {
-    this.energy -= 35;
-    if (this.energy < 0) {
-      this.energy = 0;
-    } else {
-      this.lastHit = new Date().getTime();
+      this.x -= 50;
     }
   }
 
