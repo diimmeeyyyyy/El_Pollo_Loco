@@ -5,6 +5,7 @@ let backgroundMusic = new Audio("audio/backgroundMusic.mp3");
 backgroundMusic.loop = true;
 let soundIsOn = false;
 let fullscreenIsActivated = false;
+let startGame_sound = new Audio("audio/startGame.mp3");
 
 window.addEventListener("resize", function () {
   let landscape = window.innerWidth > window.innerHeight;
@@ -58,9 +59,9 @@ function startGame() {
   removeEndscreens();
   world.gameCharacter.reset(); // Setzt den Spielcharakter zurück
   world.checkSound();
-  console.log(
-    "bottlesAmount after newstart is " + world.gameCharacter.bottlesAmount
-  );
+  if (soundIsOn) {
+    startGame_sound.play();
+  }
 }
 
 function removeEndscreens() {

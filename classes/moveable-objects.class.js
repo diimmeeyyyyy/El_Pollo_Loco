@@ -39,7 +39,6 @@ class MoveableObject extends DrawableObject {
       } else {
         this.bottlesAmount = 100;
       }
-      console.log(this.bottlesAmount);
     } else if (object === "coin") {
       if (this.coinAmount < 100) {
         this.coinAmount += 20;
@@ -47,7 +46,6 @@ class MoveableObject extends DrawableObject {
       } else {
         this.coinAmount = 100;
       }
-      console.log(this.coinAmount);
     }
   }
 

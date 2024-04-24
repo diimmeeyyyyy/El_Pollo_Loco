@@ -84,7 +84,7 @@ class Character extends MoveableObject {
     this.checkBottleThrow();
     this.height = 200;
     this.y = 240;
-    this.deadAnimationPlayed = false;
+    /* this.deadAnimationPlayed = false; */
     this.isAlive = true;
     this.bottlesAmount = 0;
     this.speed = 10;
@@ -180,11 +180,9 @@ class Character extends MoveableObject {
 
   throwBottle() {
     this.stopLongIdle();
-    console.log("BottlesAmount is " + this.bottlesAmount);
     if (this.bottlesAmount <= 0) {
       this.playAnimation(this.IMAGES_IDLE);
       this.playSound(this.noBottlesToThrow_sound);
-      console.log("BottlesAmount now" + this.bottlesAmount);
     } else {
       let bottle = new ThrowableObject(this.x + 100, this.y);
       this.world.throwableObjects.push(bottle);
@@ -296,16 +294,12 @@ class Character extends MoveableObject {
   }
 
   playDeathAnimation() {
-    if (!this.deadAnimationPlayed) {
-      this.playAnimation(this.IMAGES_DEAD);
-      this.deadAnimationPlayed = true;
-
-      setTimeout(() => {
-        this.isAlive = false;
-        this.world.gameOver = true;
-        this.world.checkSound();
-      }, 250);
-    }
+    this.playAnimation(this.IMAGES_DEAD);
+    this.world.gameOver = true;
+    this.world.checkSound();
+    setTimeout(() => {
+      this.isAlive = false;
+    }, 700);
   }
 
   stopSnoringSound() {

@@ -66,6 +66,7 @@ class Collision {
           enemy.smallEnemyIsDead = true;
           sound = enemy.jump_on_small_chicken_sound;
           isDead = enemy.smallEnemyIsDead;
+          enemy.y = 370;
         }
 
         enemy.img.src = enemy.IMAGES_DEAD;
@@ -109,7 +110,6 @@ class Collision {
     this.world.level.enemies.forEach((enemy) => {
       if (this.world.gameCharacter.isColliding(enemy)) {
         if (
-          //of normal chicken
           !this.world.gameCharacter.isAboveGround() &&
           (enemy.enemyIsDead === false || enemy.smallEnemyIsDead === false)
         ) {
@@ -131,7 +131,6 @@ class Collision {
         if (bottle.isColliding(enemy)) {
           bottle.splash(bottle.x, bottle.y);
           if (enemy instanceof Endboss && !bottle.hasCollided) {
-            // Check if bottle has not collided before
             bottle.hasCollided = true;
             enemy.endbossIsCollidingBottle();
             this.world.statusBar_endboss.setPercentage(

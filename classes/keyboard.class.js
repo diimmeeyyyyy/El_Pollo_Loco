@@ -13,7 +13,6 @@ class Keyboard {
 
   bindKeyPressEvents() {
     document.addEventListener("keydown", (event) => {
-      /* console.log(event.keyCode); */
       if (event.keyCode == 39) {
         keyboard.RIGHT = true;
       }
@@ -40,7 +39,6 @@ class Keyboard {
     });
 
     document.addEventListener("keyup", (event) => {
-      /*   console.log(event); */
       if (event.keyCode == 39) {
         keyboard.RIGHT = false;
       }

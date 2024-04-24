@@ -1,12 +1,7 @@
 class Endscreen {
-  /* constructor(world) {
-    this.world = world;
-  } */
   world;
 
   showGameOverScreen() {
-    /* this.world.gameOver = true;
-    this.world.checkSound(); */
     let gameOverScreen = document.getElementById("Game_Over_Screen");
     gameOverScreen.classList.remove("d-none");
   }
@@ -24,6 +19,7 @@ class Endscreen {
       clearInterval(enemy.endbossDamageInterval);
       clearInterval(enemy.endbossWakingAnimation);
       clearInterval(enemy.endbossWalkingMovement);
+      clearInterval(enemy.endbossAlertAnimation);
     });
 
     clearInterval(this.world.gameCharacter.characterMovementInterval);

@@ -136,7 +136,7 @@ class World {
     this.ctx.translate(this.camera_x, 0); //forward
 
     // statusBar_endboss
-    if (this.gameCharacter.x >= 2000) {
+    if (this.gameCharacter.x >= this.level.enemies[7].x - 600) {
       this.ctx.translate(-this.camera_x, 0); //back
       this.addToGame(this.statusBar_endboss);
       this.ctx.translate(this.camera_x, 0); //forward
