@@ -56,7 +56,11 @@ function startGame() {
   world = new World(canvas, keyboard);
   keyboard.bindButtonPressEvents();
   removeEndscreens();
+  world.gameCharacter.reset(); // Setzt den Spielcharakter zurück
   world.checkSound();
+  console.log(
+    "bottlesAmount after newstart is " + world.gameCharacter.bottlesAmount
+  );
 }
 
 function removeEndscreens() {

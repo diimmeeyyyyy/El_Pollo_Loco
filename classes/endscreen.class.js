@@ -5,10 +5,10 @@ class Endscreen {
   world;
 
   showGameOverScreen() {
+    /* this.world.gameOver = true;
+    this.world.checkSound(); */
     let gameOverScreen = document.getElementById("Game_Over_Screen");
     gameOverScreen.classList.remove("d-none");
-    this.world.gameOver = true;
-    this.world.checkSound();
   }
 
   stopGame() {
@@ -28,6 +28,16 @@ class Endscreen {
 
     clearInterval(this.world.gameCharacter.characterMovementInterval);
     clearInterval(this.world.gameCharacter.characterAnimationInterval);
+    this.removeThrowEventListener();
+  }
+
+  removeThrowEventListener() {
+    if (this.world.gameCharacter.bottleThrowHandler) {
+      document.removeEventListener(
+        "keydown",
+        this.world.gameCharacter.bottleThrowHandler
+      );
+    }
   }
 
   removeMobileArrows() {

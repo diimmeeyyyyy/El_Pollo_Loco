@@ -25,6 +25,7 @@ class ThrowableObject extends MoveableObject {
     this.y = y;
     this.height = 80;
     this.width = 60;
+    this.hasCollided = false;
     this.applyGravity();
     this.throw();
   }
@@ -47,9 +48,12 @@ class ThrowableObject extends MoveableObject {
   }
 
   splash(bottleX, bottleY) {
+    this.x = bottleX;
+    this.y = bottleY;
+    /*  this.speedX = 0; // Stop horizontal movement */
+    this.speedY = 0;
     clearInterval(this.rotationInterval); // Stop the rotation animation
-    this.x = bottleX; // Set the x-coordinate of the splash animation
-    this.y = bottleY; // Set the y-coordinate of the splash animation
+
     this.playAnimation(this.IMAGES_SALSA_BOTTLE_SPLASH); // Start the splash animation
   }
 }

@@ -1,7 +1,4 @@
 class Character extends MoveableObject {
-  height = 200;
-  y = 240;
-
   IMAGES_IDLE = [
     "img/2_character_pepe/1_idle/idle/I-1.png",
     "img/2_character_pepe/1_idle/idle/I-2.png",
@@ -66,19 +63,6 @@ class Character extends MoveableObject {
 
   IMAGE_GAMEOVER = "img/9_intro_outro_screens/game_over/game over!.png";
   world;
-  speed = 10;
-  bottlesAmount = 0;
-  coinAmount = 0;
-  energy = 100;
-  walking_sound = new Audio("audio/walking.mp3");
-  damage_sound = new Audio("audio/damage.mp3");
-  jump_sound = new Audio("audio/jump.mp3");
-  noBottlesToThrow_sound = new Audio("audio/noBottlesToThrow.mp3");
-  throwBottle_sound = new Audio("audio/throwBottle.mp3");
-  snoring_sound = new Audio("audio/snoring.m4a");
-  deadAnimationPlayed = false;
-  isAlive = true;
-  /* isAnimating = false; */
 
   offset = {
     top: 120,
@@ -97,11 +81,33 @@ class Character extends MoveableObject {
     this.loadImages(this.IMAGES_DEAD);
     this.applyGravity();
     this.animate();
+    this.checkBottleThrow();
+    this.height = 200;
+    this.y = 240;
+    this.deadAnimationPlayed = false;
+    this.isAlive = true;
+    this.bottlesAmount = 0;
+    this.speed = 10;
+    this.coinAmount = 0;
+    this.energy = 100;
+    this.walking_sound = new Audio("audio/walking.mp3");
+    this.damage_sound = new Audio("audio/damage.mp3");
+    this.jump_sound = new Audio("audio/jump.mp3");
+    this.noBottlesToThrow_sound = new Audio("audio/noBottlesToThrow.mp3");
+    this.throwBottle_sound = new Audio("audio/throwBottle.mp3");
+    this.snoring_sound = new Audio("audio/snoring.m4a");
+    this.idleTimer = 0;
+    this.characterMovementInterval;
+    this.characterAnimationInterval;
   }
 
-  idleTimer = 0;
-  characterMovementInterval;
-  characterAnimationInterval;
+  reset() {
+    this.bottlesAmount = 0;
+    this.coinAmount = 0;
+    this.energy = 100;
+    this.deadAnimationPlayed = false;
+    this.isAlive = true;
+  }
 
   animate() {
     this.checkCharacterMovement();
@@ -114,7 +120,7 @@ class Character extends MoveableObject {
       if (this.canMoveRight()) this.moveRight();
       if (this.canMoveLeft()) this.moveLeft();
       if (this.canJump()) this.jump();
-      if (this.canThrowBottle()) this.throwBottle();
+      if (this.canThrowBottle()) this.idleTimer += 1;
       if (this.noKeyPressed()) this.idleTimer += 1;
       this.checkIdleStatus();
       this.world.camera_x = -this.x + 100;
@@ -157,11 +163,34 @@ class Character extends MoveableObject {
     return this.world.keyboard.D;
   }
 
+  checkBottleThrow() {
+    if (this.bottleThrowHandler) {
+      document.removeEventListener("keydown", this.bottleThrowHandler);
+    }
+
+    // Definieren des neuen Event-Listeners
+    this.bottleThrowHandler = (event) => {
+      if (event.key === "d" || event.key === "D") {
+        this.throwBottle();
+      }
+    };
+
+    document.addEventListener("keydown", this.bottleThrowHandler);
+  }
+
   throwBottle() {
     this.stopLongIdle();
+    console.log("BottlesAmount is " + this.bottlesAmount);
     if (this.bottlesAmount <= 0) {
       this.playAnimation(this.IMAGES_IDLE);
       this.playSound(this.noBottlesToThrow_sound);
+      console.log("BottlesAmount now" + this.bottlesAmount);
+    } else {
+      let bottle = new ThrowableObject(this.x + 100, this.y);
+      this.world.throwableObjects.push(bottle);
+      this.bottlesAmount -= 20;
+      this.playSound(this.throwBottle_sound);
+      this.world.statusBar_bottle.setPercentage(this.bottlesAmount, "bottle");
     }
   }
 
@@ -273,6 +302,8 @@ class Character extends MoveableObject {
 
       setTimeout(() => {
         this.isAlive = false;
+        this.world.gameOver = true;
+        this.world.checkSound();
       }, 250);
     }
   }

@@ -60,13 +60,24 @@ class MoveableObject extends DrawableObject {
     }
   }
 
-  hit() {
-    this.energy -= 5;
-    if (this.energy < 0) {
-      this.energy = 0;
-    } else {
-      this.lastHit = new Date().getTime(); // thats how i save time in number format
+  gotHitBy(enemy) {
+    if (enemy === "NormalChicken") {
+      this.energy -= 5;
+      if (this.energy < 0) {
+        this.energy = 0;
+      } else {
+        this.lastHit = new Date().getTime(); // thats how i save time in number format
+      }
+    } else if (enemy === "Endboss") {
+      this.energy -= 35;
+      if (this.energy < 0) {
+        this.energy = 0;
+      } else {
+        this.lastHit = new Date().getTime();
+      }
     }
+
+    this.x -= 50;
   }
 
   endbossHit() {

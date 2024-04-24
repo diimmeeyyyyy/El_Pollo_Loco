@@ -102,7 +102,6 @@ class Collision {
 
   checkCollisionInterval() {
     this.checkCollisions();
-    this.checkThrowableObjects();
     this.checkBottleCollision();
   }
 
@@ -114,11 +113,9 @@ class Collision {
           !this.world.gameCharacter.isAboveGround() &&
           (enemy.enemyIsDead === false || enemy.smallEnemyIsDead === false)
         ) {
-          this.world.gameCharacter.hit();
-          this.world.gameCharacter.x -= 50;
-          console.log("SCHADEN");
+          this.world.gameCharacter.gotHitBy("NormalChicken");
         } else if (enemy instanceof Endboss && enemy.endbossIsAlive === true) {
-          this.world.gameCharacter.endbossHit();
+          this.world.gameCharacter.gotHitBy("Endboss");
         }
         this.world.statusBar_health.setPercentage(
           this.world.gameCharacter.energy,
@@ -128,29 +125,14 @@ class Collision {
     });
   }
 
-  checkThrowableObjects() {
-    if (this.world.keyboard.D && this.world.gameCharacter.bottlesAmount > 0) {
-      this.world.gameCharacter.idleTimer = 0;
-      let bottle = new ThrowableObject(
-        this.world.gameCharacter.x + 100,
-        this.world.gameCharacter.y
-      );
-      this.world.throwableObjects.push(bottle);
-      this.world.gameCharacter.bottlesAmount -= 20;
-      this.world.gameCharacter.throwBottle_sound.play();
-      this.world.statusBar_bottle.setPercentage(
-        this.world.gameCharacter.bottlesAmount,
-        "bottle"
-      );
-    }
-  }
-
   checkBottleCollision() {
     this.world.throwableObjects.forEach((bottle) => {
       this.world.level.enemies.forEach((enemy) => {
         if (bottle.isColliding(enemy)) {
-           bottle.splash(bottle.x, bottle.y);
-          if (enemy instanceof Endboss) {
+          bottle.splash(bottle.x, bottle.y);
+          if (enemy instanceof Endboss && !bottle.hasCollided) {
+            // Check if bottle has not collided before
+            bottle.hasCollided = true;
             enemy.endbossIsCollidingBottle();
             this.world.statusBar_endboss.setPercentage(
               enemy.endbossEnergy,
@@ -179,12 +161,15 @@ class Collision {
             isDead = enemy.smallEnemyIsDead;
           }
 
-          enemy.img.src = enemy.IMAGES_DEAD;
-          sound.play();
-          if (isDead) {
-            setTimeout(() => {
-              enemy.img = null;
-            }, 2000);
+          if (enemy.img) {
+            // Check if enemy.img is not null
+            enemy.img.src = enemy.IMAGES_DEAD;
+            sound.play();
+            if (isDead) {
+              setTimeout(() => {
+                enemy.img = null;
+              }, 2000);
+            }
           }
         }
       });
