@@ -32,6 +32,7 @@ class World {
       this.level.enemies[6].jump_on_small_chicken_sound,
       this.level.enemies[7].endboss_damage_sound,
       this.level.enemies[7].endboss_eliminated_sound,
+      this.level.enemies[7].endboss_alert_sound,
       this.gameOver_sound,
       this.gameWin_sound,
     ];
@@ -180,7 +181,7 @@ class World {
       this.flipImage(moveableObject);
     }
     moveableObject.draw(this.ctx);
-    moveableObject.drawFrame(this.ctx);
+   /*  moveableObject.drawFrame(this.ctx); */
 
     if (moveableObject.otherDirection || moveableObject.otherDirectionEnemy) {
       this.flipImageBack(moveableObject);

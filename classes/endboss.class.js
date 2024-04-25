@@ -33,17 +33,6 @@ class Endboss extends MoveableObject {
     "img/4_enemie_boss_chicken/2_alert/G12.png",
   ];
 
-  IMAGES_ATTACK = [
-    "img/4_enemie_boss_chicken/3_attack/G13.png",
-    "img/4_enemie_boss_chicken/3_attack/G14.png",
-    "img/4_enemie_boss_chicken/3_attack/G15.png",
-    "img/4_enemie_boss_chicken/3_attack/G16.png",
-    "img/4_enemie_boss_chicken/3_attack/G17.png",
-    "img/4_enemie_boss_chicken/3_attack/G18.png",
-    "img/4_enemie_boss_chicken/3_attack/G19.png",
-    "img/4_enemie_boss_chicken/3_attack/G20.png",
-  ];
-
   IMAGES_DEAD = [
     "img/4_enemie_boss_chicken/5_dead/G24.png",
     "img/4_enemie_boss_chicken/5_dead/G25.png",
@@ -63,7 +52,6 @@ class Endboss extends MoveableObject {
     this.loadImages(this.IMAGES_HURT);
     this.loadImages(this.IMAGES_DEAD);
     this.loadImages(this.IMAGES_ALERT);
-    this.loadImages(this.IMAGES_ATTACK);
     this.x = 2900;
     this.animate();
   }
@@ -85,15 +73,26 @@ class Endboss extends MoveableObject {
       if (this.isHurt()) {
         this.clearEndbossWalkingInterval();
         this.playEndbossIsHurtAnimation();
-        this.playEndbossAlertAnimation();
-        this.playEndbossIsAttackingAnimation();
+        setTimeout(() => {
+          this.playEndbossAlertAnimation();
+        }, 750);
         this.startEndbossWalkingInterval();
+        this.increaseSpeedAfterDamage();
       } else if (this.isDead(this.endbossEnergy)) {
         this.speed = 0;
         this.clearEndbossWalkingInterval();
         this.playEndbossDeathAnimation();
       }
-    }, /* 200 */ 250);
+    }, /* 200 */ 100);
+  }
+
+  /**
+   * This function increases the speed of the end boss by 0.2 units
+   * intended to be called after the end boss takes damage
+   * making the boss move faster as a response to being hurt
+   */
+  increaseSpeedAfterDamage() {
+    this.speed += 0.25;
   }
 
   /**
@@ -135,26 +134,13 @@ class Endboss extends MoveableObject {
   }
 
   /**
-   * Plays the attack animation for the endboss
-   */
-  playEndbossIsAttackingAnimation() {
-    setTimeout(() => {
-      if (!this.isDead(this.endbossEnergy)) {
-        this.playAnimation(this.IMAGES_ATTACK);
-      }
-    }, 2000);
-  }
-
-  /**
    * Plays the alert animation for the endboss
    */
   playEndbossAlertAnimation() {
-    setTimeout(() => {
-      if (!this.isDead(this.endbossEnergy)) {
-        this.endboss_alert_sound.play();
-        this.playAnimation(this.IMAGES_ALERT);
-      }
-    }, 1500);
+    if (!this.isDead(this.endbossEnergy)) {
+      this.endboss_alert_sound.play();
+      this.playAnimation(this.IMAGES_ALERT);
+    }
   }
 
   /**
@@ -174,9 +160,8 @@ class Endboss extends MoveableObject {
       this.playAnimation(this.IMAGES_DEAD);
       this.endboss_eliminated_sound.play();
 
-      this.clearEndbossWalkingInterval();
-
       setTimeout(() => {
+        this.clearEndbossWalkingInterval();
         this.endbossIsAlive = false;
       }, 1000);
     }

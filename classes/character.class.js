@@ -71,6 +71,9 @@ class Character extends MoveableObject {
     left: 20,
   };
 
+  /**
+   * Constructor for the Character class
+   */
   constructor() {
     super().loadImage("img/2_character_pepe/1_idle/idle/I-1.png");
     this.loadImages(this.IMAGES_IDLE);
@@ -84,7 +87,6 @@ class Character extends MoveableObject {
     this.checkBottleThrow();
     this.height = 200;
     this.y = 240;
-    /* this.deadAnimationPlayed = false; */
     this.isAlive = true;
     this.bottlesAmount = 0;
     this.speed = 5;
@@ -101,6 +103,9 @@ class Character extends MoveableObject {
     this.characterAnimationInterval;
   }
 
+  /**
+   * resets game when starting
+   */
   reset() {
     this.bottlesAmount = 0;
     this.coinAmount = 0;
@@ -109,11 +114,17 @@ class Character extends MoveableObject {
     this.isAlive = true;
   }
 
+  /**
+   * Is responsible for animating the character
+   */
   animate() {
     this.checkCharacterMovement();
     this.checkCharacterAnimation();
   }
 
+  /**
+   * Checks and updates the character's movement every 1/60th of a second (to match 60 FPS)
+   */
   checkCharacterMovement() {
     this.characterMovementInterval = setInterval(() => {
       this.walking_sound.pause();
@@ -127,10 +138,17 @@ class Character extends MoveableObject {
     }, 1000 / 60);
   }
 
+  /**
+   * Checks if the character can move to the right
+   * @returns {boolean} - Returns true if the character can move to the right, false otherwise
+   */
   canMoveRight() {
     return this.world.keyboard.RIGHT && this.x < this.world.level.levelEndX;
   }
 
+  /**
+   * Moves the character to the right
+   */
   moveRight() {
     this.stopLongIdle();
     super.moveRight();
@@ -138,10 +156,17 @@ class Character extends MoveableObject {
     this.playSound(this.walking_sound);
   }
 
+  /**
+   * Checks if the character can move to the right
+   * @returns {boolean} - Returns true if the character can move to the left, false otherwise
+   */
   canMoveLeft() {
     return this.world.keyboard.LEFT && this.x > 0;
   }
 
+  /**
+   * Moves the character to the left
+   */
   moveLeft() {
     this.stopLongIdle();
     super.moveLeft();
@@ -149,20 +174,34 @@ class Character extends MoveableObject {
     this.playSound(this.walking_sound);
   }
 
+  /**
+   *
+   * @returns - Returns true if the character can jump, false otherwise
+   */
   canJump() {
     return this.world.keyboard.SPACE && !this.isAboveGround();
   }
 
+  /**
+   * Makes the character jump
+   */
   jump() {
     this.stopLongIdle();
     this.speedY = 30;
     this.jump_sound.play();
   }
 
+  /**
+   * Checks if the character can throw a bottle
+   * @returns {boolean} - Returns true if the 'D' key is being pressed, false otherwise
+   */
   canThrowBottle() {
     return this.world.keyboard.D;
   }
 
+  /**
+   * Checks if the 'D' key is pressed to throw a bottle
+   */
   checkBottleThrow() {
     if (this.bottleThrowHandler) {
       document.removeEventListener("keydown", this.bottleThrowHandler);
@@ -177,6 +216,9 @@ class Character extends MoveableObject {
     document.addEventListener("keydown", this.bottleThrowHandler);
   }
 
+  /**
+   * Throws a bottle if the character has any, otherwise plays a sound indicating no bottles left
+   */
   throwBottle() {
     this.stopLongIdle();
     if (this.bottlesAmount <= 0) {
@@ -191,6 +233,10 @@ class Character extends MoveableObject {
     }
   }
 
+  /**
+   * Checks if no keys are being pressed
+   * @returns {boolean} - Returns true if no keys (SPACE, RIGHT, LEFT, D) are being pressed, false otherwise
+   */
   noKeyPressed() {
     return (
       !this.world.keyboard.SPACE &&
@@ -200,6 +246,10 @@ class Character extends MoveableObject {
     );
   }
 
+  /**
+   * Checks if keys are being pressed
+   * @returns {boolean} - Returns true if keys (SPACE, RIGHT, LEFT, D) are being pressed, false otherwise
+   */
   keyPressed() {
     return (
       this.world.keyboard.SPACE &&
@@ -209,6 +259,9 @@ class Character extends MoveableObject {
     );
   }
 
+  /**
+   * Checks and updates the character's animation every 50 milliseconds
+   */
   checkCharacterAnimation() {
     this.characterAnimationInterval = setInterval(() => {
       if (this.isDead(this.energy)) {
@@ -220,9 +273,12 @@ class Character extends MoveableObject {
       } else if (this.isHurt()) {
         this.playHurtAnimation();
       }
-    }, 100);
+    }, 50);
   }
 
+  /**
+   * Plays the hurt animation and sound for the character
+   */
   playHurtAnimation() {
     this.stopLongIdle();
     this.stopSnoringSound();
@@ -230,6 +286,10 @@ class Character extends MoveableObject {
     this.playSound(this.damage_sound);
   }
 
+  /**
+   * Plays a given sound if the character is not above the ground and the sound is not already playing
+   * @param {*} sound - Sound to be played
+   */
   playSound(sound) {
     if (!this.isAboveGround() && sound.paused) {
       sound.play();
@@ -239,6 +299,9 @@ class Character extends MoveableObject {
   idleInterval;
   longIdleInterval;
 
+  /**
+   * Checks the idle status of the character
+   */
   checkIdleStatus() {
     if (this.keyPressed()) {
       this.stopLongIdle();
@@ -246,6 +309,9 @@ class Character extends MoveableObject {
     this.checkIdleAnimation();
   }
 
+  /**
+   *  Checks if the idle or long idle animation should be played
+   */
   checkIdleAnimation() {
     if (!this.isDead()) {
       if (this.idleTimer >= 60 * 5) {
@@ -259,6 +325,9 @@ class Character extends MoveableObject {
     }
   }
 
+  /**
+   * Plays the idle animation for the character
+   */
   playIdleAnimation() {
     if (!this.idleInterval) {
       this.idleInterval = setInterval(() => {
@@ -267,6 +336,9 @@ class Character extends MoveableObject {
     }
   }
 
+  /**
+   * Stops the idle animation for the character
+   */
   stopIdleAnimation() {
     if (this.idleInterval) {
       clearInterval(this.idleInterval);
@@ -274,6 +346,9 @@ class Character extends MoveableObject {
     }
   }
 
+  /**
+   * Plays the long idle animation for the character
+   */
   playLongIdleAnimation() {
     if (!this.longIdleInterval) {
       this.longIdleInterval = setInterval(() => {
@@ -283,6 +358,9 @@ class Character extends MoveableObject {
     this.snoring_sound.play();
   }
 
+  /**
+   * Stops the long idle animation for the character
+   */
   stopLongIdle() {
     if (this.longIdleInterval) {
       clearInterval(this.longIdleInterval);
@@ -292,6 +370,9 @@ class Character extends MoveableObject {
     this.idleTimer = 0;
   }
 
+  /**
+   * Plays the death animation and sound for the character
+   */
   playDeathAnimation() {
     this.playAnimation(this.IMAGES_DEAD);
     this.world.gameOver = true;
@@ -301,6 +382,9 @@ class Character extends MoveableObject {
     }, 700);
   }
 
+  /**
+   * Stops the snoring sound of long idle animation
+   */
   stopSnoringSound() {
     this.snoring_sound.pause();
     this.snoring_sound.currentTime = 0;

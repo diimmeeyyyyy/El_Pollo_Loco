@@ -18,11 +18,6 @@ class MoveableObject extends DrawableObject {
     left: 0,
   };
 
-  /* setStoppableInterval(fn, time) {
-    let id = setInterval(fn, time);
-    this.intervalIDs.push(id);
-  } */
-
   isColliding(mo) {
     return (
       this.x + this.width - this.offset.right > mo.x + mo.offset.left && //CHECK RIGHT -> LEFT
