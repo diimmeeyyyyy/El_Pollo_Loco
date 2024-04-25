@@ -92,6 +92,7 @@ class Character extends MoveableObject {
     this.speed = 5;
     this.coinAmount = 0;
     this.energy = 100;
+    this.isHurt = false;
     this.walking_sound = new Audio("audio/walking.mp3");
     this.damage_sound = new Audio("audio/damage.mp3");
     this.jump_sound = new Audio("audio/jump.mp3");
@@ -143,7 +144,11 @@ class Character extends MoveableObject {
    * @returns {boolean} - Returns true if the character can move to the right, false otherwise
    */
   canMoveRight() {
-    return this.world.keyboard.RIGHT && this.x < this.world.level.levelEndX;
+    return (
+      this.world.keyboard.RIGHT &&
+      this.x < this.world.level.levelEndX &&
+      !this.isHurt
+    );
   }
 
   /**
@@ -161,7 +166,7 @@ class Character extends MoveableObject {
    * @returns {boolean} - Returns true if the character can move to the left, false otherwise
    */
   canMoveLeft() {
-    return this.world.keyboard.LEFT && this.x > 0;
+    return this.world.keyboard.LEFT && this.x > 0 && !this.isHurt;
   }
 
   /**
@@ -270,8 +275,6 @@ class Character extends MoveableObject {
         this.playAnimation(this.IMAGES_JUMPING);
       } else if (this.world.keyboard.RIGHT || this.world.keyboard.LEFT) {
         this.playAnimation(this.IMAGES_WALKING);
-      } else if (this.isHurt()) {
-        this.playHurtAnimation();
       }
     }, 50);
   }
@@ -279,11 +282,48 @@ class Character extends MoveableObject {
   /**
    * Plays the hurt animation and sound for the character
    */
-  playHurtAnimation() {
+  characterIsHurtAnimationInterval;
+  hurtAnimation() {
     this.stopLongIdle();
     this.stopSnoringSound();
-    this.playAnimation(this.IMAGES_HURT);
-    this.playSound(this.damage_sound);
+    this.characterIsHurtAnimationInterval = setInterval(() => {
+      this.playAnimation(this.IMAGES_HURT);
+      this.playSound(this.damage_sound);
+    }, 100);
+  }
+
+  playHurtAnimation() {
+    this.hurtAnimation();
+
+    setTimeout(() => {
+      this.isHurt = false;
+      clearInterval(this.characterIsHurtAnimationInterval);
+    }, 500);
+  }
+
+  damageValues = {
+    NormalChicken: 20,
+    Endboss: 40,
+  };
+
+  /**
+   * Handles loss of energy when character is colliding enemy
+   * @param {string} enemy - The enemy that the character is colliding with
+   */
+  gotHitBy(enemy) {
+    this.isHurt = true;
+    const damage = this.damageValues[enemy];
+    if (damage !== undefined) {
+      this.energy -= damage;
+      if (this.energy < 0) {
+        this.energy = 0;
+      } else {
+        this.lastHit = new Date().getTime();
+      }
+      this.x -= 75;
+
+      this.playHurtAnimation();
+    }
   }
 
   /**

@@ -30,6 +30,7 @@ class Endscreen {
 
     clearInterval(this.world.gameCharacter.characterMovementInterval);
     clearInterval(this.world.gameCharacter.characterAnimationInterval);
+    clearInterval(this.world.gameCharacter.characterIsHurtAnimationInterval)
     this.removeThrowEventListener();
   }
 

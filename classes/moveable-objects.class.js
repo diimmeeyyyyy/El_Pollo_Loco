@@ -65,28 +65,6 @@ class MoveableObject extends DrawableObject {
     }
   }
 
-  damageValues = {
-    NormalChicken: 20,
-    Endboss: 40,
-  };
-
-  /**
-   * Handles loss of energy when character is colliding enemy
-   * @param {string} enemy - The enemy that the character is colliding with
-   */
-  gotHitBy(enemy) {
-    const damage = this.damageValues[enemy];
-    if (damage !== undefined) {
-      this.energy -= damage;
-      if (this.energy < 0) {
-        this.energy = 0;
-      } else {
-        this.lastHit = new Date().getTime();
-      }
-      this.x -= 50;
-    }
-  }
-
   /**
    * Checks if the current object is hurt
    * @returns {boolean} - Returns true if the current object was hit within the last second, false otherwise
