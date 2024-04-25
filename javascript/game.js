@@ -12,6 +12,8 @@ function init() {
     document.getElementById("Canvas").style.borderRadius = "unset";
     document.getElementById("Fullscreen_Button").style.display = "none";
     document.getElementById("Keyboard_Commands").style.display = "none";
+    document.querySelector(".game-over-img").style.borderRadius = "unset";
+    document.querySelector(".win-img").style.borderRadius = "unset";
   }
 }
 
@@ -63,10 +65,14 @@ function startGame() {
   canvas = document.getElementById("Canvas");
   initLevel();
   world = new World(canvas, keyboard);
-  keyboard.bindButtonPressEvents();
+  keyboard.bindButtonPressEvents(world);
   removeEndscreens();
-  world.gameCharacter.reset(); // Setzt den Spielcharakter zurück
+  world.gameCharacter.reset();
   world.checkSound();
+  startGameSound();
+}
+
+function startGameSound() {
   if (soundIsOn) {
     startGame_sound.play();
   }

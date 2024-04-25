@@ -87,7 +87,7 @@ class Character extends MoveableObject {
     /* this.deadAnimationPlayed = false; */
     this.isAlive = true;
     this.bottlesAmount = 0;
-    this.speed = 10;
+    this.speed = 5;
     this.coinAmount = 0;
     this.energy = 100;
     this.walking_sound = new Audio("audio/walking.mp3");
@@ -168,7 +168,6 @@ class Character extends MoveableObject {
       document.removeEventListener("keydown", this.bottleThrowHandler);
     }
 
-    // Definieren des neuen Event-Listeners
     this.bottleThrowHandler = (event) => {
       if (event.key === "d" || event.key === "D") {
         this.throwBottle();

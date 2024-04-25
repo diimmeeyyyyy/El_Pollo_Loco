@@ -1,6 +1,6 @@
 class MoveableObject extends DrawableObject {
   /* speed = 0.15; */
-  speed = 2.0;
+  speed;
   otherDirection = false;
   otherDirectionEnemy = false;
   speedY = 0;
@@ -60,8 +60,8 @@ class MoveableObject extends DrawableObject {
   }
 
   damageValues = {
-    NormalChicken: 5,
-    Endboss: 35,
+    NormalChicken: 20,
+    Endboss: 40,
   };
 
   gotHitBy(enemy) {
@@ -118,18 +118,10 @@ class MoveableObject extends DrawableObject {
   }
 
   moveRight() {
-    if (this instanceof Character) {
-      this.x += 5.0;
-    } else {
       this.x += this.speed;
-    }
   }
 
   moveLeft() {
-    if (this instanceof Character) {
-      this.x -= 5.0;
-    } else {
       this.x -= this.speed;
-    }
   }
 }

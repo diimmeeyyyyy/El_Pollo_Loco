@@ -2,6 +2,7 @@ class Endboss extends MoveableObject {
   height = 400;
   width = 250;
   y = 70;
+  speed = 0.7;
   isDeadAnimationPlayed = false;
   endboss_damage_sound = new Audio("audio/endboss-damage.mp3");
   endboss_eliminated_sound = new Audio("audio/endboss_eliminated.mp3");
@@ -84,15 +85,15 @@ class Endboss extends MoveableObject {
       if (this.isHurt()) {
         this.clearEndbossWalkingInterval();
         this.playEndbossIsHurtAnimation();
-        setTimeout(() => {
-          this.checkEndbossWalking();
-        }, 1000);
-        //WALKING ANIMATION WIEDER LAUFEN LASSEN
+        this.playEndbossAlertAnimation();
+        this.playEndbossIsAttackingAnimation();
+        this.startEndbossWalkingInterval();
       } else if (this.isDead(this.endbossEnergy)) {
+        this.speed = 0;
         this.clearEndbossWalkingInterval();
         this.playEndbossDeathAnimation();
       }
-    }, 200);
+    }, /* 200 */ 250);
   }
 
   /**
@@ -112,6 +113,9 @@ class Endboss extends MoveableObject {
     }, 1000 / 80);
   }
 
+  /**
+   * Clears the interval for the endboss´s walking animation & movement, to let endboss stop
+   */
   clearEndbossWalkingInterval() {
     if (this.endbossWakingAnimation) {
       clearInterval(this.endbossWakingAnimation);
@@ -119,6 +123,38 @@ class Endboss extends MoveableObject {
     if (this.endbossWalkingMovement) {
       clearInterval(this.endbossWalkingMovement);
     }
+  }
+
+  /**
+   * Starts an Interval for the endboss to begin walking after a delay of 1 second
+   */
+  startEndbossWalkingInterval() {
+    setTimeout(() => {
+      this.checkEndbossWalking();
+    }, 2000);
+  }
+
+  /**
+   * Plays the attack animation for the endboss
+   */
+  playEndbossIsAttackingAnimation() {
+    setTimeout(() => {
+      if (!this.isDead(this.endbossEnergy)) {
+        this.playAnimation(this.IMAGES_ATTACK);
+      }
+    }, 2000);
+  }
+
+  /**
+   * Plays the alert animation for the endboss
+   */
+  playEndbossAlertAnimation() {
+    setTimeout(() => {
+      if (!this.isDead(this.endbossEnergy)) {
+        this.endboss_alert_sound.play();
+        this.playAnimation(this.IMAGES_ALERT);
+      }
+    }, 1500);
   }
 
   /**
@@ -137,6 +173,8 @@ class Endboss extends MoveableObject {
       this.isDeadAnimationPlayed = true;
       this.playAnimation(this.IMAGES_DEAD);
       this.endboss_eliminated_sound.play();
+
+      this.clearEndbossWalkingInterval();
 
       setTimeout(() => {
         this.endbossIsAlive = false;

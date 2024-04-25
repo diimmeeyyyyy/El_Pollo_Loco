@@ -65,7 +65,7 @@ class Keyboard {
     });
   }
 
-  bindButtonPressEvents() {
+  bindButtonPressEvents(world) {
     //WALK LEFT
     document
       .getElementById("Walk_Left_Button")
@@ -113,13 +113,14 @@ class Keyboard {
     document
       .getElementById("Throw_Bottle")
       .addEventListener("touchstart", (e) => {
-        keyboard.D = true;
+        world.gameCharacter.throwBottle();
       });
 
     /* document
       .getElementById("Throw_Bottle")
       .addEventListener("touchend", (e) => {
         keyboard.D = false;
+        console.log("TOUCHEND MAN");
       }); */
   }
 }
