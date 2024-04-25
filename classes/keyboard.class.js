@@ -6,11 +6,16 @@ class Keyboard {
   SPACE = false;
   D = false;
 
+  /**
+   * Constructor for the Keyboard class
+   */
   constructor() {
     this.bindKeyPressEvents();
-    /*  this.bindButtonPressEvents(); */
   }
 
+  /**
+   * Binds key press events to their respective handlers
+   */
   bindKeyPressEvents() {
     document.addEventListener("keydown", (event) => {
       if (event.keyCode == 39) {
@@ -65,6 +70,14 @@ class Keyboard {
     });
   }
 
+  /**
+   * Binds touch events to their respective handlers for mobile devices
+   * @param {*} world - The game world
+   * 
+   * * It adds event listeners for the touchstart and touchend events on the mobile control buttons
+   * When a button is pressed (touchstart), the corresponding property on the keyboard object is set to true
+   * When a button is released (touchend), the corresponding property on the keyboard object is set to false
+   */
   bindButtonPressEvents(world) {
     //WALK LEFT
     document
@@ -115,12 +128,5 @@ class Keyboard {
       .addEventListener("touchstart", (e) => {
         world.gameCharacter.throwBottle();
       });
-
-    /* document
-      .getElementById("Throw_Bottle")
-      .addEventListener("touchend", (e) => {
-        keyboard.D = false;
-        console.log("TOUCHEND MAN");
-      }); */
   }
 }

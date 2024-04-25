@@ -46,6 +46,9 @@ class Endboss extends MoveableObject {
     left: 20,
   };
 
+  /**
+   * Constructor for the Endboss class
+   */
   constructor() {
     super().loadImage(this.IMAGES_WALKING[0]);
     this.loadImages(this.IMAGES_WALKING);
@@ -60,6 +63,9 @@ class Endboss extends MoveableObject {
   endbossDamageInterval;
   endbossWalkingMovement;
 
+  /**
+   * Animates the end boss character
+   */
   animate() {
     this.checkEndbossDamage();
     this.checkEndbossWalking();

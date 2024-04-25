@@ -7,6 +7,9 @@ let soundIsOn = false;
 let fullscreenIsActivated = false;
 let startGame_sound = new Audio("audio/startGame.mp3");
 
+/**
+ * Initializes the game settings based on the window size
+ */
 function init() {
   if (window.innerWidth <= 1030) {
     document.getElementById("Canvas").style.borderRadius = "unset";
@@ -17,6 +20,9 @@ function init() {
   }
 }
 
+/**
+ * When the window is resized, it checks if the window is in landscape mode (width greater than height)
+ */
 window.addEventListener("resize", function () {
   let landscape = window.innerWidth > window.innerHeight;
   let turnDevice = document.getElementById("Turn_Device");
@@ -27,6 +33,9 @@ window.addEventListener("resize", function () {
   }
 });
 
+/**
+ * Toggles the fullscreen mode of the game
+ */
 function showFullscreen() {
   let fullscreen = document.getElementById("Start_Screen");
   if (!fullscreenIsActivated) {
@@ -38,6 +47,10 @@ function showFullscreen() {
   }
 }
 
+/**
+ * Enters fullscreen mode for the given element
+ * @param {object} element
+ */
 function enterFullscreen(element) {
   if (element.requestFullscreen) {
     element.requestFullscreen();
@@ -50,6 +63,9 @@ function enterFullscreen(element) {
   }
 }
 
+/**
+ * Exits fullscreen mode for the given element
+ */
 function exitFullscreen() {
   if (document.exitFullscreen) {
     document.exitFullscreen();
@@ -58,6 +74,9 @@ function exitFullscreen() {
   }
 }
 
+/**
+ * Starts the game
+ */
 function startGame() {
   removeStartGameButton();
   centerKeyboardCommandDiv();
@@ -69,33 +88,51 @@ function startGame() {
   removeEndscreens();
   world.gameCharacter.reset();
   world.checkSound();
-  startGameSound();
+  checkStartGameSound();
 }
 
-function startGameSound() {
+/**
+ * Checks if the sound is on and plays the start game sound if it is
+ */
+function checkStartGameSound() {
   if (soundIsOn) {
     startGame_sound.play();
   }
 }
 
+/**
+ * Removes any end screens from the game
+ */
 function removeEndscreens() {
   closeGameOverScreen();
   closeWinScreen();
 }
 
+/**
+ * Stops the game win music when starting the game
+ */
 function stopWinMusic() {
   world.gameWin_sound.pause();
   world.gameWin_sound.currentTime = 0;
 }
 
+/**
+ * Closes the game win screen
+ */
 function closeWinScreen() {
   document.getElementById("Win_Screen").classList.add("d-none");
 }
 
+/**
+ * Closes the game over screen
+ */
 function closeGameOverScreen() {
   document.getElementById("Game_Over_Screen").classList.add("d-none");
 }
 
+/**
+ * Displays the mobile buttons for movement if the window width is less than or equal to 1030 pixels
+ */
 function mobileButtons() {
   if (window.innerWidth <= 1030) {
     document.getElementById("Mobile_Movement_Left").style.display = "flex";
@@ -103,11 +140,17 @@ function mobileButtons() {
   }
 }
 
+/**
+ * Removes the start game button and the policy button from the screen
+ */
 function removeStartGameButton() {
   document.getElementById("Start_Game_Button").style.display = "none";
   document.getElementById("Policy_Btn").style.display = "none";
 }
 
+/**
+ * Centers the keyboard command div on the screen
+ */
 function centerKeyboardCommandDiv() {
   let targetDiv = document.querySelector(".fullscreen-and-sound-div");
   targetDiv.style.left = "50%";
@@ -117,6 +160,9 @@ function centerKeyboardCommandDiv() {
   targetDiv.appendChild(keyboardInstructionsImg);
 }
 
+/**
+ * Displays the keyboard commands in a pop-up
+ */
 function showKeyboardCommands() {
   let popUpBackground = document.createElement("div");
   popUpBackground.classList.add("pop-up-backdrop");
@@ -130,6 +176,10 @@ function showKeyboardCommands() {
     });
 }
 
+/**
+ * Generates the HTML for the keyboard commands pop-up
+ * @returns {string} The HTML string for the keyboard commands pop-up
+ */
 function generateKeyboardCommandsHTML() {
   return /*html*/ `
 <div class="keyboard-instructions">
@@ -160,6 +210,9 @@ function generateKeyboardCommandsHTML() {
   `;
 }
 
+/**
+ * Displays the policy information on the screen
+ */
 function showPolicy() {
   document.getElementById("Canvas").style.display = "none";
   document.getElementById("Start_Game_Button").style.display = "none";
@@ -188,12 +241,18 @@ function showPolicy() {
     `;
 }
 
+/**
+ * Closes the policy information on the screen
+ */
 function closePolicy() {
   document.getElementById("Policy").style.display = "none";
   document.getElementById("Canvas").style.display = "flex";
   document.getElementById("Start_Game_Button").style.display = "flex";
 }
 
+/**
+ * Toggles the game sound on or off
+ */
 function turnSoundOnOrOff() {
   if (!soundIsOn) {
     soundIsOn = true;

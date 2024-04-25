@@ -4,6 +4,11 @@ class World {
   keyboard;
   camera_x = 0;
 
+  /**
+   * Constructor for the World class
+   * @param {object} canvas - The canvas on which the game world is drawn
+   * @param {object} keyboard - The keyboard object that handles keyboard input
+   */
   constructor(canvas, keyboard) {
     this.ctx = canvas.getContext("2d");
     this.canvas = canvas;
@@ -50,7 +55,7 @@ class World {
   }
 
   /**
-   * Used to check if sound is turned on/ off
+   * Check if sound is turned on/ off
    */
   checkSound() {
     if (!soundIsOn) {

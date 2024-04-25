@@ -1,5 +1,4 @@
 class MoveableObject extends DrawableObject {
-  /* speed = 0.15; */
   speed;
   otherDirection = false;
   otherDirectionEnemy = false;
@@ -18,6 +17,11 @@ class MoveableObject extends DrawableObject {
     left: 0,
   };
 
+  /**
+   * Checks if the current object is colliding with another moveable object
+   * @param {MoveableObject} mo - The other moveable object to check for collision
+   * @returns {boolean} - Returns true if the current object is colliding with the other moveable object, false otherwise
+   */
   isColliding(mo) {
     return (
       this.x + this.width - this.offset.right > mo.x + mo.offset.left && //CHECK RIGHT -> LEFT
@@ -27,6 +31,10 @@ class MoveableObject extends DrawableObject {
     );
   }
 
+  /**
+   * Handles the collection of objects by the character
+   * @param {string} object - The type of object being collected
+   */
   isCollecting(object) {
     if (object === "bottle") {
       if (this.bottlesAmount < 100) {
@@ -45,6 +53,9 @@ class MoveableObject extends DrawableObject {
     }
   }
 
+  /**
+   * Handles the collision between the endboss and a bottle
+   */
   endbossIsCollidingBottle() {
     this.endbossEnergy -= 25;
     if (this.endbossEnergy < 0) {
@@ -59,6 +70,10 @@ class MoveableObject extends DrawableObject {
     Endboss: 40,
   };
 
+  /**
+   * Handles loss of energy when character is colliding enemy
+   * @param {string} enemy - The enemy that the character is colliding with
+   */
   gotHitBy(enemy) {
     const damage = this.damageValues[enemy];
     if (damage !== undefined) {
@@ -72,21 +87,31 @@ class MoveableObject extends DrawableObject {
     }
   }
 
+  /**
+   * Checks if the current object is hurt
+   * @returns {boolean} - Returns true if the current object was hit within the last second, false otherwise
+   */
   isHurt() {
     let timepassed = new Date().getTime() - this.lastHit; // difference in ms
     timepassed = timepassed / 1000; // differnce in seconds
     return timepassed < 1;
   }
 
+  /**
+   * Checks if the current object is dead
+   * @param {number} energy - The current energy level of the object
+   * @returns {boolean} - Returns true if the energy level is 0, indicating that the object is dead, false otherwise
+   */
   isDead(energy) {
     return energy == 0;
   }
 
-  showGameOverScreen() {
-    if (this.endbossEnergy === 0) {
-    }
-  }
-
+  /**
+   * Applies gravity to the current object
+   * It sets an interval that runs every 1000/35 milliseconds (approximately 28.57 times per second)
+   * If the current object is above the ground or its vertical speed is greater than 0, it decreases the object's y-coordinate by its vertical speed and decreases the vertical speed by the acceleration due to gravity
+   * This simulates the effect of gravity pulling the object downwards
+   */
   applyGravity() {
     setInterval(() => {
       if (this.isAboveGround() || this.speedY > 0) {
@@ -96,6 +121,10 @@ class MoveableObject extends DrawableObject {
     }, 1000 / 35);
   }
 
+  /**
+   * Checks if the current object is above the ground
+   * @returns {boolean} - Returns true if the current object is above the ground, false otherwise
+   */
   isAboveGround() {
     if (this instanceof ThrowableObject) {
       //throwableobjects should always fall
@@ -105,6 +134,10 @@ class MoveableObject extends DrawableObject {
     }
   }
 
+  /**
+   *  Plays the animation for the current object
+   * @param {Array} images - The array of images that make up the animation
+   */
   playAnimation(images) {
     let i = this.currentImage % images.length; //Modulo-Operator (%)
     let path = images[i];
@@ -112,11 +145,17 @@ class MoveableObject extends DrawableObject {
     this.currentImage++;
   }
 
+  /**
+   *  Moves the object to the right
+   */
   moveRight() {
-      this.x += this.speed;
+    this.x += this.speed;
   }
 
+  /**
+   * Moves the object to the left
+   */
   moveLeft() {
-      this.x -= this.speed;
+    this.x -= this.speed;
   }
 }

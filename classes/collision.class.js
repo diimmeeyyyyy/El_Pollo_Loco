@@ -1,6 +1,9 @@
 class Collision {
   world;
 
+  /**
+   *  Checks various game conditions at regular intervals
+   */
   checkGameInterval() {
     this.checkBottlesOnGround();
     this.checkCoins();
@@ -9,6 +12,9 @@ class Collision {
     this.checkEndbossLife();
   }
 
+  /**
+   * Checks if the character is colliding with any bottles on the ground
+   */
   checkBottlesOnGround() {
     this.world.level.salsaBottles = this.world.level.salsaBottles.filter(
       (bottle) => {
@@ -30,6 +36,9 @@ class Collision {
     );
   }
 
+  /**
+   * Checks if the character is colliding with coins
+   */
   checkCoins() {
     this.world.level.coins = this.world.level.coins.filter((coin) => {
       if (
@@ -47,6 +56,9 @@ class Collision {
     });
   }
 
+  /**
+   * Checks if the character is jumping on any enemies
+   */
   CheckCharacterJump() {
     this.world.level.enemies = this.world.level.enemies.filter((enemy) => {
       if (
@@ -82,6 +94,9 @@ class Collision {
     });
   }
 
+  /**
+   * Checks if the character is alive
+   */
   checkCharacterLife() {
     if (this.world.gameCharacter.isAlive == false) {
       this.world.endscreen.stopGame();
@@ -90,6 +105,9 @@ class Collision {
     }
   }
 
+  /**
+   * Checks if the endboss is alive
+   */
   checkEndbossLife() {
     if (
       this.world.level.enemies[this.world.level.enemies.length - 1]
@@ -101,11 +119,17 @@ class Collision {
     }
   }
 
+  /**
+   * Checks for collisions at regular intervals.
+   */
   checkCollisionInterval() {
     this.checkCollisions();
     this.checkBottleCollision();
   }
 
+  /**
+   * Checks for collisions between the character and enemies
+   */
   checkCollisions() {
     this.world.level.enemies.forEach((enemy) => {
       if (this.world.gameCharacter.isColliding(enemy)) {
@@ -125,6 +149,9 @@ class Collision {
     });
   }
 
+  /**
+   * Checks for collisions between thrown bottles and endboss
+   */
   checkBottleCollision() {
     this.world.throwableObjects.forEach((bottle) => {
       this.world.level.enemies.forEach((enemy) => {
@@ -143,6 +170,9 @@ class Collision {
     });
   }
 
+  /**
+   * Checks for collisions between thrown bottles and normal chickens
+   */
   checkBottleCollisionChicken() {
     this.world.throwableObjects.forEach((bottle) => {
       this.world.level.enemies.forEach((enemy) => {

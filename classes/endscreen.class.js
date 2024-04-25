@@ -1,11 +1,17 @@
 class Endscreen {
   world;
 
+  /**
+   * Displays the game over screen
+   */
   showGameOverScreen() {
     let gameOverScreen = document.getElementById("Game_Over_Screen");
     gameOverScreen.classList.remove("d-none");
   }
 
+  /**
+   * Stops the game by clearing all intervals
+   */
   stopGame() {
     clearInterval(this.world.gameInterval);
     clearInterval(this.world.collisionInterval);
@@ -27,6 +33,9 @@ class Endscreen {
     this.removeThrowEventListener();
   }
 
+  /**
+   * Removes the event listener for throwing bottles
+   */
   removeThrowEventListener() {
     if (this.world.gameCharacter.bottleThrowHandler) {
       document.removeEventListener(
@@ -36,6 +45,9 @@ class Endscreen {
     }
   }
 
+  /**
+   *  Removes the mobile movement buttons from the screen
+   */
   removeMobileArrows() {
     let allButtons = document.querySelectorAll(".mobile-movement");
     allButtons.forEach((button) => {
@@ -43,6 +55,9 @@ class Endscreen {
     });
   }
 
+  /**
+   * Displays the winning screen
+   */
   showWinScreen() {
     let winningScreen = document.getElementById("Win_Screen");
     winningScreen.classList.remove("d-none");

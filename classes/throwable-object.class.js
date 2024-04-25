@@ -15,6 +15,11 @@ class ThrowableObject extends MoveableObject {
     "img/6_salsa_bottle/bottle_rotation/4_bottle_rotation.png",
   ];
 
+  /**
+   * Constructor for the ThrowableObject class
+   * @param {number} x - The x-coordinate of the throwable object
+   * @param {number} y  - The y-coordinate of the throwable object
+   */
   constructor(x, y) {
     super().loadImage(
       "img/6_salsa_bottle/bottle_rotation/1_bottle_rotation.png"
@@ -32,12 +37,18 @@ class ThrowableObject extends MoveableObject {
 
   rotationInterval;
 
+  /**
+   *  Animates the rotation of the throwable object (salsa bottle)
+   */
   animateBottleRotation() {
     this.rotationInterval = setInterval(() => {
       this.playAnimation(this.IMAGES_SALSA_BOTTLE_ROTATION);
     }, 50);
   }
 
+  /**
+   * Throws the throwable object (salsa bottle)
+   */
   throw() {
     this.speedY = 30;
     this.applyGravity();
@@ -47,6 +58,11 @@ class ThrowableObject extends MoveableObject {
     this.animateBottleRotation();
   }
 
+  /**
+   * Triggers the splash animation for the throwable object (salsa bottle) at the given coordinates
+   * @param {number} bottleX - The x-coordinate where the splash should occur
+   * @param {number} bottleY - The y-coordinate where the splash should occur
+   */
   splash(bottleX, bottleY) {
     this.x = bottleX;
     this.y = bottleY;

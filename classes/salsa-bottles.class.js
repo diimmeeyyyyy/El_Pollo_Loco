@@ -12,10 +12,12 @@ class SalsaBottles extends DrawableObject {
     left: 15,
   };
 
+  /**
+   * Constructor for the SalsaBottles class
+   */
   constructor() {
     super();
     this.x = 100 + Math.random() * 2200;
     this.loadImage(this.IMAGE_SALSA_BOTTLE);
-    /* this.loadImages(this.IMAGES_SALSA_BOTTLE_SPLASH); */
   }
 }

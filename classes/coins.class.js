@@ -10,6 +10,9 @@ class Coins extends DrawableObject {
     left: 70,
   };
 
+  /**
+   * Constructor for the Coins class
+   */
   constructor() {
     super();
     this.x = 400 + Math.random() * 1800;
