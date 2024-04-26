@@ -18,21 +18,23 @@ class Collision {
   checkBottlesOnGround() {
     this.world.level.salsaBottles = this.world.level.salsaBottles.filter(
       (bottle) => {
-        if (
-          this.world.gameCharacter.isColliding(bottle) &&
-          this.world.gameCharacter.bottlesAmount !== 100
-        ) {
-          this.world.gameCharacter.isCollecting("bottle");
-          this.world.statusBar_bottle.setPercentage(
-            this.world.gameCharacter.bottlesAmount,
-            "bottle"
-          );
-          // if character collides with bottle, i remove it from array
+        if (this.characterIsCollidingWith(bottle)) {
+          this.updateBottleAmount();
           return false;
         }
-        // if character doesnt collide with bottle, i keep it in the game
         return true;
       }
+    );
+  }
+
+  /**
+   * Updates the game character's bottle collection status and the status bar to reflect the current bottle amount of the game character
+   */
+  updateBottleAmount() {
+    this.world.gameCharacter.isCollecting("bottle");
+    this.world.statusBar_bottle.setPercentage(
+      this.world.gameCharacter.bottlesAmount,
+      "bottle"
     );
   }
 
@@ -41,15 +43,8 @@ class Collision {
    */
   checkCoins() {
     this.world.level.coins = this.world.level.coins.filter((coin) => {
-      if (
-        this.world.gameCharacter.isColliding(coin) &&
-        this.world.gameCharacter.coinAmount !== 100
-      ) {
-        this.world.gameCharacter.isCollecting("coin");
-        this.world.statusBar_coins.setPercentage(
-          this.world.gameCharacter.coinAmount,
-          "coins"
-        );
+      if (this.characterIsCollidingWith(coin)) {
+        this.updateCoinAmount();
         return false;
       }
       return true;
@@ -57,16 +52,42 @@ class Collision {
   }
 
   /**
+   * Checks if the game character is colliding with a given coin and if the game character's coin amount is not equal to 100
+   * @param {*} coin - The coin object to check for a collision with the game character
+   * @returns {boolean} - Returns true if the game character is colliding with the coin and the game character's coin amount is not equal to 100, otherwise false
+   */
+  characterIsCollidingWith(collectableObject) {
+    let collectableObjectAmount;
+    if (collectableObject instanceof Coins) {
+      collectableObjectAmount = this.world.gameCharacter.coinAmount;
+    } else if (collectableObject instanceof SalsaBottles) {
+      collectableObjectAmount = this.world.gameCharacter.bottlesAmount;
+    }
+
+    return (
+      this.world.gameCharacter.isColliding(collectableObject) &&
+      collectableObjectAmount !== 100
+    );
+  }
+
+  /**
+   * Updates the game character's coin collection status and the status bar to reflect the current coin amount of the game character
+   * @returns {boolean} - Always returns false to let disappear
+   */
+  updateCoinAmount() {
+    this.world.gameCharacter.isCollecting("coin");
+    this.world.statusBar_coins.setPercentage(
+      this.world.gameCharacter.coinAmount,
+      "coins"
+    );
+  }
+
+  /**
    * Checks if the character is jumping on any enemies
    */
   CheckCharacterJump() {
     this.world.level.enemies = this.world.level.enemies.filter((enemy) => {
-      if (
-        this.world.gameCharacter.isColliding(enemy) &&
-        this.world.gameCharacter.isAboveGround() &&
-        this.world.gameCharacter.speedY < 0 &&
-        (enemy.enemyIsDead === false || enemy.smallEnemyIsDead === false)
-      ) {
+      if (this.characterIsJumpingOnEnemy(enemy)) {
         if (enemy instanceof Chicken) {
           this.handleChickenCollision(enemy);
         } else if (enemy instanceof ChickenSmall) {
@@ -75,6 +96,20 @@ class Collision {
       }
       return true;
     });
+  }
+
+  /**
+   * Checks if the game character is jumping on an enemy
+   * @param {object} enemy - Enemy object to check for a collision with the game character from above
+   * @returns {boolean}  - Returns true if the game character is colliding with the enemy, is above the ground, moving downwards (indicating a jump), and the enemy is not dead, otherwise false.
+   */
+  characterIsJumpingOnEnemy(enemy) {
+    return (
+      this.world.gameCharacter.isColliding(enemy) &&
+      this.world.gameCharacter.isAboveGround() &&
+      this.world.gameCharacter.speedY < 0 &&
+      (enemy.enemyIsDead === false || enemy.smallEnemyIsDead === false)
+    );
   }
 
   /**
@@ -115,24 +150,59 @@ class Collision {
    */
   checkCollisions() {
     this.world.level.enemies.forEach((enemy) => {
-      if (
-        this.world.gameCharacter.isColliding(enemy) &&
-        !this.world.gameCharacter.isDead(this.world.gameCharacter.energy)
-      ) {
-        if (
-          !this.world.gameCharacter.isAboveGround() &&
-          (enemy.enemyIsDead === false || enemy.smallEnemyIsDead === false)
-        ) {
+      if (this.characterCollides(enemy)) {
+        if (this.enemyIsNormalChicken(enemy)) {
           this.world.gameCharacter.gotHitBy("NormalChicken");
-        } else if (enemy instanceof Endboss && enemy.endbossIsAlive === true) {
+        } else if (this.enemyIsEndboss(enemy)) {
           this.world.gameCharacter.gotHitBy("Endboss");
         }
-        this.world.statusBar_health.setPercentage(
-          this.world.gameCharacter.energy,
-          "health"
-        );
+        this.updateStatusBarCharacterEnergy();
       }
     });
+  }
+
+  /**
+   * Checks if the game character is colliding with an enemy and if the game character is not dead
+   * @param {object} enemy - Enemy object to check for a collision with the game character
+   * @returns {boolean} - Returns true if the game character is colliding with the enemy and the game character is not dead, otherwise false
+   */
+  characterCollides(enemy) {
+    return (
+      this.world.gameCharacter.isColliding(enemy) &&
+      !this.world.gameCharacter.isDead(this.world.gameCharacter.energy)
+    );
+  }
+
+  /**
+   * Checks if the enemy is a normal chicken (brown or yellow ones)
+   * @param {object} enemy - Enemy object to check for a collision with the game character
+   * @returns {boolean} - Returns true if the game character is colliding with a normal chicken which isnt dead already, otherwise false
+   */
+  enemyIsNormalChicken(enemy) {
+    return (
+      !this.world.gameCharacter.isAboveGround() &&
+      (enemy instanceof Chicken || enemy instanceof ChickenSmall) &&
+      (enemy.enemyIsDead === false || enemy.smallEnemyIsDead === false)
+    );
+  }
+
+  /**
+   * Checks if enemy is an instance of Endboss and if the Endboss is alive
+   * @param {object} enemy - Enemy object to check for a collision with the game character
+   * @returns {boolean} - Returns true if the game character is colliding with the endboss which isnt dead already, otherwise false
+   */
+  enemyIsEndboss(enemy) {
+    return enemy instanceof Endboss && enemy.endbossIsAlive === true;
+  }
+
+  /**
+   * Updates the status bar to reflect the current energy level of the game character
+   */
+  updateStatusBarCharacterEnergy() {
+    this.world.statusBar_health.setPercentage(
+      this.world.gameCharacter.energy,
+      "health"
+    );
   }
 
   /**
