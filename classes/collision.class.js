@@ -67,27 +67,10 @@ class Collision {
         this.world.gameCharacter.speedY < 0 &&
         (enemy.enemyIsDead === false || enemy.smallEnemyIsDead === false)
       ) {
-        let isDead = false;
-        let sound = null;
-
         if (enemy instanceof Chicken) {
-          enemy.enemyIsDead = true;
-          sound = enemy.jump_on_chicken_sound;
-          isDead = enemy.enemyIsDead;
+          this.handleChickenCollision(enemy);
         } else if (enemy instanceof ChickenSmall) {
-          enemy.smallEnemyIsDead = true;
-          sound = enemy.jump_on_small_chicken_sound;
-          isDead = enemy.smallEnemyIsDead;
-          enemy.y = 370;
-        }
-
-        enemy.img.src = enemy.IMAGES_DEAD;
-        sound.play();
-
-        if (isDead) {
-          setTimeout(() => {
-            enemy.img = null;
-          }, 2000);
+          this.handleChickenSmallCollision(enemy);
         }
       }
       return true;
@@ -174,37 +157,60 @@ class Collision {
   }
 
   /**
-   * Checks for collisions between thrown bottles and normal chickens
+   * Checks for collisions between thrown bottles and normal or small chickens
    */
   checkBottleCollisionChicken() {
     this.world.throwableObjects.forEach((bottle) => {
       this.world.level.enemies.forEach((enemy) => {
         if (bottle.isColliding(enemy) && !(enemy instanceof Endboss)) {
-          let isDead = false;
-          let sound = null;
-
           if (enemy instanceof Chicken) {
-            enemy.enemyIsDead = true;
-            sound = enemy.jump_on_chicken_sound;
-            isDead = enemy.enemyIsDead;
+            this.handleChickenCollision(enemy);
           } else if (enemy instanceof ChickenSmall) {
-            enemy.smallEnemyIsDead = true;
-            sound = enemy.jump_on_small_chicken_sound;
-            isDead = enemy.smallEnemyIsDead;
-          }
-
-          if (enemy.img) {
-            // Check if enemy.img is not null
-            enemy.img.src = enemy.IMAGES_DEAD;
-            sound.play();
-            if (isDead) {
-              setTimeout(() => {
-                enemy.img = null;
-              }, 2000);
-            }
+            this.handleChickenSmallCollision(enemy);
           }
         }
       });
     });
+  }
+
+  /**
+   * Handles the collision with a Chicken enemy
+   * @param {object} enemy - The enemy object that the bottle is colliding with
+   */
+  handleChickenCollision(enemy) {
+    enemy.enemyIsDead = true;
+    let sound = enemy.jump_on_chicken_sound;
+    let isDead = enemy.enemyIsDead;
+    this.handleDeadEnemy(enemy, sound, isDead);
+  }
+
+  /**
+   * Handles the collision with a small Chicken enemy
+   * @param {object} enemy - The enemy object that the bottle is colliding with
+   */
+  handleChickenSmallCollision(enemy) {
+    enemy.smallEnemyIsDead = true;
+    let sound = enemy.jump_on_small_chicken_sound;
+    let isDead = enemy.smallEnemyIsDead;
+    enemy.y = 370;
+    this.handleDeadEnemy(enemy, sound, isDead);
+  }
+
+  /**
+   * Handles the actions to be performed when an enemy is dead
+   * @param {object} enemy - The enemy object that the bottle is colliding with
+   * @param {object} sound - The sound to play when the enemy is hit
+   * @param {boolean} isDead - The current status of the enemy
+   */
+  handleDeadEnemy(enemy, sound, isDead) {
+    if (enemy.img) {
+      enemy.img.src = enemy.IMAGES_DEAD;
+      sound.play();
+      if (isDead) {
+        setTimeout(() => {
+          enemy.img = null;
+        }, 2000);
+      }
+    }
   }
 }
