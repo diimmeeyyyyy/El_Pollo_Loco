@@ -88,7 +88,7 @@ class World {
     }, 1000 / 60);
     this.collisionInterval = setInterval(() => {
       this.collision.checkCollisionInterval();
-    }, 150);
+    }, 50);
     this.collisionIntervalChicken = setInterval(() => {
       this.collision.checkBottleCollisionChicken();
     }, 50);

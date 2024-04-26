@@ -20,17 +20,18 @@ class ThrowableObject extends MoveableObject {
    * @param {number} x - The x-coordinate of the throwable object
    * @param {number} y  - The y-coordinate of the throwable object
    */
-  constructor(x, y) {
+  constructor(x, y, otherDirection) {
     super().loadImage(
       "img/6_salsa_bottle/bottle_rotation/1_bottle_rotation.png"
     );
     this.loadImages(this.IMAGES_SALSA_BOTTLE_SPLASH);
     this.loadImages(this.IMAGES_SALSA_BOTTLE_ROTATION);
-    this.x = x;
     this.y = y;
     this.height = 80;
     this.width = 60;
     this.hasCollided = false;
+    this.otherDirection = otherDirection;
+    this.x = otherDirection ? x - 50 : x + 100;
     this.applyGravity();
     this.throw();
   }
@@ -50,12 +51,23 @@ class ThrowableObject extends MoveableObject {
    * Throws the throwable object (salsa bottle)
    */
   throw() {
-    this.speedY = 30;
-    this.applyGravity();
-    setInterval(() => {
-      this.x += 10;
-    }, 25);
-    this.animateBottleRotation();
+    if (this.otherDirection) {
+      console.log(this.otherDirection);
+      this.speedY = 25;
+      this.applyGravity();
+      setInterval(() => {
+        this.x -= 10;
+      }, 25);
+      this.animateBottleRotation();
+    } else {
+      console.log(this.otherDirection);
+      this.speedY = 25;
+      this.applyGravity();
+      setInterval(() => {
+        this.x += 10;
+      }, 25);
+      this.animateBottleRotation();
+    }
   }
 
   /**

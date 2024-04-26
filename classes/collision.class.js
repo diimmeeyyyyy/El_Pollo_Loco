@@ -132,7 +132,10 @@ class Collision {
    */
   checkCollisions() {
     this.world.level.enemies.forEach((enemy) => {
-      if (this.world.gameCharacter.isColliding(enemy)) {
+      if (
+        this.world.gameCharacter.isColliding(enemy) &&
+        !this.world.gameCharacter.isDead(this.world.gameCharacter.energy)
+      ) {
         if (
           !this.world.gameCharacter.isAboveGround() &&
           (enemy.enemyIsDead === false || enemy.smallEnemyIsDead === false)

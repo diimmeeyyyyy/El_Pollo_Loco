@@ -174,8 +174,8 @@ class Character extends MoveableObject {
    */
   moveLeft() {
     this.stopLongIdle();
-    super.moveLeft();
     this.otherDirection = true;
+    super.moveLeft();
     this.playSound(this.walking_sound);
   }
 
@@ -230,7 +230,7 @@ class Character extends MoveableObject {
       this.playAnimation(this.IMAGES_IDLE);
       this.playSound(this.noBottlesToThrow_sound);
     } else {
-      let bottle = new ThrowableObject(this.x + 100, this.y);
+      let bottle = new ThrowableObject(this.x, this.y, this.otherDirection);
       this.world.throwableObjects.push(bottle);
       this.bottlesAmount -= 20;
       this.playSound(this.throwBottle_sound);
@@ -280,7 +280,7 @@ class Character extends MoveableObject {
   }
 
   /**
-   * Plays the hurt animation and sound for the character
+   * Handle the actual hurt animation and sound for the character
    */
   characterIsHurtAnimationInterval;
   hurtAnimation() {
@@ -292,6 +292,9 @@ class Character extends MoveableObject {
     }, 100);
   }
 
+  /**
+   * Plays the hurt animation for the character
+   */
   playHurtAnimation() {
     this.hurtAnimation();
 

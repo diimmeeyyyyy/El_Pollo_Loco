@@ -14,8 +14,8 @@ class Chicken extends MoveableObject {
   offset = {
     top: 0,
     bottom: 0,
-    right: 0,
-    left: 0,
+    right: 20,
+    left: 20,
   };
 
   /**
@@ -42,7 +42,7 @@ class Chicken extends MoveableObject {
       if (this.enemyIsDead == false) {
         this.moveLeft();
       }
-    }, 1000 / 30); 
+    }, 1000 / 30);
     this.chickenMovementInterval = setInterval(() => {
       if (this.enemyIsDead == false) {
         this.playAnimation(this.IMAGES_WALKING);
