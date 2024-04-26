@@ -112,57 +112,63 @@ class World {
    */
   draw() {
     this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
-
     this.ctx.translate(this.camera_x, 0);
-
-    //background zuerst, weil zuerst erstellt wird
     this.addObjectsToGame(this.level.backgroundObjects);
-    //Clouds
     this.addObjectsToGame(this.level.clouds);
-    //throwable objects
     this.addObjectsToGame(this.throwableObjects);
-    //salsa bottles
     this.addObjectsToGame(this.level.salsaBottles);
-    //coins
     this.addObjectsToGame(this.level.coins);
-
-    //statusBar_health
-    this.ctx.translate(-this.camera_x, 0); //back
-    this.addToGame(this.statusBar_health);
-    this.ctx.translate(this.camera_x, 0); //forward
-
-    //statusBar_coins
-    this.ctx.translate(-this.camera_x, 0); //back
-    this.addToGame(this.statusBar_coins);
-    this.ctx.translate(this.camera_x, 0); //forward
-
-    //statusBar_bottle
-    this.ctx.translate(-this.camera_x, 0); //back
-    this.addToGame(this.statusBar_bottle);
-    this.ctx.translate(this.camera_x, 0); //forward
-
-    // statusBar_endboss
-    if (this.gameCharacter.x >= this.level.enemies[7].x - 600) {
-      this.ctx.translate(-this.camera_x, 0); //back
-      this.addToGame(this.statusBar_endboss);
-      this.ctx.translate(this.camera_x, 0); //forward
-    }
-
-    //gameCharacter
+    this.drawStatusBarHealth();
+    this.drawStatusBarCoins();
+    this.drawStatusBarBottles();
+    this.drawStatusBarEndboss();
     this.addToGame(this.gameCharacter);
-
-    //Chicken
     this.addObjectsToGame(this.level.enemies);
-
     this.ctx.translate(-this.camera_x, 0);
-
-    // draw() wird immer wieder aufgerufen
     self = this;
     requestAnimationFrame(function () {
       if (self.gameCharacter.isAlive) {
         self.draw();
       }
     });
+  }
+
+  /**
+   * Draws the health status bar on the game screen
+   */
+  drawStatusBarHealth() {
+    this.ctx.translate(-this.camera_x, 0); //back
+    this.addToGame(this.statusBar_health);
+    this.ctx.translate(this.camera_x, 0); //forward
+  }
+
+  /**
+   * Draws the coins status bar on the game screen
+   */
+  drawStatusBarCoins() {
+    this.ctx.translate(-this.camera_x, 0); //back
+    this.addToGame(this.statusBar_coins);
+    this.ctx.translate(this.camera_x, 0); //forward
+  }
+
+  /**
+   * Draws the bottle status bar on the game screen
+   */
+  drawStatusBarBottles() {
+    this.ctx.translate(-this.camera_x, 0); //back
+    this.addToGame(this.statusBar_bottle);
+    this.ctx.translate(this.camera_x, 0); //forward
+  }
+
+  /**
+   * Draws the endboss status bar on the game screen
+   */
+  drawStatusBarEndboss() {
+    if (this.gameCharacter.x >= this.level.enemies[7].x - 600) {
+      this.ctx.translate(-this.camera_x, 0); //back
+      this.addToGame(this.statusBar_endboss);
+      this.ctx.translate(this.camera_x, 0); //forward
+    }
   }
 
   /**
@@ -186,7 +192,7 @@ class World {
       this.flipImage(moveableObject);
     }
     moveableObject.draw(this.ctx);
-   /*  moveableObject.drawFrame(this.ctx); */
+    /*  moveableObject.drawFrame(this.ctx); */
 
     if (moveableObject.otherDirection || moveableObject.otherDirectionEnemy) {
       this.flipImageBack(moveableObject);
