@@ -27,10 +27,9 @@ class Endscreen {
       clearInterval(enemy.endbossWakingAnimation);
       clearInterval(enemy.endbossWalkingMovement);
     });
-
+    clearInterval(this.world.gameCharacter.characterIsHurtAnimationInterval);
     clearInterval(this.world.gameCharacter.characterMovementInterval);
     clearInterval(this.world.gameCharacter.characterAnimationInterval);
-    clearInterval(this.world.gameCharacter.characterIsHurtAnimationInterval)
     this.removeThrowEventListener();
   }
 

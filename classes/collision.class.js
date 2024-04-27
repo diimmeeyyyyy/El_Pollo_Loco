@@ -169,7 +169,7 @@ class Collision {
   characterCollides(enemy) {
     return (
       this.world.gameCharacter.isColliding(enemy) &&
-      !this.world.gameCharacter.isDead(this.world.gameCharacter.energy)
+      this.world.gameCharacter.isAlive == true
     );
   }
 

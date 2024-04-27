@@ -155,10 +155,12 @@ class Character extends MoveableObject {
    * Moves the character to the right
    */
   moveRight() {
-    this.stopLongIdle();
-    super.moveRight();
-    this.otherDirection = false;
-    this.playSound(this.walking_sound);
+    if (!this.isHurt) {
+      this.stopLongIdle();
+      super.moveRight();
+      this.otherDirection = false;
+      this.playSound(this.walking_sound);
+    }
   }
 
   /**
@@ -173,10 +175,12 @@ class Character extends MoveableObject {
    * Moves the character to the left
    */
   moveLeft() {
-    this.stopLongIdle();
-    this.otherDirection = true;
-    super.moveLeft();
-    this.playSound(this.walking_sound);
+    if (!this.isHurt) {
+      this.stopLongIdle();
+      this.otherDirection = true;
+      super.moveLeft();
+      this.playSound(this.walking_sound);
+    }
   }
 
   /**
